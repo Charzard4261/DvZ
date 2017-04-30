@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import dwarves.vs.zombies.util.PlayerSkinEditor;
 
@@ -88,6 +89,27 @@ public class PlayerListeners implements Listener {
 			{
 				event.getRecipients().add(p);
 			}
+		}
+	}
+
+	@EventHandler
+	public void onRespawn(PlayerRespawnEvent event)
+	{
+		switch (Core.getInstance().gs)
+		{
+		case Lobby:
+			event.setRespawnLocation(Core.getInstance().mm.getLobby());
+			break;
+		case Startup:
+			event.setRespawnLocation(Core.getInstance().mm.getLobby());
+			break;
+		case Build_Phase:
+			event.setRespawnLocation(Core.getInstance().mm.getMap().getSpawn());
+		case Game:
+			
+			break;
+		default:
+			break;
 		}
 	}
 }

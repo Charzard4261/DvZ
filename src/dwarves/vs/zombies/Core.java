@@ -97,6 +97,7 @@ public class Core extends JavaPlugin {
 		{
 			i++;
 			p.setCustomName(ChatColor.DARK_AQUA + p.getDisplayName());
+			p.setPlayerListName(p.getCustomName());
 			if (i == oldManint)
 			{
 				oldMan = p;
@@ -116,7 +117,8 @@ public class Core extends JavaPlugin {
 					Bukkit.broadcastMessage(oldMan.getCustomName() + ChatColor.LIGHT_PURPLE
 							+ " has become the dwarvern general " + ChatColor.GOLD
 							+ "Old Man Willakers");
-					oldMan.setCustomName(ChatColor.GOLD + "OldManWillakers");
+					oldMan.setCustomName(ChatColor.GOLD + "BruceWillakers");
+					oldMan.setPlayerListName(oldMan.getCustomName());
 					PlayerSkinEditor.applyOldMan(oldMan.getUniqueId());
 					spawnOldMan(oldMan);
 					oldMan.sendTitle(ChatColor.AQUA + "It's time to play!", ChatColor.DARK_AQUA
@@ -142,10 +144,7 @@ public class Core extends JavaPlugin {
 		gs = GameState.Lobby;
 		dwarves.clear();
 		monsters.clear();
-		UUID oldManUUID = oldMan.getUniqueId();
-		oldMan = null;
-		roamin = null;
-		nisovin = null;
+		
 		for (Player p : Bukkit.getOnlinePlayers())
 		{
 			p.setCustomName(p.getDisplayName());
@@ -154,14 +153,21 @@ public class Core extends JavaPlugin {
 			p.getInventory().clear();
 			p.teleport(mm.getLobby());
 		}
-
+		
+		if (oldMan != null) {
+			UUID oldManUUID = oldMan.getUniqueId();
+			PlayerSkinEditor.swapSkins(oldManUUID, omV, omS);
+			oldMan = null;
+		}
+		roamin = null;
+		nisovin = null;
+		
 		new BukkitRunnable() {
 
 			@Override
 			public void run()
 			{
 				delete(mm.getMap().getWorld());
-				PlayerSkinEditor.swapSkins(oldManUUID, omV, omS);
 			}
 		}.runTaskLater(this, 50);
 	}

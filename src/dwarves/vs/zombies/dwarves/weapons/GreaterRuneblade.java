@@ -1,8 +1,14 @@
 package dwarves.vs.zombies.dwarves.weapons;
 
+import net.minecraft.server.v1_11_R1.NBTTagCompound;
+import net.minecraft.server.v1_11_R1.NBTTagInt;
+import net.minecraft.server.v1_11_R1.NBTTagList;
+import net.minecraft.server.v1_11_R1.NBTTagString;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,6 +37,21 @@ public class GreaterRuneblade extends Weapon {
 		meta.setDisplayName(ChatColor.AQUA + "Greater Runeblade");
 		item.setItemMeta(meta);
 
+		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
+		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+		NBTTagList modifiers = new NBTTagList();
+		NBTTagCompound damage = new NBTTagCompound();
+		damage.set("AttributeName", new NBTTagString("generic.attackDamage"));
+		damage.set("Name", new NBTTagString("generic.attackDamage"));
+		damage.set("Amount", new NBTTagInt(15));
+		damage.set("Operation", new NBTTagInt(0));
+		damage.set("UUIDLeast", new NBTTagInt(894654));
+		damage.set("UUIDMost", new NBTTagInt(2872));
+		modifiers.add(damage);
+		nmsStack.setTag(compound);
+
+		item = CraftItemStack.asBukkitCopy(nmsStack);
+
 		return item;
 	}
 
@@ -43,7 +64,7 @@ public class GreaterRuneblade extends Weapon {
 	@Override
 	public void normal()
 	{
-		
+
 	}
 
 	@Override
@@ -51,25 +72,26 @@ public class GreaterRuneblade extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "Spell is on cooldown: "
-					+ timer + " seconds remaining.");
+			player.sendMessage(ChatColor.DARK_AQUA + "Spell is on cooldown: " + timer
+					+ " seconds remaining.");
 			return;
 		}
 		usedSpecial = true;
-		
+
 		player.playSound(player.getLocation(), "runebladeRunedash", 4F, 1F);
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, 255, false, false), false);
+		player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, 255, false,
+				false), false);
 		player.setVelocity(player.getLocation().getDirection().multiply(2));
-		
+
 		timer = 20;
 		dashTimer task = new dashTimer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
-		
+
 	}
 
 	private class dashTimer implements Runnable {
-		
+
 		private int id;
 
 		@Override
@@ -80,15 +102,15 @@ public class GreaterRuneblade extends Weapon {
 				usedSpecial = false;
 				Bukkit.getScheduler().cancelTask(id);
 			}
-			
+
 			timer -= 1;
 		}
-		
+
 		public void setId(int id)
 		{
 			this.id = id;
 		}
-		
+
 	}
 
 }
