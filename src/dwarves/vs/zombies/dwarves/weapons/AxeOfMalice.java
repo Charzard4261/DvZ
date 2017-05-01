@@ -80,21 +80,21 @@ public class AxeOfMalice extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_RED + "YOU MUST WAIT: " + timer
+			player.sendMessage(ChatColor.DARK_RED + "YOU MUST WAIT " + timer
 					+ " SECONDS BEFORE YOU USE MY POWER.");
 			return;
 		}
 
 		usedSpecial = true;
 
-		player.playSound(player.getLocation(), "SOMETHING", 4F, 1F);
+		player.playSound(player.getLocation(), "maliceUse", 4F, 1F);
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 160, 2, false, false), false);
 		player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 160, 0, false);
 				false), false);
 
 		timer = 60;
     
-    axeofmaliceTimer task = new axeofmaliceTimer();
+    		axeofmaliceTimer task = new axeofmaliceTimer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
 
 	}
