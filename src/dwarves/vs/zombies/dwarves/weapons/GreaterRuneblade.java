@@ -84,8 +84,8 @@ public class GreaterRuneblade extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "Spell is on cooldown: " + timer
-					+ " seconds remaining.");
+			player.sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
+					+ " more seconds to do that.");
 			return;
 		}
 		usedSpecial = true;

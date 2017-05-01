@@ -86,7 +86,8 @@ public class Tombmaker extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "You Cant Do That For " + timer + " Seconds.");
+			player.sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
+					+ " more seconds to do that.");
 			return;
 		}
 		usedSpecial = true;
