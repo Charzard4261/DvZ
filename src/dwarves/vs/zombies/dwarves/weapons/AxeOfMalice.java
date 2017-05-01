@@ -32,7 +32,7 @@ public class AxeOfMalice extends Weapon {
 
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 2);
+		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 3);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Axe Of Malice");
 		item.setItemMeta(meta);
