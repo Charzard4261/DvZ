@@ -35,8 +35,6 @@ public class GreaterRuneblade extends Weapon {
 		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 3);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA + "Greater Runeblade");
-		item.setItemMeta(meta);
-	
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.GOLD + "With this Blade, killing demons grants you a Powerful");
 		lore.add(ChatColor.GOLD + "Rampage for 3 seconds with allows you to instantly");
