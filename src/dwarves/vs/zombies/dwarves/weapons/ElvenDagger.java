@@ -18,7 +18,7 @@ import org.bukkit.potion.PotionEffectType;
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.Weapon;
 
-public class GreaterRuneblade extends Weapon {
+public class ElvenDagger extends Weapon {
 
 	Player player;
 	boolean usedSpecial = false;
@@ -57,6 +57,16 @@ public class GreaterRuneblade extends Weapon {
 		damage.set("UUIDMost", new NBTTagInt(2872));
 		modifiers.add(damage);
 		nmsStack.setTag(compound);
+	     
+	        NBTTagCompound speed = new NBTTagCompound();
+	     	speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
+		speed.set("Name", new NBTTagString("generic.movementSpeed"));
+		speed.set("Amount", new NBTTagInt(0.8));
+	     	damage.set("Operation", new NBTTagInt(0));
+		damage.set("UUIDLeast", new NBTTagInt(894654));
+		damage.set("UUIDMost", new NBTTagInt(2872));
+		modifiers.add(speed);
+	        nmsStack.setTag(compound);
 
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 
@@ -86,7 +96,7 @@ public class GreaterRuneblade extends Weapon {
 		}
 		usedSpecial = true;
 
-		player.playSound(player.getLocation(), "SOMETHING", 4F, 1F);
+		player.playSound(player.getLocation(), "runebladeRunedash", 4F, 1F);
 
 		timer = 60;
 		EviserateTimer task = new EviserateTimer();
