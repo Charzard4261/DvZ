@@ -36,6 +36,15 @@ public class GreaterRuneblade extends Weapon {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA + "Greater Runeblade");
 		item.setItemMeta(meta);
+	
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.GOLD + "With this Blade, killing demons grants you a Powerful");
+		lore.add(ChatColor.GOLD + "Rampage for 3 seconds with allows you to instantly");
+		lore.add(ChatColor.GOLD + "kill most demons. Right Click to Runedash which dashes");
+		lore.add(ChatColor.GOLD + "you forward making you breifly immune to damage and");
+		lore.add(ChatColor.GOLD + "granting you a Powerfull Rampage for 0.5 seconds.");
+		meta.setLore(lore);
+		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
