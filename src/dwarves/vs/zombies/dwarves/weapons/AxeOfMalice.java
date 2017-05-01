@@ -51,9 +51,8 @@ public class AxeOfMalice extends Weapon {
 			damage.set("UUIDMost", new NBTTagInt(2872));
 			damage.set("Slot", new NBTTagString("mainhand"));
 			modifiers.add(damage);
-    
 		}
-		
+
 		compound.set("AttributeModifiers", modifiers);
 
 		NBTTagList ench = new NBTTagList();
