@@ -1,5 +1,7 @@
 package dwarves.vs.zombies.dwarves.weapons;
 
+import java.util.ArrayList;
+
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
 import net.minecraft.server.v1_11_R1.NBTTagInt;
 import net.minecraft.server.v1_11_R1.NBTTagList;
@@ -18,13 +20,13 @@ import org.bukkit.potion.PotionEffectType;
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.Weapon;
 
-public class TombMaker extends Weapon {
+public class Tombmaker extends Weapon {
 
 	Player player;
 	boolean usedSpecial = false;
 	int timer = 0;
 
-	public GreaterRuneblade(Player player)
+	public Tombmaker(Player player)
 	{
 		super(true, true);
 		this.player = player;
@@ -36,13 +38,13 @@ public class TombMaker extends Weapon {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA + "Tomb Maker");
 		ArrayList<String> lore = new ArrayList<String>();
-                lore.add(ChatColor.YELLOW + "Power: " ChatColor.AQUA + "4"
+		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "4");
 		lore.add(ChatColor.YELLOW + "With this Shovel, you gain a Powerful Rampage for 5");
 		lore.add(ChatColor.YELLOW + "seconds when shoveling gravel. Additionak kills while");
 		lore.add(ChatColor.YELLOW + "on a rampage will allow you to extend the duration.");
 		lore.add(ChatColor.YELLOW + "Right Click to gain a haste buff to both dig and craft");
 		lore.add(ChatColor.YELLOW + "faster as well as put an additional resource item you");
-           	lore.add(ChatColor.YELLOW + "gather into the Shared Recource Chest");
+		lore.add(ChatColor.YELLOW + "gather into the Shared Recource Chest");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 
@@ -57,6 +59,10 @@ public class TombMaker extends Weapon {
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
 		modifiers.add(damage);
+
+		compound.set("AttributeModifiers", modifiers);
+
+		nmsStack.setTag(compound);
 
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 
@@ -80,14 +86,14 @@ public class TombMaker extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "You Cant Do That For " + timer
-					+ " Seconds.");
+			player.sendMessage(ChatColor.DARK_AQUA + "You Cant Do That For " + timer + " Seconds.");
 			return;
 		}
 		usedSpecial = true;
 
 		player.playSound(player.getLocation(), "SOMETHING", 4F, 1F);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
+		player.addPotionEffect(
+				new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
 
 		timer = 15;
 		tombHasteTimer task = new tombHasteTimer();

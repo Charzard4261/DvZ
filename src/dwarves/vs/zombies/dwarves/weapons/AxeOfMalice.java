@@ -1,5 +1,7 @@
 package dwarves.vs.zombies.dwarves.weapons;
 
+import java.util.ArrayList;
+
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
 import net.minecraft.server.v1_11_R1.NBTTagInt;
 import net.minecraft.server.v1_11_R1.NBTTagList;
@@ -36,12 +38,12 @@ public class AxeOfMalice extends Weapon {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA + "Axe Of Malice");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(Chatcolor.GOLD + "Power: " Chatcolor.Aqua + "20"
-		lore.add(ChatColor.GOLD + "With this Axe, you can Right Click to grant yourself a");
-		lore.add(ChatColor.GOLD + "Powerful Rampage for 8 seconds. Additional kills while");
-		lore.add(ChatColor.GOLD + "on a rampage will allow you to extend the duration.");
-		lore.add(ChatColor.GOLD + "This ability has a 60 second cooldown that is reduced");
-		lore.add(ChatColor.GOLD + "by 1 for every kill or 4 seconds for Bow kills.");
+		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "20");
+		lore.add(ChatColor.YELLOW + "With this Axe, you can Right Click to grant yourself a");
+		lore.add(ChatColor.YELLOW + "Powerful Rampage for 8 seconds. Additional kills while");
+		lore.add(ChatColor.YELLOW + "on a rampage will allow you to extend the duration.");
+		lore.add(ChatColor.YELLOW + "This ability has a 60 second cooldown that is reduced");
+		lore.add(ChatColor.YELLOW + "by 1 for every kill or 4 seconds for bow kills.");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 
@@ -88,13 +90,14 @@ public class AxeOfMalice extends Weapon {
 		usedSpecial = true;
 
 		player.playSound(player.getLocation(), "maliceUse", 4F, 1F);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 160, 2, false, false), false);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 160, 0, false);
+		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 160, 2, false, false),
+				false);
+		player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 160, 0, false,
 				false), false);
 
 		timer = 60;
-    
-    		axeofmaliceTimer task = new axeofmaliceTimer();
+
+		axeofmaliceTimer task = new axeofmaliceTimer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
 
 	}

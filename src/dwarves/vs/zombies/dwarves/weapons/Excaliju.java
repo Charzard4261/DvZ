@@ -72,7 +72,6 @@ public class Excaliju extends Weapon {
 			kb.set("Slot", new NBTTagString("mainhand"));
 			modifiers.add(kb);
 		}
-		
 		compound.set("AttributeModifiers", modifiers);
 
 		NBTTagList ench = new NBTTagList();

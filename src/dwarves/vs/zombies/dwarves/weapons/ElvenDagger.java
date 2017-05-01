@@ -1,6 +1,9 @@
 package dwarves.vs.zombies.dwarves.weapons;
 
+import java.util.ArrayList;
+
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
+import net.minecraft.server.v1_11_R1.NBTTagDouble;
 import net.minecraft.server.v1_11_R1.NBTTagInt;
 import net.minecraft.server.v1_11_R1.NBTTagList;
 import net.minecraft.server.v1_11_R1.NBTTagString;
@@ -12,8 +15,6 @@ import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.Weapon;
@@ -24,7 +25,7 @@ public class ElvenDagger extends Weapon {
 	boolean usedSpecial = false;
 	int timer = 0;
 
-	public GreaterRuneblade(Player player)
+	public ElvenDagger(Player player)
 	{
 		super(true, true);
 		this.player = player;
@@ -36,12 +37,12 @@ public class ElvenDagger extends Weapon {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA + "Elven Dagger");
 		ArrayList<String> lore = new ArrayList<String>();
-                lore.add(ChatColor.GOLD + "Power: " ChatColor.AQUA + "15"
-		lore.add(ChatColor.GOLD + "With this Dagger, you move more quickly and your");
-		lore.add(ChatColor.GOLD + "hits poison demons for 5 seconds. Right Click to");
-		lore.add(ChatColor.GOLD + "Eviserate which deals massive damage killing most");
-		lore.add(ChatColor.GOLD + "demons. This ability has a 60 second cooldown that");
-		lore.add(ChatColor.GOLD + "is reduced by 10 seconds for every bow kill.");
+		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "15");
+		lore.add(ChatColor.YELLOW + "With this Dagger, you move more quickly and your");
+		lore.add(ChatColor.YELLOW + "hits poison demons for 5 seconds. Right Click to");
+		lore.add(ChatColor.YELLOW + "Eviserate which deals massive damage killing most");
+		lore.add(ChatColor.YELLOW + "demons. This ability has a 60 second cooldown that");
+		lore.add(ChatColor.YELLOW + "is reduced by 10 seconds for every bow kill.");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 
@@ -56,16 +57,19 @@ public class ElvenDagger extends Weapon {
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
 		modifiers.add(damage);
-	     
-	        NBTTagCompound speed = new NBTTagCompound();
-	     	speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
+
+		NBTTagCompound speed = new NBTTagCompound();
+		speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
 		speed.set("Name", new NBTTagString("generic.movementSpeed"));
-		speed.set("Amount", new NBTTagInt(0.8));
-	     	damage.set("Operation", new NBTTagInt(0));
+		speed.set("Amount", new NBTTagDouble(0.8));
+		damage.set("Operation", new NBTTagInt(0));
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
 		modifiers.add(speed);
-	        nmsStack.setTag(compound);
+
+		compound.set("AttributeModifiers", modifiers);
+
+		nmsStack.setTag(compound);
 
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 
@@ -89,8 +93,7 @@ public class ElvenDagger extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "You Cant Do That For " + timer
-					+ " Seconds.");
+			player.sendMessage(ChatColor.DARK_AQUA + "You Cant Do That For " + timer + " Seconds.");
 			return;
 		}
 		usedSpecial = true;
@@ -127,4 +130,3 @@ public class ElvenDagger extends Weapon {
 	}
 
 }
-

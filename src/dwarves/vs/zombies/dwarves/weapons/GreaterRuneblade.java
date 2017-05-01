@@ -1,5 +1,7 @@
 package dwarves.vs.zombies.dwarves.weapons;
 
+import java.util.ArrayList;
+
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
 import net.minecraft.server.v1_11_R1.NBTTagInt;
 import net.minecraft.server.v1_11_R1.NBTTagList;
@@ -55,6 +57,9 @@ public class GreaterRuneblade extends Weapon {
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
 		modifiers.add(damage);
+
+		compound.set("AttributeModifiers", modifiers);
+
 		nmsStack.setTag(compound);
 
 		item = CraftItemStack.asBukkitCopy(nmsStack);
