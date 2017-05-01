@@ -34,7 +34,7 @@ public class AxeOfMalice extends Weapon {
 	{
 		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 3);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + "Axe Of Malice");
+		meta.setDisplayName(ChatColor.AQUA + "Axe Of Malice");
 		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
@@ -54,13 +54,6 @@ public class AxeOfMalice extends Weapon {
 		}
 
 		compound.set("AttributeModifiers", modifiers);
-
-		NBTTagList ench = new NBTTagList();
-		NBTTagCompound enchant = new NBTTagCompound();
-		enchant.set("id", new NBTTagInt(34));
-		enchant.set("lvl", new NBTTagInt(10));
-		ench.add(enchant);
-		compound.set("ench", ench);
 
 		nmsStack.setTag(compound);
 
@@ -86,7 +79,7 @@ public class AxeOfMalice extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "YOU MUST WAIT: " + timer
+			player.sendMessage(ChatColor.DARK_RED + "YOU MUST WAIT: " + timer
 					+ " SECONDS BEFORE YOU USE MY POWER.");
 			return;
 		}
