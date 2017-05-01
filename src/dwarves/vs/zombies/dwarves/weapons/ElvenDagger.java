@@ -36,7 +36,7 @@ public class ElvenDagger extends Weapon {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA + "Elven Dagger");
 		ArrayList<String> lore = new ArrayList<String>();
-    lore.add(ChatColor.GOLD + "Power: " ChatColor.AQUA + "15"
+                lore.add(ChatColor.GOLD + "Power: " ChatColor.AQUA + "15"
 		lore.add(ChatColor.GOLD + "With this Dagger, you move more quickly and your");
 		lore.add(ChatColor.GOLD + "hits poison demons for 5 seconds. Right Click to");
 		lore.add(ChatColor.GOLD + "Eviserate which deals massive damage killing most");
@@ -56,7 +56,6 @@ public class ElvenDagger extends Weapon {
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
 		modifiers.add(damage);
-		nmsStack.setTag(compound);
 	     
 	        NBTTagCompound speed = new NBTTagCompound();
 	     	speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
