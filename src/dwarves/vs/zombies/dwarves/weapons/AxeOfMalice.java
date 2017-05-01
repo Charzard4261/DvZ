@@ -53,6 +53,7 @@ public class AxeOfMalice extends Weapon {
 			modifiers.add(damage);
     
 		}
+		
 		compound.set("AttributeModifiers", modifiers);
 
 		NBTTagList ench = new NBTTagList();
