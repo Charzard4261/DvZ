@@ -14,7 +14,6 @@ import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import dwarves.vs.zombies.command.CommandFactory;
 import dwarves.vs.zombies.command.commands.GameCmd;
@@ -161,15 +160,7 @@ public class Core extends JavaPlugin {
 		}
 		roamin = null;
 		nisovin = null;
-		
-		new BukkitRunnable() {
-
-			@Override
-			public void run()
-			{
-				delete(mm.getMap().getWorld());
-			}
-		}.runTaskLater(this, 50);
+		delete(mm.getMap().getWorld());
 	}
 
 	public void spawnOldMan(Player player)
@@ -186,7 +177,7 @@ public class Core extends JavaPlugin {
 
 	public void spawnDwarf(Player player)
 	{
-		dwarves.add(new Dwarf(player));
+		dwarves.add(new Dwarf(player.getUniqueId()));
 		player.teleport(mm.getMap().getSpawn());
 		player.sendTitle(ChatColor.AQUA + "It's time to play!", ChatColor.DARK_AQUA + "Dwarves"
 				+ ChatColor.GOLD + " Vs " + ChatColor.DARK_RED + "Zombies", 0, 100, 20);

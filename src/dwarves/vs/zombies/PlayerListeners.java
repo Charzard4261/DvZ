@@ -29,8 +29,7 @@ public class PlayerListeners implements Listener {
 					if (event.getPlayer().getUniqueId()
 							.equals(Core.getInstance().oldMan.getUniqueId()))
 						PlayerSkinEditor.applyOldMan(event.getPlayer().getUniqueId());
-				Core.getInstance().getDwarf(event.getPlayer()).getWeapon()
-						.setPlayer(event.getPlayer());
+				Core.getInstance().getDwarf(event.getPlayer()).setPlayer();
 			} else if (Core.getInstance().getMonster(event.getPlayer()) == null)
 			{
 				Core.getInstance().spawnDwarf(event.getPlayer());
