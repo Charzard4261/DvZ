@@ -25,6 +25,12 @@ public class DragonskinBow extends Bow implements Listener {
 		ItemStack item = new ItemStack(Material.BOW);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA + "Dragonskin Bow");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "50");
+		lore.add(ChatColor.YELLOW + "With this Bow, kills grant you a Powerful Rampage");
+		lore.add(ChatColor.YELLOW + "for 2 seconds, which allows you to instantly kill");
+		lore.add(ChatColor.YELLOW + "most demons.");
+		meta.setLore(lore);
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
 		return item;
@@ -44,7 +50,7 @@ public class DragonskinBow extends Bow implements Listener {
 		arrow.setVelocity(arrow.getVelocity().multiply(1));
 		arrow.setKnockbackStrength(1);
 		arrow.setCritical(false);
-		arrow.spigot().setDamage(20); // Damage
+		arrow.spigot().setDamage(50); // Damage
 	}
 
 	@Override
