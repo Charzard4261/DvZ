@@ -37,6 +37,7 @@ public class Longbow extends Weapon implements Listener {
 		lore.add(ChatColor.YELLOW + "it's power by 25 for 15 seconds and can stack up to");
 		lore.add(ChatColor.YELLOW + "6 times for a total of 200 power");
 		meta.setLore(lore);
+	        meta.setUnbreakable(true);
 		item.setItemMeta(meta);
 
 	@Override
