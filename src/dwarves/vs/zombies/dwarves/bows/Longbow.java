@@ -24,6 +24,20 @@ import dwarves.vs.zombies.Weapon;
 public class Longbow extends Weapon implements Listener {
 
 	private static String DISPLAY_BOW_NAME = ChatColor.AQUA + "Ranger's Longbow";
+	
+	public ItemStack getItem()
+	{
+		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 3);
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(ChatColor.AQUA + "Ranger's Longbow");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(Chatcolor.YELLOW + "Power: " Chatcolor.Aqua + "50 to 200"
+		lore.add(ChatColor.YELLOW + "With this Bow, you gain a stacking damage buff");
+		lore.add(ChatColor.YELLOW + "everytime you kill a Demon with it which increases");
+		lore.add(ChatColor.YELLOW + "it's power by 25 for 15 seconds and can stack up to");
+		lore.add(ChatColor.YELLOW + "6 times for a total of 200 power");
+		meta.setLore(lore);
+		item.setItemMeta(meta);
 
 	@Override
 	public void onEnable() {
@@ -46,7 +60,7 @@ public class Longbow extends Weapon implements Listener {
 				arrow.setVelocity(arrow.getVelocity().multiply(1));
 				arrow.setKnockbackStrength(1);
 				arrow.setCritical(false);
-				arrow.spigot().setDamage(20);
+				arrow.spigot().setDamage(50);
 
 			}
 
