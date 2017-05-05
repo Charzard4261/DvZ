@@ -13,7 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import dwarves.vs.zombies.Bow;
 import dwarves.vs.zombies.Core;
 
-public class DragonskinBow extends Bow implements Listener {
+public class Crossbow extends Bow implements Listener {
 
 	Player player;
 	public int timer;
@@ -61,12 +61,12 @@ public class DragonskinBow extends Bow implements Listener {
 		arrow.spigot().setDamage(50); // Damage
 
 		timer = 0.5;
-		EviserateTimer task = new EviserateTimer();
+		ShootTimer task = new ShootTimer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
 
 	}
 
-	private class Timer implements Runnable {
+	private class ShootTimer implements Runnable {
 
 		private int id;
 
