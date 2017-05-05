@@ -54,14 +54,14 @@ public class DragonskinBow extends Bow implements Listener {
 	}
 
 	@Override
-	public void onHit()
+	public void onKill()
 	{
 		if (usedSpecial)
 			return;
 		
 		usedSpecial = true;
 		
-		timer = 30;
+		timer = 0;
 
 		Timer task = new Timer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
