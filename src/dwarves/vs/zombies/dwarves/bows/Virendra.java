@@ -28,11 +28,11 @@ public class DragonskinBow extends Bow{
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD + "Virendra");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.YELLOW + "The men tell me that ever since I started using it");
-		lore.add(ChatColor.YELLOW + "my shots have become more accurate, more powerful.");
-		lore.add(ChatColor.YELLOW + "But the truth is that when I draw this bow.");
-		lore.add(ChatColor.YELLOW + "When I hold her in my hands.");
-		lore.add(ChatColor.YELLOW + "All I can feel is her love for me and my hate for myself.");
+		lore.add "The men tell me that ever since I started using it");
+		lore.add "my shots have become more accurate, more powerful.");
+		lore.add "But the truth is that when I draw this bow.");
+		lore.add "When I hold her in my hands.");
+		lore.add "All I can feel is her love for me and my hate for myself.");
 		lore.add(ChatColor.GOLD + "- Bruce Willakers"
 		meta.setLore(lore);
 		meta.setUnbreakable(true);
