@@ -17,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import dwarves.vs.zombies.command.CommandFactory;
 import dwarves.vs.zombies.command.commands.GameCmd;
+import dwarves.vs.zombies.command.commands.ItemCommand;
 import dwarves.vs.zombies.dwarves.Dwarf;
 import dwarves.vs.zombies.dwarves.OldManWillakers;
 import dwarves.vs.zombies.dwarves.PlayerDwarfListeners;
@@ -58,6 +59,7 @@ public class Core extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new PlayerMonsterListeners(), this);
 
 		cm.registerCommand(new GameCmd()); // Add a command (The command class goes inside brackets) control + click on -> ExampleCommand
+		cm.registerCommand(new ItemCommand());
 	}
 
 	@Override

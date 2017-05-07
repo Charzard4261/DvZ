@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,6 +18,6 @@ public abstract class Bow {
 	
 	public abstract void onFire(EntityShootBowEvent event);
 	
-	public abstract void onHit();
+	public abstract void onHit(EntityDamageByEntityEvent event);
 	
 }

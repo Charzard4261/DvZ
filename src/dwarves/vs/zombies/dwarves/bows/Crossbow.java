@@ -1,11 +1,12 @@
 package dwarves.vs.zombies.dwarves.bows;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -13,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import dwarves.vs.zombies.Bow;
 import dwarves.vs.zombies.Core;
 
-public class Crossbow extends Bow implements Listener {
+public class Crossbow extends Bow {
 
 	Player player;
 	public int timer;
@@ -42,7 +43,6 @@ public class Crossbow extends Bow implements Listener {
 		this.player = player;
 	}
 
-	@Override
 	public void special()
 	{
 		if (usedSpecial)
@@ -53,14 +53,7 @@ public class Crossbow extends Bow implements Listener {
 		}
 		usedSpecial = true;
 
-		Arrow arrow = (Arrow) event.getProjectile();
-		arrow.setFireTicks(0);
-		arrow.setVelocity(arrow.getVelocity().multiply(1));
-		arrow.setKnockbackStrength(1);
-		arrow.setCritical(false);
-		arrow.spigot().setDamage(50); // Damage
-
-		timer = 0.5;
+		timer = 0;
 		ShootTimer task = new ShootTimer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
 
@@ -87,5 +80,19 @@ public class Crossbow extends Bow implements Listener {
 			this.id = id;
 		}
 
+	}
+
+	@Override
+	public void onFire(EntityShootBowEvent event)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onHit(EntityDamageByEntityEvent event)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

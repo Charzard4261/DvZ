@@ -20,7 +20,9 @@ public class PlayerListeners implements Listener {
 		switch (Core.getInstance().gs)
 		{
 		case Lobby:
-
+			event.getPlayer().setCustomName(event.getPlayer().getDisplayName());
+			event.getPlayer().setPlayerListName(event.getPlayer().getDisplayName());
+			event.getPlayer().teleport(Core.getInstance().mm.getLobby());
 			break;
 		case Build_Phase:
 			if (Core.getInstance().getDwarf(event.getPlayer()) != null)
@@ -105,7 +107,7 @@ public class PlayerListeners implements Listener {
 		case Build_Phase:
 			event.setRespawnLocation(Core.getInstance().mm.getMap().getSpawn());
 		case Game:
-			
+
 			break;
 		default:
 			break;

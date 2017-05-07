@@ -34,7 +34,7 @@ public class AxeOfMalice extends Weapon {
 
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 3);
+		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 1);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA + "Axe Of Malice");
 		ArrayList<String> lore = new ArrayList<String>();
@@ -69,7 +69,7 @@ public class AxeOfMalice extends Weapon {
 		attackSpeed.set("UUIDMost", new NBTTagInt(2872));
 		attackSpeed.set("Slot", new NBTTagString("mainhand"));
 		modifiers.add(attackSpeed);
-
+		
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 
 		return item;

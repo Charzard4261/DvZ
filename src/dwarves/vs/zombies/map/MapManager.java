@@ -46,7 +46,7 @@ public class MapManager {
 
 	public Location getLobby()
 	{
-		return new Location(Bukkit.getWorld("lobby"), 0, 40, 0);
+		return new Location(Bukkit.getWorld("lobby"), 0.5, 40, 0.5);
 	}
 
 }

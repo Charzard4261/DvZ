@@ -92,7 +92,7 @@ public class PlayerDwarfListeners implements Listener {
 		if (dwarf.getBow().shotprojectiledata.contains(arrow))
 		{
 			dwarf.getBow().shotprojectiledata.remove(event.getEntity());
-			dwarf.getBow().onHit();
+			dwarf.getBow().onHit(event);
 		}
 	}
 

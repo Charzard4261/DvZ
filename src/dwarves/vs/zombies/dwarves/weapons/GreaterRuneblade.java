@@ -67,7 +67,7 @@ public class GreaterRuneblade extends Weapon {
 		attackSpeed.set("UUIDMost", new NBTTagInt(2872));
 		attackSpeed.set("Slot", new NBTTagString("mainhand"));
 		modifiers.add(attackSpeed);
-
+		
 		compound.set("AttributeModifiers", modifiers);
 
 		nmsStack.setTag(compound);

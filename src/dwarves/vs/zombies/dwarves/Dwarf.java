@@ -67,6 +67,7 @@ public class Dwarf {
 
 	public void setWeapon(Weapon weapon)
 	{
+		this.weapon = null;
 		this.weapon = weapon;
 	}
 
