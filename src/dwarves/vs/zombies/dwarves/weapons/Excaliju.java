@@ -61,6 +61,16 @@ public class Excaliju extends Weapon {
 			damage.set("UUIDMost", new NBTTagInt(2872));
 			damage.set("Slot", new NBTTagString("mainhand"));
 			modifiers.add(damage);
+		
+			NBTTagCompound attackSpeed = new NBTTagCompound();
+			damage.set("AttributeName", new NBTTagString("generic.attackSpeed"));
+			damage.set("Name", new NBTTagString("generic.attackSpeed"));
+			damage.set("Amount", new NBTTagInt(2));
+			damage.set("Operation", new NBTTagInt(0));
+			damage.set("UUIDLeast", new NBTTagInt(894654));
+			damage.set("UUIDMost", new NBTTagInt(2872));
+			damage.set("Slot", new NBTTagString("mainhand"));
+			modifiers.add(attackSpeed);
 
 			NBTTagCompound kb = new NBTTagCompound();
 			kb.set("AttributeName", new NBTTagString("generic.knockbackResistance"));
