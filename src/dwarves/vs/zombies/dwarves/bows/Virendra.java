@@ -39,6 +39,21 @@ public class DragonskinBow extends Bow{
 		item.setItemMeta(meta);
 		return item;
 	}
+		compound.set("AttributeModifiers", modifiers);
+
+		NBTTagList ench = new NBTTagList();
+		NBTTagCompound enchant = new NBTTagCompound();
+		enchant.set("id", new NBTTagInt(34));
+		enchant.set("lvl", new NBTTagInt(10));
+		ench.add(enchant);
+		compound.set("ench", ench);
+
+		nmsStack.setTag(compound);
+
+		item = CraftItemStack.asBukkitCopy(nmsStack);
+
+		return item;
+	}
 	
 	@Override
 	public void setPlayer(Player player)
