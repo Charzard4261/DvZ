@@ -59,6 +59,16 @@ public class Tombmaker extends Weapon {
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
 		modifiers.add(damage);
+		
+		NBTTagCompound attackSpeed = new NBTTagCompound();
+		attackSpeed.set("AttributeName", new NBTTagString("generic.attackSpeed"));
+		attackSpeed.set("Name", new NBTTagString("generic.attackSpeed"));
+		attackSpeed.set("Amount", new NBTTagInt(4));
+		attackSpeed.set("Operation", new NBTTagInt(0));
+		attackSpeed.set("UUIDLeast", new NBTTagInt(894654));
+		attackSpeed.set("UUIDMost", new NBTTagInt(2872));
+		attackSpeed.set("Slot", new NBTTagString("mainhand"));
+		modifiers.add(attackSpeed);
 
 		compound.set("AttributeModifiers", modifiers);
 
