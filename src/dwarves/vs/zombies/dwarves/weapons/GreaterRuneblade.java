@@ -106,7 +106,7 @@ public class GreaterRuneblade extends Weapon {
 				false), false);
 		player.setVelocity(player.getLocation().getDirection().multiply(2));
 
-		timer = 20;
+		timer = 15;
 		dashTimer task = new dashTimer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
 
