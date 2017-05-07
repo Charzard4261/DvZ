@@ -128,7 +128,7 @@ public class Excaliju extends Weapon {
 				false), false);
 		player.setVelocity(player.getLocation().getDirection().multiply(2));
 
-		timer = 15;
+		timer = 10;
 
 		dashTimer task = new dashTimer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
