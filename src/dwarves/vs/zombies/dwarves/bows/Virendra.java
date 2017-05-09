@@ -2,11 +2,15 @@ package dwarves.vs.zombies.dwarves.bows;
 
 import java.util.ArrayList;
 
+import net.minecraft.server.v1_11_R1.NBTTagCompound;
+import net.minecraft.server.v1_11_R1.NBTTagInt;
+import net.minecraft.server.v1_11_R1.NBTTagList;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import dwarves.vs.zombies.Bow;
 import dwarves.vs.zombies.Core;
 
-public class DragonskinBow extends Bow{
+public class Virendra extends Bow{
 
 	Player player;
 	public int timer;
@@ -28,18 +32,18 @@ public class DragonskinBow extends Bow{
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD + "Virendra");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add "The men tell me that ever since I started using it");
-		lore.add "my shots have become more accurate, more powerful.");
-		lore.add "But the truth is that when I draw this bow.");
-		lore.add "When I hold her in my hands.");
-		lore.add "All I can feel is her love for me and my hate for myself.");
-		lore.add(ChatColor.GOLD + "- Bruce Willakers"
+		lore.add("The men tell me that ever since I started using it");
+		lore.add("my shots have become more accurate, more powerful.");
+		lore.add("But the truth is that when I draw this bow.");
+		lore.add("When I hold her in my hands.");
+		lore.add("All I can feel is her love for me and my hate for myself.");
+		lore.add(ChatColor.GOLD + "- Bruce Willakers");
 		meta.setLore(lore);
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
-		return item;
-	}
-		compound.set("AttributeModifiers", modifiers);
+		
+		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
+		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
 
 		NBTTagList ench = new NBTTagList();
 		NBTTagCompound enchant = new NBTTagCompound();
