@@ -11,6 +11,7 @@ public class Map {
 	double spawnZ;
 	float spawnPitch;
 	float spawnYaw;
+	public Shrine[] shrines;
 
 	public Map(String world, double spawnX, double spawnY, double spawnZ, float spawnPitch, float spawnYaw, Shrine[] shrines)
 	{
@@ -20,6 +21,7 @@ public class Map {
 		this.spawnZ = spawnZ;
 		this.spawnPitch = spawnPitch;
 		this.spawnYaw = spawnYaw;
+		this.shrines = shrines;
 	}
 
 	public String getWorld()

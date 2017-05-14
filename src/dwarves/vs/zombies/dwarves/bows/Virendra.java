@@ -19,7 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import dwarves.vs.zombies.Bow;
 import dwarves.vs.zombies.Core;
 
-public class Virendra extends Bow{
+public class Virendra extends Bow {
 
 	Player player;
 	public int timer;

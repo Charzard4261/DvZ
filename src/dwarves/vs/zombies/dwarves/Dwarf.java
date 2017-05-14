@@ -24,6 +24,7 @@ public class Dwarf {
 		this.player = Bukkit.getPlayer(uuid);
 		this.weapon = new GreaterRuneblade(player);
 		this.bow = new DragonskinBow();
+		setPlayer();
 	}
 
 	public void setPlayer()
@@ -43,9 +44,23 @@ public class Dwarf {
 		return weapon;
 	}
 
+	public void setWeapon(Weapon weapon)
+	{
+		this.weapon = null;
+		this.weapon = weapon;
+		setPlayer();
+	}
+
 	public Bow getBow()
 	{
 		return bow;
+	}
+
+	public void setBow(Bow bow)
+	{
+		this.bow = null;
+		this.bow = bow;
+		setPlayer();
 	}
 
 	public boolean isProccing()
@@ -63,12 +78,6 @@ public class Dwarf {
 	public void giveProc(int i)
 	{
 		proccing = i;
-	}
-
-	public void setWeapon(Weapon weapon)
-	{
-		this.weapon = null;
-		this.weapon = weapon;
 	}
 
 }

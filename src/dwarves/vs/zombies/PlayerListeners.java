@@ -1,14 +1,19 @@
 package dwarves.vs.zombies;
 
+import java.util.Collection;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
+import dwarves.vs.zombies.Core.GameState;
 import dwarves.vs.zombies.util.PlayerSkinEditor;
 
 @SuppressWarnings("deprecation")
@@ -107,10 +112,77 @@ public class PlayerListeners implements Listener {
 		case Build_Phase:
 			event.setRespawnLocation(Core.getInstance().mm.getMap().getSpawn());
 		case Game:
-
+			event.setRespawnLocation(Core.getInstance().mm.getCurrentShrine().getMonsterSpawn());
 			break;
 		default:
 			break;
 		}
 	}
+
+	@EventHandler
+	public void onMove(PlayerMoveEvent event)
+	{
+		if (Core.getInstance().gs != GameState.Game)
+			return;
+		// Shrine Protection
+		{
+			int radius = Core.getInstance().mm.getCurrentShrine().prot;
+
+			double radiusSquared = radius * radius;
+
+			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(
+					Core.getInstance().mm.getCurrentShrine().getLocation(), radius, radius, radius); // All entities within a box
+			for (Entity entity : entities)
+			{
+
+				if (entity.getLocation().distanceSquared(
+						Core.getInstance().mm.getCurrentShrine().getLocation()) > radiusSquared)
+					continue; // All entities within a sphere
+
+				if (entity instanceof Player)
+				{
+					if (Core.getInstance().getDwarf(event.getPlayer()) != null)
+					{
+					} else if (Core.getInstance().getMonster(event.getPlayer()) != null)
+					{
+						// TODO Check if can go past mob protection
+						event.getPlayer().damage(9999);
+						event.getPlayer()
+								.sendMessage(
+										ChatColor.DARK_RED
+												+ "You were killed because you were too close to the next shrine!");
+						event.getPlayer().sendMessage(
+								ChatColor.DARK_RED + "Destroy the current one first!");
+					}
+				}
+
+			}
+		}
+		// Shrine Protection
+
+		// Shrine Destroy
+		{
+			int radius = Core.getInstance().mm.getCurrentShrine().destroy;
+
+			double radiusSquared = radius * radius;
+
+			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(
+					Core.getInstance().mm.getCurrentShrine().getLocation(), radius, radius, radius); // All entities within a box
+			for (Entity entity : entities)
+			{
+
+				if (entity.getLocation().distanceSquared(
+						Core.getInstance().mm.getCurrentShrine().getLocation()) > radiusSquared)
+					continue; // All entities within a sphere
+
+				if (entity instanceof Player)
+				{
+					// TODO Deal damage to the shrine
+				}
+
+			}
+		}
+		// Shrine Destroy
+	}
+
 }

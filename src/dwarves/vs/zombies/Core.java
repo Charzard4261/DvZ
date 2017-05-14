@@ -16,7 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import dwarves.vs.zombies.command.CommandFactory;
-import dwarves.vs.zombies.command.commands.GameCmd;
+import dwarves.vs.zombies.command.commands.GameCommand;
+import dwarves.vs.zombies.command.commands.ItemCommand;
 import dwarves.vs.zombies.dwarves.Dwarf;
 import dwarves.vs.zombies.dwarves.OldManWillakers;
 import dwarves.vs.zombies.dwarves.PlayerDwarfListeners;
@@ -32,11 +33,11 @@ public class Core extends JavaPlugin {
 
 	public GameState gs = GameState.Lobby; // What phase the game is in
 	public MapManager mm;
-	private ArrayList<Dwarf> dwarves = new ArrayList<Dwarf>(); // A list of the dwarves
-	private ArrayList<Monster> monsters = new ArrayList<Monster>(); // A list of the monsters
+	public ArrayList<Dwarf> dwarves = new ArrayList<Dwarf>(); // A list of the dwarves
+	public ArrayList<Monster> monsters = new ArrayList<Monster>(); // A list of the monsters
 	public boolean monstersReleased = false; // Monsters released true/false
 
-	Player oldMan;
+	public Player oldMan;
 	String omV;
 	String omS;
 	Player roamin;
@@ -57,7 +58,8 @@ public class Core extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new PlayerDwarfListeners(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new PlayerMonsterListeners(), this);
 
-		cm.registerCommand(new GameCmd()); // Add a command (The command class goes inside brackets) control + click on -> ExampleCommand
+		cm.registerCommand(new GameCommand()); // Add a command (The command class goes inside brackets) control + click on -> ExampleCommand
+		cm.registerCommand(new ItemCommand());
 	}
 
 	@Override
@@ -114,7 +116,7 @@ public class Core extends JavaPlugin {
 					omS = ((CraftPlayer) oldMan).getHandle().getProfile().getProperties()
 							.get("textures").iterator().next().getSignature();
 					Bukkit.broadcastMessage(oldMan.getCustomName() + ChatColor.LIGHT_PURPLE
-							+ " has become the dwarvern hero " + ChatColor.GOLD
+							+ " has become the Dwarvern Hero " + ChatColor.GOLD
 							+ "Bruce Willakers");
 					oldMan.setCustomName(ChatColor.GOLD + "BruceWillakers");
 					oldMan.setPlayerListName(oldMan.getCustomName());
@@ -140,6 +142,9 @@ public class Core extends JavaPlugin {
 
 	public void endGame()
 	{
+		Bukkit.broadcastMessage(ChatColor.DARK_RED + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+		Bukkit.broadcastMessage(ChatColor.DARK_RED + "THE FINAL SHRINE HAS FALLEN!");
+		Bukkit.broadcastMessage(ChatColor.DARK_RED + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 		gs = GameState.Lobby;
 		dwarves.clear();
 		monsters.clear();
