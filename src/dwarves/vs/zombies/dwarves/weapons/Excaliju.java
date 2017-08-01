@@ -11,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -19,17 +18,14 @@ import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.Weapon;
+import dwarves.vs.zombies.dwarves.Dwarf;
+import dwarves.vs.zombies.dwarves.DwarfSpecialTimer;
 
 public class Excaliju extends Weapon {
 
-	Player player;
-	boolean usedSpecial = false;
-	int timer = 0;
-
-	public Excaliju(Player player)
+	public Excaliju()
 	{
 		super(true, true);
-		this.player = player;
 	}
 
 	public ItemStack getItem()
@@ -61,7 +57,7 @@ public class Excaliju extends Weapon {
 			damage.set("UUIDMost", new NBTTagInt(2872));
 			damage.set("Slot", new NBTTagString("mainhand"));
 			modifiers.add(damage);
-			
+
 			NBTTagCompound attackSpeed = new NBTTagCompound();
 			attackSpeed.set("AttributeName", new NBTTagString("generic.attackSpeed"));
 			attackSpeed.set("Name", new NBTTagString("generic.attackSpeed"));
@@ -71,7 +67,7 @@ public class Excaliju extends Weapon {
 			attackSpeed.set("UUIDMost", new NBTTagInt(2872));
 			attackSpeed.set("Slot", new NBTTagString("mainhand"));
 			modifiers.add(attackSpeed);
-			
+
 			NBTTagCompound kb = new NBTTagCompound();
 			kb.set("AttributeName", new NBTTagString("generic.knockbackResistance"));
 			kb.set("Name", new NBTTagString("generic.knockbackResistance"));
@@ -82,7 +78,7 @@ public class Excaliju extends Weapon {
 			kb.set("Slot", new NBTTagString("mainhand"));
 			modifiers.add(kb);
 		}
-		
+
 		compound.set("AttributeModifiers", modifiers);
 
 		NBTTagList ench = new NBTTagList();
@@ -100,63 +96,34 @@ public class Excaliju extends Weapon {
 	}
 
 	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
-	}
-
-	@Override
-	public void normal()
+	public void normal(Dwarf dwarf)
 	{
 
 	}
 
 	@Override
-	public void special()
+	public void special(Dwarf dwarf)
 	{
-		if (usedSpecial)
+		if (dwarf.usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
+			dwarf.getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + dwarf.specialTimer
 					+ " more seconds to do that.");
 			return;
 		}
 
-		usedSpecial = true;
+		dwarf.usedSpecial = true;
 
-		player.playSound(player.getLocation(), "runebladeRunedash", 4F, 1F);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, 255, false,
+		dwarf.getPlayer().playSound(dwarf.getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
+		dwarf.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
+		dwarf.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, 255, false,
 				false), false);
-		player.setVelocity(player.getLocation().getDirection().multiply(2));
+		dwarf.getPlayer().setVelocity(dwarf.getPlayer().getLocation().getDirection().multiply(2));
 
-		timer = 10;
+		dwarf.specialTimer = 10;
 
-		dashTimer task = new dashTimer();
+		DwarfSpecialTimer task = new DwarfSpecialTimer();
+		task.setDwarf(dwarf);
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
 
 	}
-
-	private class dashTimer implements Runnable {
-
-		private int id;
-
-		@Override
-		public void run()
-		{
-			timer -= 1;
-
-			if (timer == 0)
-			{
-				usedSpecial = false;
-				Bukkit.getScheduler().cancelTask(id);
-			}
-		}
-
-		public void setId(int id)
-		{
-			this.id = id;
-		}
-
-	}
-
 }

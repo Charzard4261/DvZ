@@ -10,7 +10,7 @@ public class OldManWillakers extends Dwarf {
 	public OldManWillakers(Player player)
 	{
 		super(player.getUniqueId());
-		setWeapon(new Excaliju(player));
+		setWeapon(new Excaliju());
 		setBow(new Virendra());
 	}
 

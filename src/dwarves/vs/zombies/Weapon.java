@@ -1,7 +1,8 @@
 package dwarves.vs.zombies;
 
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import dwarves.vs.zombies.dwarves.Dwarf;
 
 public abstract class Weapon {
 
@@ -16,10 +17,8 @@ public abstract class Weapon {
 	
 	public abstract ItemStack getItem();
 	
-	public abstract void setPlayer(Player player);
+	public abstract void normal(Dwarf dwarf);
 	
-	public abstract void normal();
-	
-	public abstract void special();
+	public abstract void special(Dwarf dwarf);
 	
 }

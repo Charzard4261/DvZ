@@ -21,6 +21,7 @@ import dwarves.vs.zombies.command.commands.ItemCommand;
 import dwarves.vs.zombies.dwarves.Dwarf;
 import dwarves.vs.zombies.dwarves.OldManWillakers;
 import dwarves.vs.zombies.dwarves.PlayerDwarfListeners;
+import dwarves.vs.zombies.dwarves.WeaponsRegistry;
 import dwarves.vs.zombies.map.MapManager;
 import dwarves.vs.zombies.monsters.Monster;
 import dwarves.vs.zombies.monsters.PlayerMonsterListeners;
@@ -33,6 +34,7 @@ public class Core extends JavaPlugin {
 
 	public GameState gs = GameState.Lobby; // What phase the game is in
 	public MapManager mm;
+	public WeaponsRegistry wr;
 	public ArrayList<Dwarf> dwarves = new ArrayList<Dwarf>(); // A list of the dwarves
 	public ArrayList<Monster> monsters = new ArrayList<Monster>(); // A list of the monsters
 	public boolean monstersReleased = false; // Monsters released true/false
@@ -53,6 +55,7 @@ public class Core extends JavaPlugin {
 		instance = this;
 		cm = new CommandFactory();
 		mm = new MapManager();
+		wr = new WeaponsRegistry();
 
 		Bukkit.getServer().getPluginManager().registerEvents(new PlayerListeners(), this); // Adding event listeners (Almost everything has an event)
 		Bukkit.getServer().getPluginManager().registerEvents(new PlayerDwarfListeners(), this);
@@ -70,6 +73,7 @@ public class Core extends JavaPlugin {
 
 		cm = null;
 		mm = null;
+		wr = null;
 		instance = null;
 	}
 
@@ -80,6 +84,11 @@ public class Core extends JavaPlugin {
 	public static Core getInstance()
 	{
 		return instance;
+	}
+
+	public WeaponsRegistry getWR()
+	{
+		return wr;
 	}
 
 	public void startGame()
@@ -116,8 +125,7 @@ public class Core extends JavaPlugin {
 					omS = ((CraftPlayer) oldMan).getHandle().getProfile().getProperties()
 							.get("textures").iterator().next().getSignature();
 					Bukkit.broadcastMessage(oldMan.getCustomName() + ChatColor.LIGHT_PURPLE
-							+ " has become the Dwarvern Hero " + ChatColor.GOLD
-							+ "Bruce Willakers");
+							+ " has become the Dwarvern Hero " + ChatColor.GOLD + "Bruce Willakers");
 					oldMan.setCustomName(ChatColor.GOLD + "BruceWillakers");
 					oldMan.setPlayerListName(oldMan.getCustomName());
 					PlayerSkinEditor.applyOldMan(oldMan.getUniqueId());
@@ -148,7 +156,7 @@ public class Core extends JavaPlugin {
 		gs = GameState.Lobby;
 		dwarves.clear();
 		monsters.clear();
-		
+
 		for (Player p : Bukkit.getOnlinePlayers())
 		{
 			p.setCustomName(p.getDisplayName());
@@ -157,8 +165,9 @@ public class Core extends JavaPlugin {
 			p.getInventory().clear();
 			p.teleport(mm.getLobby());
 		}
-		
-		if (oldMan != null) {
+
+		if (oldMan != null)
+		{
 			UUID oldManUUID = oldMan.getUniqueId();
 			PlayerSkinEditor.swapSkins(oldManUUID, omV, omS);
 			oldMan = null;

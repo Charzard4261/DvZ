@@ -17,12 +17,14 @@ public class Dwarf {
 	private Weapon weapon;
 	private Bow bow;
 	private int proccing = 0;
+	public boolean usedSpecial = false;
+	public int specialTimer = 0;
 
 	public Dwarf(UUID uuid)
 	{
 		this.uuid = uuid;
 		this.player = Bukkit.getPlayer(uuid);
-		this.weapon = new GreaterRuneblade(player);
+		this.weapon = new GreaterRuneblade();
 		this.bow = new DragonskinBow();
 		setPlayer();
 	}
@@ -30,7 +32,6 @@ public class Dwarf {
 	public void setPlayer()
 	{
 		this.player = Bukkit.getPlayer(uuid);
-		this.weapon.setPlayer(player);
 		this.bow.setPlayer(player);
 	}
 

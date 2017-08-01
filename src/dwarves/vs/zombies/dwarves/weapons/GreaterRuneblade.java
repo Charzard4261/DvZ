@@ -11,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -19,17 +18,14 @@ import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.Weapon;
+import dwarves.vs.zombies.dwarves.Dwarf;
+import dwarves.vs.zombies.dwarves.DwarfSpecialTimer;
 
 public class GreaterRuneblade extends Weapon {
 
-	Player player;
-	boolean usedSpecial = false;
-	int timer = 0;
-
-	public GreaterRuneblade(Player player)
+	public GreaterRuneblade()
 	{
 		super(true, true);
-		this.player = player;
 	}
 
 	public ItemStack getItem()
@@ -79,60 +75,33 @@ public class GreaterRuneblade extends Weapon {
 	}
 
 	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
-	}
-
-	@Override
-	public void normal()
+	public void normal(Dwarf dwarf)
 	{
 
 	}
 
 	@Override
-	public void special()
+	public void special(Dwarf dwarf)
 	{
-		if (usedSpecial)
+		if (dwarf.usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
+			dwarf.getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + dwarf.specialTimer
 					+ " more seconds to do that.");
 			return;
 		}
-		usedSpecial = true;
+		dwarf.usedSpecial = true;
 
-		player.playSound(player.getLocation(), "runebladeRunedash", 4F, 1F);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, 255, false,
+		dwarf.getPlayer().playSound(dwarf.getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
+		dwarf.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
+		dwarf.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, 255, false,
 				false), false);
-		player.setVelocity(player.getLocation().getDirection().multiply(2));
+		dwarf.getPlayer().setVelocity(dwarf.getPlayer().getLocation().getDirection().multiply(2));
 
-		timer = 15;
-		dashTimer task = new dashTimer();
+		dwarf.specialTimer = 15;
+		
+		DwarfSpecialTimer task = new DwarfSpecialTimer();
+		task.setDwarf(dwarf);
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
-
-	}
-
-	private class dashTimer implements Runnable {
-
-		private int id;
-
-		@Override
-		public void run()
-		{
-			if (timer == 0)
-			{
-				usedSpecial = false;
-				Bukkit.getScheduler().cancelTask(id);
-			}
-
-			timer -= 1;
-		}
-
-		public void setId(int id)
-		{
-			this.id = id;
-		}
 
 	}
 

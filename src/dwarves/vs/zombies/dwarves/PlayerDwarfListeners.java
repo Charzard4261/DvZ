@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import dwarves.vs.zombies.Core;
+import dwarves.vs.zombies.Weapon;
 
 public class PlayerDwarfListeners implements Listener {
 
@@ -27,44 +28,53 @@ public class PlayerDwarfListeners implements Listener {
 		if (Core.getInstance().getDwarf(event.getPlayer()) == null)
 			return;
 
-		/**
-		 * Left clicking (air or a block) with their weapon.
-		 **/
-		if ((event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)
-				&& event.getPlayer()
-						.getInventory()
-						.getItemInHand()
-						.equals(Core.getInstance().getDwarf(event.getPlayer())
-								.getWeapon().getItem())) {
-			Core.getInstance().getDwarf(event.getPlayer()).getWeapon().normal();
+		for (Weapon w : Core.getInstance().getWR().getWeapons())
+		{
+			if (!(event.getPlayer().getInventory().getItemInHand().equals(w.getItem())))
+				return;
+			if (event.getAction() == Action.LEFT_CLICK_AIR
+					|| event.getAction() == Action.LEFT_CLICK_BLOCK)
+				w.normal(Core.getInstance().getDwarf(event.getPlayer()));
+			else if (event.getAction() == Action.RIGHT_CLICK_AIR
+					|| event.getAction() == Action.RIGHT_CLICK_BLOCK)
+				w.special(Core.getInstance().getDwarf(event.getPlayer()));
 		}
-		/**
-		 * Right clicking (air or a block) with their weapon.
-		 **/
-		else if ((event.getAction() == Action.RIGHT_CLICK_AIR || event
-				.getAction() == Action.RIGHT_CLICK_BLOCK)
-				&& event.getPlayer()
-						.getInventory()
-						.getItemInHand()
-						.equals(Core.getInstance().getDwarf(event.getPlayer())
-								.getWeapon().getItem())) {
-			Core.getInstance().getDwarf(event.getPlayer()).getWeapon()
-					.special();
-		}
-		/**
-		 * Right clicking a block with an empty hand.
-		 **/
-		else if (event.getAction() == Action.RIGHT_CLICK_BLOCK
-				&& event.getPlayer().getInventory().getItemInHand().getType() == Material.AIR) {
+
+		// /**
+		// * Left clicking (air or a block) with their weapon.
+		// **/
+		// if ((event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)
+		// && event.getPlayer()
+		// .getInventory()
+		// .getItemInHand()
+		// .equals(Core.getInstance().getDwarf(event.getPlayer()).getWeapon()
+		// .getItem()))
+		// {
+		// Core.getInstance().getDwarf(event.getPlayer()).getWeapon().normal();
+		// }
+		// /**
+		// * Right clicking (air or a block) with their weapon.
+		// **/
+		// else if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
+		// && event.getPlayer()
+		// .getInventory()
+		// .getItemInHand()
+		// .equals(Core.getInstance().getDwarf(event.getPlayer()).getWeapon()
+		// .getItem()))
+		// {
+		// Core.getInstance().getDwarf(event.getPlayer()).getWeapon().special();
+		// }
+		// /**
+		// * Right clicking a block with an empty hand.
+		// **/ else
+		if (event.getAction() == Action.RIGHT_CLICK_BLOCK
+				&& event.getPlayer().getInventory().getItemInHand().getType() == Material.AIR)
+		{
 			if (event.getClickedBlock().getType() == Material.DETECTOR_RAIL
-					&& !(event.getPlayer().getInventory().contains(Core
-							.getInstance().getDwarf(event.getPlayer()).getBow()
-							.getItem())))
-				event.getPlayer()
-						.getInventory()
-						.addItem(
-								Core.getInstance().getDwarf(event.getPlayer())
-										.getBow().getItem());
+					&& !(event.getPlayer().getInventory().contains(Core.getInstance()
+							.getDwarf(event.getPlayer()).getBow().getItem())))
+				event.getPlayer().getInventory()
+						.addItem(Core.getInstance().getDwarf(event.getPlayer()).getBow().getItem());
 		}
 	}
 
@@ -73,33 +83,36 @@ public class PlayerDwarfListeners implements Listener {
 	{
 		if (event.getEntity().isDead())
 			return;
-		
+
 		if (!(event.getDamager() instanceof Player))
 			return;
-		
+
 		if (Core.getInstance().getDwarf((Player) event.getDamager()) == null)
 			return;
-		
+
 		Dwarf dwarf = Core.getInstance().getDwarf((Player) event.getDamager());
-		
-		//TODO Add check for monster class, I.E. Dire Wolves, Mob Heroes
-		
+
+		// TODO Add check for monster class, I.E. Dire Wolves, Mob Heroes
+
 		if (Core.getInstance().oldMan != null)
 			if (Core.getInstance().oldMan.equals(event.getDamager()))
 			{
-				if (dwarf.isProccing()) {
+				if (dwarf.isProccing())
+				{
 					if (event.getEntity() instanceof EnderDragon)
 						return;
 					((LivingEntity) event.getEntity()).damage(99999, event.getDamager());
 					dwarf.giveProc();
-						
+
 				}
 			}
-		
-		if (dwarf.isProccing()) {
+
+		if (dwarf.isProccing())
+		{
 			if (event.getEntity() instanceof PigZombie || event.getEntity() instanceof IronGolem)
 				return;
-			else {
+			else
+			{
 				((LivingEntity) event.getEntity()).damage(99999, event.getDamager());
 				dwarf.giveProc();
 			}
@@ -124,7 +137,8 @@ public class PlayerDwarfListeners implements Listener {
 
 		Dwarf dwarf = Core.getInstance().getDwarf((Player) event.getEntity());
 
-		if (dwarf.getBow().getItem().equals(event.getBow())) {
+		if (dwarf.getBow().getItem().equals(event.getBow()))
+		{
 			dwarf.getBow().shotprojectiledata.add(event.getProjectile());
 			dwarf.getBow().onFire(event);
 		}
@@ -145,7 +159,8 @@ public class PlayerDwarfListeners implements Listener {
 
 		Dwarf dwarf = Core.getInstance().getDwarf((Player) arrow.getShooter());
 
-		if (dwarf.getBow().shotprojectiledata.contains(arrow)) {
+		if (dwarf.getBow().shotprojectiledata.contains(arrow))
+		{
 			dwarf.getBow().shotprojectiledata.remove(event.getEntity());
 			dwarf.getBow().onHit(event);
 		}
