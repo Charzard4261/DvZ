@@ -12,19 +12,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.Weapon;
-import dwarves.vs.zombies.dwarves.Dwarf;
-import dwarves.vs.zombies.dwarves.DwarfSpecialTimer;
 
 public class ElvenDagger extends Weapon {
 
-	public ElvenDagger()
+	Player player;
+	boolean usedSpecial = false;
+	int timer = 0;
+
+	public ElvenDagger(Player player)
 	{
 		super(true, true);
+		this.player = player;
 	}
 
 	public ItemStack getItem()
@@ -52,19 +56,17 @@ public class ElvenDagger extends Weapon {
 		damage.set("Operation", new NBTTagInt(0));
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
-		damage.set("Slot", new NBTTagString("mainhand"));
 		modifiers.add(damage);
 
 		NBTTagCompound speed = new NBTTagCompound();
 		speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
 		speed.set("Name", new NBTTagString("generic.movementSpeed"));
 		speed.set("Amount", new NBTTagDouble(0.8));
-		speed.set("Operation", new NBTTagInt(0));
-		speed.set("UUIDLeast", new NBTTagInt(894654));
-		speed.set("UUIDMost", new NBTTagInt(2872));
-		speed.set("Slot", new NBTTagString("mainhand"));
+		damage.set("Operation", new NBTTagInt(0));
+		damage.set("UUIDLeast", new NBTTagInt(894654));
+		damage.set("UUIDMost", new NBTTagInt(2872));
 		modifiers.add(speed);
-
+		
 		NBTTagCompound attackSpeed = new NBTTagCompound();
 		attackSpeed.set("AttributeName", new NBTTagString("generic.attackSpeed"));
 		attackSpeed.set("Name", new NBTTagString("generic.attackSpeed"));
@@ -74,7 +76,7 @@ public class ElvenDagger extends Weapon {
 		attackSpeed.set("UUIDMost", new NBTTagInt(2872));
 		attackSpeed.set("Slot", new NBTTagString("mainhand"));
 		modifiers.add(attackSpeed);
-		
+
 		compound.set("AttributeModifiers", modifiers);
 
 		nmsStack.setTag(compound);
@@ -85,29 +87,56 @@ public class ElvenDagger extends Weapon {
 	}
 
 	@Override
-	public void normal(Dwarf dwarf)
+	public void setPlayer(Player player)
+	{
+		this.player = player;
+	}
+
+	@Override
+	public void normal()
 	{
 
 	}
 
 	@Override
-	public void special(Dwarf dwarf)
+	public void special()
 	{
-		if (dwarf.usedSpecial)
+		if (usedSpecial)
 		{
-			dwarf.getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + dwarf.specialTimer
+			player.sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
 					+ " more seconds to do that.");
 			return;
 		}
-		dwarf.usedSpecial = true;
+		usedSpecial = true;
 
-		dwarf.getPlayer().playSound(dwarf.getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
+		player.playSound(player.getLocation(), "runebladeRunedash", 4F, 1F);
 
-		dwarf.specialTimer = 60;
-
-		DwarfSpecialTimer task = new DwarfSpecialTimer();
-		task.setDwarf(dwarf);
+		timer = 60;
+		EviserateTimer task = new EviserateTimer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
+
+	}
+
+	private class EviserateTimer implements Runnable {
+
+		private int id;
+
+		@Override
+		public void run()
+		{
+			if (timer == 0)
+			{
+				usedSpecial = false;
+				Bukkit.getScheduler().cancelTask(id);
+			}
+
+			timer -= 1;
+		}
+
+		public void setId(int id)
+		{
+			this.id = id;
+		}
 
 	}
 

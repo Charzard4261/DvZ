@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -18,14 +19,17 @@ import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.Weapon;
-import dwarves.vs.zombies.dwarves.Dwarf;
-import dwarves.vs.zombies.dwarves.DwarfSpecialTimer;
 
 public class AxeOfMalice extends Weapon {
 
-	public AxeOfMalice()
+	Player player;
+	boolean usedSpecial = false;
+	int timer = 0;
+
+	public AxeOfMalice(Player player)
 	{
 		super(true, true);
+		this.player = player;
 	}
 
 	public ItemStack getItem()
@@ -76,34 +80,62 @@ public class AxeOfMalice extends Weapon {
 	}
 
 	@Override
-	public void normal(Dwarf dwarf)
+	public void setPlayer(Player player)
+	{
+		this.player = player;
+	}
+
+	@Override
+	public void normal()
 	{
 
 	}
 
 	@Override
-	public void special(Dwarf dwarf)
+	public void special()
 	{
-		if (dwarf.usedSpecial)
+		if (usedSpecial)
 		{
-			dwarf.getPlayer().sendMessage(ChatColor.DARK_RED + "YOU MUST WAIT " + dwarf.specialTimer
+			player.sendMessage(ChatColor.DARK_RED + "YOU MUST WAIT " + timer
 					+ " SECONDS BEFORE YOU USE MY POWER.");
 			return;
 		}
 
-		dwarf.usedSpecial = true;
+		usedSpecial = true;
 
-		dwarf.getPlayer().playSound(dwarf.getPlayer().getLocation(), "maliceUse", 4F, 1F);
-		dwarf.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 160, 2, false, false),
+		player.playSound(player.getLocation(), "maliceUse", 4F, 1F);
+		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 160, 2, false, false),
 				false);
-		dwarf.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 160, 0, false,
+		player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 160, 0, false,
 				false), false);
 
-		dwarf.specialTimer = 60;
+		timer = 60;
 
-		DwarfSpecialTimer task = new DwarfSpecialTimer();
-		task.setDwarf(dwarf);
+		axeofmaliceTimer task = new axeofmaliceTimer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
+
+	}
+
+	private class axeofmaliceTimer implements Runnable {
+
+		private int id;
+
+		@Override
+		public void run()
+		{
+			timer -= 1;
+
+			if (timer == 0)
+			{
+				usedSpecial = false;
+				Bukkit.getScheduler().cancelTask(id);
+			}
+		}
+
+		public void setId(int id)
+		{
+			this.id = id;
+		}
 
 	}
 

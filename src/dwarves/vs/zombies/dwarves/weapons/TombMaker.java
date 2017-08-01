@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -18,14 +19,17 @@ import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.Weapon;
-import dwarves.vs.zombies.dwarves.Dwarf;
-import dwarves.vs.zombies.dwarves.DwarfSpecialTimer;
 
 public class Tombmaker extends Weapon {
 
-	public Tombmaker()
+	Player player;
+	boolean usedSpecial = false;
+	int timer = 0;
+
+	public Tombmaker(Player player)
 	{
 		super(true, true);
+		this.player = player;
 	}
 
 	public ItemStack getItem()
@@ -76,31 +80,58 @@ public class Tombmaker extends Weapon {
 	}
 
 	@Override
-	public void normal(Dwarf dwarf)
+	public void setPlayer(Player player)
+	{
+		this.player = player;
+	}
+
+	@Override
+	public void normal()
 	{
 
 	}
 
 	@Override
-	public void special(Dwarf dwarf)
+	public void special()
 	{
-		if (dwarf.usedSpecial)
+		if (usedSpecial)
 		{
-			dwarf.getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + dwarf.specialTimer
+			player.sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
 					+ " more seconds to do that.");
 			return;
 		}
-		dwarf.usedSpecial = true;
+		usedSpecial = true;
 
-		dwarf.getPlayer().playSound(dwarf.getPlayer().getLocation(), "SOMETHING", 4F, 1F);
-		dwarf.getPlayer().addPotionEffect(
+		player.playSound(player.getLocation(), "SOMETHING", 4F, 1F);
+		player.addPotionEffect(
 				new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
 
-		dwarf.specialTimer = 15;
-		
-		DwarfSpecialTimer task = new DwarfSpecialTimer();
-		task.setDwarf(dwarf);
+		timer = 15;
+		tombHasteTimer task = new tombHasteTimer();
 		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
+
+	}
+
+	private class tombHasteTimer implements Runnable {
+
+		private int id;
+
+		@Override
+		public void run()
+		{
+			if (timer == 0)
+			{
+				usedSpecial = false;
+				Bukkit.getScheduler().cancelTask(id);
+			}
+
+			timer -= 1;
+		}
+
+		public void setId(int id)
+		{
+			this.id = id;
+		}
 
 	}
 
