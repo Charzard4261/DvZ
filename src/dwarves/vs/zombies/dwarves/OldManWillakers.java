@@ -14,4 +14,10 @@ public class OldManWillakers extends Dwarf {
 		setBow(new Virendra());
 	}
 
+	@Override
+	public void giveProc()
+	{
+		this.proccing = 5;
+	}
+
 }

@@ -16,7 +16,7 @@ public class Dwarf {
 	private Player player;
 	private Weapon weapon;
 	private Bow bow;
-	private int proccing = 0;
+	protected int proccing = 0;
 
 	public Dwarf(UUID uuid)
 	{
@@ -73,11 +73,6 @@ public class Dwarf {
 	public void giveProc()
 	{
 		proccing = 3;
-	}
-
-	public void giveProc(int i)
-	{
-		proccing = i;
 	}
 
 }

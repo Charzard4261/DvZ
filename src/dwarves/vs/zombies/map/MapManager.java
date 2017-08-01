@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import dwarves.vs.zombies.Core;
+import dwarves.vs.zombies.map.maps.nekrosis.NekrosisMap;
 import dwarves.vs.zombies.map.maps.skyloft.SkyloftMap;
 
 public class MapManager {
@@ -23,6 +24,7 @@ public class MapManager {
 	public MapManager()
 	{
 		maps.add(new SkyloftMap());
+		maps.add(new NekrosisMap());
 	}
 
 	public void chooseMap()

@@ -10,6 +10,7 @@ import net.minecraft.server.v1_11_R1.PacketPlayOutRespawn;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -71,8 +72,8 @@ public class PlayerSkinEditor {
 
 	public static void swapSkins(UUID uuid, String value, String signature)
 	{
-		Player player = Bukkit.getPlayer(uuid);
-		player.teleport(Core.getInstance().mm.getLobby());
+		OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+		player.getPlayer().teleport(Core.getInstance().mm.getLobby());
 		
 		EntityPlayer ep = ((CraftPlayer) player).getHandle();
 		GameProfile gp = ep.getProfile();
@@ -85,17 +86,15 @@ public class PlayerSkinEditor {
 		pm.put("textures", new Property(
 				"textures", value, signature));
 		
-		player.setPlayerListName(player.getDisplayName());
-		
-		player.setPlayerListName(player.getCustomName());
+		player.getPlayer().setPlayerListName(player.getPlayer().getCustomName());
 
 		for (Player p : Bukkit.getOnlinePlayers())
 		{
-			p.hidePlayer(player);
-			p.showPlayer(player);
+			p.hidePlayer(player.getPlayer());
+			p.showPlayer(player.getPlayer());
 		}
 		
-		reloadSkinForSelf(player);
+		reloadSkinForSelf(player.getPlayer());
 	}
 
 }
