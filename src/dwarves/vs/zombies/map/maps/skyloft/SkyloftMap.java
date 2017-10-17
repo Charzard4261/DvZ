@@ -8,8 +8,8 @@ import dwarves.vs.zombies.map.Shrine;
 
 public class SkyloftMap extends Map {
 	
-	private static Shrine s1 = new Shrine(new Location(Bukkit.getWorld("skyloft"), 0, 0, 0), 1, 1, new Location(Bukkit.getWorld("skyloft"), 0, 0, 0));
-	private static Shrine s2 = new Shrine(new Location(Bukkit.getWorld("skyloft"), 0, 0, 0), 1, 1, new Location(Bukkit.getWorld("skyloft"), 0, 0, 0));
+	private static Shrine s1 = new Shrine("", new Location(Bukkit.getWorld("skyloft"), 0, 0, 0), 1, 1, new Location(Bukkit.getWorld("skyloft"), 0, 0, 0));
+	private static Shrine s2 = new Shrine("", new Location(Bukkit.getWorld("skyloft"), 0, 0, 0), 1, 1, new Location(Bukkit.getWorld("skyloft"), 0, 0, 0));
 	
 	public SkyloftMap()
 	{

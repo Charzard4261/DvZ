@@ -10,9 +10,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import dwarves.vs.zombies.command.CommandFactory;
@@ -29,8 +32,8 @@ import dwarves.vs.zombies.util.PlayerSkinEditor;
 
 public class Core extends JavaPlugin {
 
-	public static Core instance; // Instance: Workaround for "Static" BS
-	private CommandFactory cm; // Commands, eg cm new is adding a command
+	public static Core instance;
+	private CommandFactory cm;
 
 	public GameState gs = GameState.Lobby; // What phase the game is in
 	public MapManager mm;
@@ -38,6 +41,8 @@ public class Core extends JavaPlugin {
 	public ArrayList<Monster> monsters = new ArrayList<Monster>(); // A list of the monsters
 	public boolean monstersReleased = false; // Monsters released true/false
 
+	public BossBar bb = Bukkit.createBossBar("Waiting for players", BarColor.BLUE, BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC);
+	
 	public Player oldMan;
 	String omV;
 	String omS;
@@ -55,13 +60,19 @@ public class Core extends JavaPlugin {
 		cm = new CommandFactory();
 		mm = new MapManager();
 
-		Bukkit.getServer().getPluginManager().registerEvents(new PlayerListeners(), this); // Adding event listeners (Almost everything has an event)
+		Bukkit.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new PlayerDwarfListeners(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new PlayerMonsterListeners(), this);
 
-		cm.registerCommand(new GameCommand()); // Add a command (The command class goes inside brackets) control + click on
+		cm.registerCommand(new GameCommand());
 		cm.registerCommand(new ItemCommand());
 		cm.registerCommand(new OnlineCommand());
+		
+		bb.removeFlag(BarFlag.PLAY_BOSS_MUSIC);
+		bb.setProgress(1.0);
+		
+		for (Player player : Bukkit.getOnlinePlayers())
+			bb.addPlayer(player);
 	}
 
 	@Override
@@ -69,7 +80,11 @@ public class Core extends JavaPlugin {
 	{
 		if (gs != GameState.Lobby)
 			endGame();
-
+		
+		for (Player player : Bukkit.getOnlinePlayers())
+			bb.removePlayer(player);
+		
+		bb = null;
 		cm = null;
 		mm = null;
 		instance = null;
@@ -147,27 +162,55 @@ public class Core extends JavaPlugin {
 		Bukkit.broadcastMessage(ChatColor.DARK_RED + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 		Bukkit.broadcastMessage(ChatColor.DARK_RED + "THE FINAL SHRINE HAS FALLEN!");
 		Bukkit.broadcastMessage(ChatColor.DARK_RED + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-		gs = GameState.Lobby;
-		dwarves.clear();
-		monsters.clear();
 		
-		for (Player p : Bukkit.getOnlinePlayers())
-		{
-			p.setCustomName(p.getDisplayName());
-			p.setPlayerListName(p.getDisplayName());
+		dwarves.vs.zombies.Core.endTimer task = new dwarves.vs.zombies.Core.endTimer();
+		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
 
-			p.getInventory().clear();
-			p.teleport(mm.getLobby());
-		}
+	}
+
+	public class endTimer implements Runnable {
+
+		private int id;
+		private int timer = 10;
 		
-		if (oldMan != null) {
-			UUID oldManUUID = oldMan.getUniqueId();
-			PlayerSkinEditor.swapSkins(oldManUUID, omV, omS);
-			oldMan = null;
+		@Override
+		public void run()
+		{
+			timer -= 1;
+
+			if (timer == 0)
+			{
+				gs = GameState.Lobby;
+				dwarves.clear();
+				monsters.clear();
+				
+				for (Player p : Bukkit.getOnlinePlayers())
+				{
+					p.setCustomName(p.getDisplayName());
+					p.setPlayerListName(p.getDisplayName());
+
+					p.getInventory().clear();
+					p.teleport(mm.getLobby());
+				}
+				
+				if (oldMan != null) {
+					UUID oldManUUID = oldMan.getUniqueId();
+					PlayerSkinEditor.swapSkins(oldManUUID, omV, omS);
+					oldMan = null;
+				}
+				roamin = null;
+				nisovin = null;
+				delete(mm.getMap().getWorld());
+				bb.setTitle("Waiting for players");
+				Bukkit.getScheduler().cancelTask(id);
+			}
 		}
-		roamin = null;
-		nisovin = null;
-		delete(mm.getMap().getWorld());
+
+		public void setId(int id)
+		{
+			this.id = id;
+		}
+
 	}
 
 	public void spawnOldMan(Player player)
@@ -177,8 +220,8 @@ public class Core extends JavaPlugin {
 
 		player.getInventory().clear();
 
-		ItemStack item = getDwarf(player).getWeapon().getItem();
-		player.getInventory().addItem(item);
+		player.getInventory().addItem(getDwarf(player).getWeapon().getItem());
+		player.getInventory().addItem(getDwarf(player).getBow().getItem());
 
 	}
 
@@ -191,9 +234,6 @@ public class Core extends JavaPlugin {
 		player.playSound(player.getLocation(), "bruceIntro", 10F, 1F);
 
 		player.getInventory().clear();
-
-		ItemStack item = getDwarf(player).getWeapon().getItem();
-		player.getInventory().addItem(item);
 	}
 
 	public void spawnMonster(Player player)
@@ -223,6 +263,7 @@ public class Core extends JavaPlugin {
 
 	public World copy(String name)
 	{
+		Bukkit.broadcastMessage(name);
 		File dataFolder = new File(this.getServer().getWorldContainer().getAbsolutePath());
 		String strData = dataFolder.toString();
 		strData = strData.substring(0, strData.length() - 1);

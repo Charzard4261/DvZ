@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -84,13 +85,13 @@ public class Warhammer extends Weapon {
 	}
 
 	@Override
-	public void normal()
+	public void normal(PlayerInteractEvent event)
 	{
 
 	}
 
 	@Override
-	public void special()
+	public void special(PlayerInteractEvent event)
 	{
 
 	}

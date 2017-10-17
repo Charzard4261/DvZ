@@ -1,4 +1,4 @@
-package dwarves.vs.zombies.dwarves.weapons;
+package dwarves.vs.zombies.monsters.weapons;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,6 @@ import net.minecraft.server.v1_11_R1.NBTTagInt;
 import net.minecraft.server.v1_11_R1.NBTTagList;
 import net.minecraft.server.v1_11_R1.NBTTagString;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
@@ -15,36 +14,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
-import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.Weapon;
 
-public class AxeOfMalice extends Weapon {
+public class Fangs extends Weapon {
 
-	Player player;
-	boolean usedSpecial = false;
-	int timer = 0;
-
-	public AxeOfMalice(Player player)
+	public Fangs()
 	{
-		super(true, true);
-		this.player = player;
+		super(false, false);
 	}
 
+	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 1);
+
+		ItemStack item = new ItemStack(Material.SUGAR, 1, (short) 1);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.AQUA + "Axe Of Malice");
+		meta.setDisplayName(ChatColor.AQUA + "Wolf Fangs");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "20");
 		lore.add(ChatColor.YELLOW + "With this Axe, you can Right Click to grant yourself a");
-		lore.add(ChatColor.YELLOW + "Powerful Rampage for 8 seconds. Additional kills while");
-		lore.add(ChatColor.YELLOW + "on a rampage will allow you to extend the duration.");
-		lore.add(ChatColor.YELLOW + "This ability has a 60 second cooldown that is reduced");
-		lore.add(ChatColor.YELLOW + "by 1 for every kill or 4 seconds for bow kills.");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 
@@ -54,7 +43,7 @@ public class AxeOfMalice extends Weapon {
 		NBTTagCompound damage = new NBTTagCompound();
 		damage.set("AttributeName", new NBTTagString("generic.attackDamage"));
 		damage.set("Name", new NBTTagString("generic.attackDamage"));
-		damage.set("Amount", new NBTTagInt(20));
+		damage.set("Amount", new NBTTagInt(16));
 		damage.set("Operation", new NBTTagInt(0));
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
@@ -77,67 +66,27 @@ public class AxeOfMalice extends Weapon {
 
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 
-		return item;
+		return null;
 	}
 
 	@Override
 	public void setPlayer(Player player)
 	{
-		this.player = player;
+
 	}
 
 	@Override
 	public void normal(PlayerInteractEvent event)
 	{
+		// THIS FIRES WHEN THE PLAYER PUNCHES NESSIE LOOK AT THESE TWO METHODS
 
 	}
 
 	@Override
 	public void special(PlayerInteractEvent event)
 	{
-		if (usedSpecial)
-		{
-			player.sendMessage(ChatColor.DARK_RED + "YOU MUST WAIT " + timer
-					+ " SECONDS BEFORE YOU USE MY POWER.");
-			return;
-		}
-
-		usedSpecial = true;
-
-		player.playSound(player.getLocation(), "maliceUse", 4F, 1F);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 160, 2, false, false),
-				false);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 160, 0, false,
-				false), false);
-
-		timer = 60;
-
-		axeofmaliceTimer task = new axeofmaliceTimer();
-		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
-
-	}
-
-	private class axeofmaliceTimer implements Runnable {
-
-		private int id;
-
-		@Override
-		public void run()
-		{
-			timer -= 1;
-
-			if (timer == 0)
-			{
-				usedSpecial = false;
-				Bukkit.getScheduler().cancelTask(id);
-			}
-		}
-
-		public void setId(int id)
-		{
-			this.id = id;
-		}
-
+		// THIS IS USE SPECIAL, AKA LEAP
+		
 	}
 
 }

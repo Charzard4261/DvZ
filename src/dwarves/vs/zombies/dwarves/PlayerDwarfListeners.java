@@ -37,7 +37,7 @@ public class PlayerDwarfListeners implements Listener {
 						.equals(Core.getInstance().getDwarf(event.getPlayer()).getWeapon()
 								.getItem()))
 		{
-			Core.getInstance().getDwarf(event.getPlayer()).getWeapon().normal();
+			Core.getInstance().getDwarf(event.getPlayer()).getWeapon().normal(event);
 		}
 		/**
 		 * Right clicking (air or a block) with their weapon.
@@ -49,7 +49,7 @@ public class PlayerDwarfListeners implements Listener {
 						.equals(Core.getInstance().getDwarf(event.getPlayer()).getWeapon()
 								.getItem()))
 		{
-			Core.getInstance().getDwarf(event.getPlayer()).getWeapon().special();
+			Core.getInstance().getDwarf(event.getPlayer()).getWeapon().special(event);
 		}
 		/**
 		 * Right clicking a block with an empty hand.
@@ -66,7 +66,17 @@ public class PlayerDwarfListeners implements Listener {
 			{
 				event.getPlayer().getInventory()
 						.addItem(Core.getInstance().getDwarf(event.getPlayer()).getBow().getItem());
-				event.getPlayer().playSound(event.getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
+			}
+			
+			/*
+			 * SWORD LADDER
+			 */
+			if (event.getClickedBlock().getType() == Material.LADDER
+					&& !(event.getPlayer().getInventory().contains(Core.getInstance()
+							.getDwarf(event.getPlayer()).getWeapon().getItem())))
+			{
+				event.getPlayer().getInventory()
+						.addItem(Core.getInstance().getDwarf(event.getPlayer()).getWeapon().getItem());
 			}
 		}
 	}

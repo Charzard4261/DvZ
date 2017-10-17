@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import dwarves.vs.zombies.Core;
-import dwarves.vs.zombies.map.maps.nekrosis.NekrosisMap;
 import dwarves.vs.zombies.map.maps.skyloft.SkyloftMap;
 
 public class MapManager {
@@ -20,58 +19,72 @@ public class MapManager {
 	private World currentWorld;
 	private int shrine = 0;
 	private Shrine currentShrine;
+	private int vault = 0;
+	private int shrineGold = 0;
 
-	public MapManager()
-	{
+	public MapManager() {
 		maps.add(new SkyloftMap());
-		maps.add(new NekrosisMap());
+		// maps.add(new NekrosisMap());
 	}
 
-	public void chooseMap()
-	{
+	public void chooseMap() {
 		int rnd = new Random().nextInt(maps.size());
 		currentMap = maps.get(rnd);
 		currentWorld = Core.getInstance().copy(currentMap.getWorld());
 		currentMap.getSpawn().getChunk().load();
 		currentShrine = currentMap.shrines[shrine];
-		// WorldCreator creator = new WorldCreator("voidworld");
-		// creator.type(WorldType.FLAT);
-		// creator.generatorSettings("2;0;1;");
-		// Bukkit.getPlayer("Charzard4261").teleport(currentWorld.getSpawnLocation());
+		Core.getInstance().bb.setTitle(currentShrine.getName() + " (" + (shrine + 1) + "/" + currentMap.shrines.length + ")");
 	}
 
-	public Map getMap()
-	{
+	public Map getMap() {
 		return currentMap;
 	}
 
-	public World getWorld()
-	{
+	public World getWorld() {
 		return currentWorld;
 	}
 
-	public Location getLobby()
-	{
+	public Location getLobby() {
 		return new Location(Bukkit.getWorld("lobby"), 0.5, 40, 0.5);
 	}
 
-	public Shrine getCurrentShrine()
-	{
+	public Shrine getCurrentShrine() {
 		return currentShrine;
 	}
 
-	public void nextShrine()
-	{
+	public void nextShrine() {
 		shrine++;
-		if (shrine == currentMap.shrines.length)
-		{
+		if (shrine == currentMap.shrines.length) {
 			Core.getInstance().endGame();
 			return;
 		}
+		currentShrine = currentMap.shrines[shrine];
+		Core.getInstance().bb.setTitle(currentShrine.getName() + " (" + shrine + "/" + currentMap.shrines.length + ")");
 		Bukkit.broadcastMessage(ChatColor.YELLOW + "-=-=-=-=-=-=-=-=-=-=-=-=-");
 		Bukkit.broadcastMessage(ChatColor.YELLOW + "THE SHRINE HAS FALLEN!");
 		Bukkit.broadcastMessage(ChatColor.YELLOW + "-=-=-=-=-=-=-=-=-=-=-=-=-");
-		currentShrine = currentMap.shrines[shrine];
+		shrineGold = shrineGold + (vault / shrine);
+		vault -= shrineGold;
+	}
+
+	public void activateGold() {
+		shrineGold = shrineGold + (vault / shrine);
+		vault -= shrineGold;
+	}
+
+	public boolean useGold(int amount) {
+		if (shrineGold >= amount) {
+			shrineGold -= amount;
+			return true;
+		} else
+			return false;
+	}
+
+	public void addGold(int amount) {
+		if (Core.getInstance().monstersReleased)
+			shrineGold += amount;
+		else
+			vault += amount;
 	}
 
 }

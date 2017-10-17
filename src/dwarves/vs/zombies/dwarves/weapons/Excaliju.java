@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -106,13 +107,13 @@ public class Excaliju extends Weapon {
 	}
 
 	@Override
-	public void normal()
+	public void normal(PlayerInteractEvent event)
 	{
 
 	}
 
 	@Override
-	public void special()
+	public void special(PlayerInteractEvent event)
 	{
 		if (usedSpecial)
 		{
@@ -127,7 +128,7 @@ public class Excaliju extends Weapon {
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
 		player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, 255, false,
 				false), false);
-		player.setVelocity(player.getLocation().getDirection().multiply(2));
+		player.setVelocity(player.getLocation().getDirection().multiply(2).setY(0.2));
 
 		timer = 10;
 

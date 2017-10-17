@@ -54,4 +54,12 @@ public class Lightbow extends Bow implements Listener {
 		arrow.setCritical(false);
 		arrow.spigot().setDamage(50); // Damage
 	}
+
+	@Override
+	public void onHit(EntityDamageByEntityEvent event)
+	{
+		if (!(event.getEntity().isDead()))
+			return;
+		Core.getInstance().getDwarf(player).giveProc();
+	}
 }

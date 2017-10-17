@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import dwarves.vs.zombies.Core.GameState;
@@ -22,6 +23,7 @@ public class PlayerListeners implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event)
 	{
+		Core.getInstance().bb.addPlayer(event.getPlayer());
 		switch (Core.getInstance().gs)
 		{
 		case Lobby:
@@ -33,8 +35,7 @@ public class PlayerListeners implements Listener {
 			if (Core.getInstance().getDwarf(event.getPlayer()) != null)
 			{
 				if (Core.getInstance().oldMan != null)
-					if (event.getPlayer().getUniqueId()
-							.equals(Core.getInstance().oldMan.getUniqueId()))
+					if (event.getPlayer().getUniqueId().equals(Core.getInstance().oldMan.getUniqueId()))
 						PlayerSkinEditor.applyOldMan(event.getPlayer().getUniqueId());
 				Core.getInstance().getDwarf(event.getPlayer()).setPlayer();
 			} else if (Core.getInstance().getMonster(event.getPlayer()) == null)
@@ -46,8 +47,7 @@ public class PlayerListeners implements Listener {
 			if (Core.getInstance().getDwarf(event.getPlayer()) != null)
 			{
 				if (Core.getInstance().oldMan != null)
-					if (event.getPlayer().getUniqueId()
-							.equals(Core.getInstance().oldMan.getUniqueId()))
+					if (event.getPlayer().getUniqueId().equals(Core.getInstance().oldMan.getUniqueId()))
 						PlayerSkinEditor.applyOldMan(event.getPlayer().getUniqueId());
 
 			} else if (Core.getInstance().getMonster(event.getPlayer()) == null)
@@ -66,15 +66,14 @@ public class PlayerListeners implements Listener {
 	{
 		if (event.getMessage().startsWith("!"))
 		{
-			event.setFormat(ChatColor.WHITE + "[!]<" + event.getPlayer().getCustomName()
-					+ ChatColor.WHITE + "> "
+			event.setFormat(ChatColor.WHITE + "[!]<" + event.getPlayer().getCustomName() + ChatColor.WHITE + "> "
 					+ event.getMessage().substring(1, event.getMessage().length()));
 			return;
 		}
 
 		event.getRecipients().clear();
-		event.setFormat(ChatColor.WHITE + "<" + event.getPlayer().getCustomName() + ChatColor.WHITE
-				+ "> " + event.getMessage());
+		event.setFormat(ChatColor.WHITE + "<" + event.getPlayer().getCustomName() + ChatColor.WHITE + "> "
+				+ event.getMessage());
 		if (Core.getInstance().getDwarf(event.getPlayer()) != null)
 		{
 			for (Player p : Bukkit.getOnlinePlayers())
@@ -131,12 +130,15 @@ public class PlayerListeners implements Listener {
 			double radiusSquared = radius * radius;
 
 			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(
-					Core.getInstance().mm.getCurrentShrine().getLocation(), radius, radius, radius); // All entities within a box
+					Core.getInstance().mm.getCurrentShrine().getLocation(), radius, radius, radius); // All
+																										// entities
+																										// within
+																										// a
+																										// box
 			for (Entity entity : entities)
 			{
 
-				if (entity.getLocation().distanceSquared(
-						Core.getInstance().mm.getCurrentShrine().getLocation()) > radiusSquared)
+				if (entity.getLocation().distanceSquared(Core.getInstance().mm.getCurrentShrine().getLocation()) > radiusSquared)
 					continue; // All entities within a sphere
 
 				if (entity instanceof Player)
@@ -147,12 +149,9 @@ public class PlayerListeners implements Listener {
 					{
 						// TODO Check if can go past mob protection
 						event.getPlayer().damage(9999);
-						event.getPlayer()
-								.sendMessage(
-										ChatColor.DARK_RED
-												+ "You were killed because you were too close to the next shrine!");
 						event.getPlayer().sendMessage(
-								ChatColor.DARK_RED + "Destroy the current one first!");
+								ChatColor.DARK_RED + "You were killed because you were too close to the next shrine!");
+						event.getPlayer().sendMessage(ChatColor.DARK_RED + "Destroy the current one first!");
 					}
 				}
 
@@ -171,8 +170,7 @@ public class PlayerListeners implements Listener {
 			for (Entity entity : entities)
 			{
 
-				if (entity.getLocation().distanceSquared(
-						Core.getInstance().mm.getCurrentShrine().getLocation()) > radiusSquared)
+				if (entity.getLocation().distanceSquared(Core.getInstance().mm.getCurrentShrine().getLocation()) > radiusSquared)
 					continue; // All entities within a sphere
 
 				if (entity instanceof Player)
@@ -183,6 +181,12 @@ public class PlayerListeners implements Listener {
 			}
 		}
 		// Shrine Destroy
+	}
+
+	@EventHandler
+	public void onLeave(PlayerQuitEvent event)
+	{
+		Core.getInstance().bb.removePlayer(event.getPlayer());
 	}
 
 }
