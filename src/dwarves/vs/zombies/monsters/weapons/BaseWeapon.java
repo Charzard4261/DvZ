@@ -11,7 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -81,17 +81,24 @@ public class BaseWeapon extends Weapon {
 	}
 
 	@Override
-	public void normal(PlayerInteractEvent event)
+	public void normal()
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void special(PlayerInteractEvent event)
+	public void special()
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void damage(EntityDamageByEntityEvent event)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

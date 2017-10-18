@@ -1,7 +1,7 @@
 package dwarves.vs.zombies;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class Weapon {
@@ -19,8 +19,10 @@ public abstract class Weapon {
 	
 	public abstract void setPlayer(Player player);
 	
-	public abstract void normal(PlayerInteractEvent event);
+	public abstract void normal();
 	
-	public abstract void special(PlayerInteractEvent event);
+	public abstract void special();
+	
+	public abstract void damage(EntityDamageByEntityEvent event);
 	
 }

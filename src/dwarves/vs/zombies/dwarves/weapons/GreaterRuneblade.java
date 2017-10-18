@@ -12,7 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -86,13 +86,13 @@ public class GreaterRuneblade extends Weapon {
 	}
 
 	@Override
-	public void normal(PlayerInteractEvent event)
+	public void normal()
 	{
 
 	}
 
 	@Override
-	public void special(PlayerInteractEvent event)
+	public void special()
 	{
 		if (usedSpecial)
 		{
@@ -135,6 +135,13 @@ public class GreaterRuneblade extends Weapon {
 			this.id = id;
 		}
 
+	}
+
+	@Override
+	public void damage(EntityDamageByEntityEvent event)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

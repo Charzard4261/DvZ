@@ -37,7 +37,7 @@ public class PlayerDwarfListeners implements Listener {
 						.equals(Core.getInstance().getDwarf(event.getPlayer()).getWeapon()
 								.getItem()))
 		{
-			Core.getInstance().getDwarf(event.getPlayer()).getWeapon().normal(event);
+			Core.getInstance().getDwarf(event.getPlayer()).getWeapon().normal();
 		}
 		/**
 		 * Right clicking (air or a block) with their weapon.
@@ -49,7 +49,7 @@ public class PlayerDwarfListeners implements Listener {
 						.equals(Core.getInstance().getDwarf(event.getPlayer()).getWeapon()
 								.getItem()))
 		{
-			Core.getInstance().getDwarf(event.getPlayer()).getWeapon().special(event);
+			Core.getInstance().getDwarf(event.getPlayer()).getWeapon().special();
 		}
 		/**
 		 * Right clicking a block with an empty hand.
@@ -84,8 +84,6 @@ public class PlayerDwarfListeners implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onAttack(EntityDamageByEntityEvent event)
 	{
-		if (event.getEntity().isDead())
-			return;
 
 		if (!(event.getDamager() instanceof Player))
 			return;
@@ -94,6 +92,8 @@ public class PlayerDwarfListeners implements Listener {
 			return;
 
 		Dwarf dwarf = Core.getInstance().getDwarf((Player) event.getDamager());
+		
+		dwarf.getWeapon().damage(event);
 
 		// TODO Add check for monster class, I.E. Dire Wolves, Mob Heroes
 
