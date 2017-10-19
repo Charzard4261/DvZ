@@ -1,4 +1,4 @@
-ackage dwarves.vs.zombies.monsters.weapons;
+package dwarves.vs.zombies.monsters.weapons;
 
 import java.util.ArrayList;
 
