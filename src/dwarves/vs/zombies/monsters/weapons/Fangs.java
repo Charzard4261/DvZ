@@ -32,11 +32,7 @@ public class Fangs extends Weapon {
 
 		ItemStack item = new ItemStack(Material.SUGAR, 1, (short) 1);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.AQUA + "Wolf Fangs");
-		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "20");
-		lore.add(ChatColor.YELLOW + "With this Axe, you can Right Click to grant yourself a");
-		meta.setLore(lore);
+		meta.setDisplayName(ChatColor.RED + "Wolf Fangs");
 		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
