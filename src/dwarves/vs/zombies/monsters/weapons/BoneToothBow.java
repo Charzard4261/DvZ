@@ -24,8 +24,6 @@ import dwarves.vs.zombies.Bow;
 public class BoneToothBow extends Bow implements Listener {
 
 	Player player;
-	public int timer;
-	public boolean usedSpecial;
 
 	@Override
     public ItemStack getItem()
