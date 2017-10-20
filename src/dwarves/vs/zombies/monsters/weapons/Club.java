@@ -32,6 +32,7 @@ public class Club extends Weapon {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Ogre Club");
 		item.setItemMeta(meta);
+		meta.setUnbreakable(true);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
