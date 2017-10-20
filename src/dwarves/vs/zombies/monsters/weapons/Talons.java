@@ -14,14 +14,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Weapon;
 
-public class Fangs extends Weapon {
+public class Talons extends Weapon {
 
-	public Fangs()
+	public Talons()
 	{
 		super(false, false);
 	}
@@ -30,9 +28,9 @@ public class Fangs extends Weapon {
 	public ItemStack getItem()
 	{
 
-		ItemStack item = new ItemStack(Material.SUGAR, 1, (short) 1);
+		ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1, (short) 1); // i dont know what the rat item is do you have any screenshots of the mob items?
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + "Wolf Fangs");
+		meta.setDisplayName(ChatColor.RED + "Rat Talons");
 		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
@@ -41,7 +39,7 @@ public class Fangs extends Weapon {
 		NBTTagCompound damage = new NBTTagCompound();
 		damage.set("AttributeName", new NBTTagString("generic.attackDamage"));
 		damage.set("Name", new NBTTagString("generic.attackDamage"));
-		damage.set("Amount", new NBTTagInt(16));
+		damage.set("Amount", new NBTTagInt(1));
 		damage.set("Operation", new NBTTagInt(0));
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
@@ -76,31 +74,20 @@ public class Fangs extends Weapon {
 	@Override
 	public void normal()
 	{
-		// THIS FIRES WHEN THE PLAYER PUNCHES NESSIE LOOK AT THESE TWO METHODS
+		// THIS FIRES WHEN THE PLAYER PUNCHES
 
 	}
 
 	@Override
 	public void special()
 	{
-		// THIS IS USE SPECIAL, AKA LEAP
+		// THIS IS USE SPECIAL
 		
 	}
 
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
 	{   
-		// At this point, 'player' doesn't exist as a variable
-		Player player = (Player) event.getDamager(); //CRITICAL but for this event it's   does sound need to be imported from anywhere? (bet nothing i put here is good)
-                player.playSound(player.getLocation(), "ENTITY_WOLF_GROWL", 4F, 1F);                          // plays growl sound
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 1, false, false), false);  // gives the speed
-		player.heal(2);
-		
-		if(player.getWorld().getTime() > 23850) 
-		{
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 8, 1, false, false), false);
-			player.heal(4);
-		}
 			
 	}
 

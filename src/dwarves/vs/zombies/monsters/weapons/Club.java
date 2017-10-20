@@ -14,14 +14,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Weapon;
 
-public class Fangs extends Weapon {
+public class Club extends Weapon {
 
-	public Fangs()
+	public Club()
 	{
 		super(false, false);
 	}
@@ -30,10 +28,11 @@ public class Fangs extends Weapon {
 	public ItemStack getItem()
 	{
 
-		ItemStack item = new ItemStack(Material.SUGAR, 1, (short) 1);
+		ItemStack item = new ItemStack(Material.WOODEN_HOE, 1, (short) 1); //not sure what item ogre uses
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + "Wolf Fangs");
+		meta.setDisplayName(ChatColor.RED + "Ogre Club");
 		item.setItemMeta(meta);
+		meta.setUnbreakable(true);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
@@ -41,7 +40,7 @@ public class Fangs extends Weapon {
 		NBTTagCompound damage = new NBTTagCompound();
 		damage.set("AttributeName", new NBTTagString("generic.attackDamage"));
 		damage.set("Name", new NBTTagString("generic.attackDamage"));
-		damage.set("Amount", new NBTTagInt(16));
+		damage.set("Amount", new NBTTagInt(15));
 		damage.set("Operation", new NBTTagInt(0));
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
@@ -64,7 +63,20 @@ public class Fangs extends Weapon {
 
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 
-		return null;
+		compound.set("AttributeModifiers", modifiers);
+
+		NBTTagList ench = new NBTTagList();
+		NBTTagCompound enchant = new NBTTagCompound();
+		enchant.set("id", new NBTTagInt(19));
+		enchant.set("lvl", new NBTTagInt(10));
+		ench.add(enchant);
+		compound.set("ench", ench);
+
+		nmsStack.setTag(compound);
+
+		item = CraftItemStack.asBukkitCopy(nmsStack);
+
+		return item;
 	}
 
 	@Override
@@ -76,31 +88,18 @@ public class Fangs extends Weapon {
 	@Override
 	public void normal()
 	{
-		// THIS FIRES WHEN THE PLAYER PUNCHES NESSIE LOOK AT THESE TWO METHODS
-
+		// THIS FIRES WHEN THE PLAYER PUNCHES
 	}
 
 	@Override
 	public void special()
 	{
-		// THIS IS USE SPECIAL, AKA LEAP
-		
+		// THIS IS USE SPECIAL 
 	}
 
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
 	{   
-		// At this point, 'player' doesn't exist as a variable
-		Player player = (Player) event.getDamager(); //CRITICAL but for this event it's   does sound need to be imported from anywhere? (bet nothing i put here is good)
-                player.playSound(player.getLocation(), "ENTITY_WOLF_GROWL", 4F, 1F);                          // plays growl sound
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 1, false, false), false);  // gives the speed
-		player.heal(2);
-		
-		if(player.getWorld().getTime() > 23850) 
-		{
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 8, 1, false, false), false);
-			player.heal(4);
-		}
 			
 	}
 
