@@ -23,14 +23,12 @@ import dwarves.vs.zombies.Weapon;
 
 public class AxeOfMalice extends Weapon {
 
-	Player player;
 	boolean usedSpecial = false;
 	int timer = 0;
 
 	public AxeOfMalice(Player player)
 	{
-		super(true, true);
-		this.player = player;
+		super(player, true, true);
 	}
 
 	public ItemStack getItem()
@@ -81,12 +79,6 @@ public class AxeOfMalice extends Weapon {
 	}
 
 	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
-	}
-
-	@Override
 	public void normal()
 	{
 
@@ -97,17 +89,17 @@ public class AxeOfMalice extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_RED + "YOU MUST WAIT " + timer
+			getPlayer().sendMessage(ChatColor.DARK_RED + "YOU MUST WAIT " + timer
 					+ " SECONDS BEFORE YOU USE MY POWER.");
 			return;
 		}
 
 		usedSpecial = true;
 
-		player.playSound(player.getLocation(), "maliceUse", 4F, 1F);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 160, 2, false, false),
+		getPlayer().playSound(getPlayer().getLocation(), "maliceUse", 4F, 1F);
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 160, 2, false, false),
 				false);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 160, 0, false,
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 160, 0, false,
 				false), false);
 
 		timer = 60;

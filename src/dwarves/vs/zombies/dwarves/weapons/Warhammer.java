@@ -19,14 +19,12 @@ import dwarves.vs.zombies.Weapon;
 
 public class Warhammer extends Weapon {
 	
-	Player player;
 	boolean usedSpecial = false;
 	int timer = 0;
 	
 	public Warhammer(Player player)
 	{
-		super(false, false);
-		this.player = player;
+		super(player, false, false);
 	}
 
 	@Override
@@ -76,12 +74,6 @@ public class Warhammer extends Weapon {
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 
 		return item;
-	}
-
-	@Override
-	public void setPlayer(Player player)
-	{
-
 	}
 
 	@Override

@@ -23,14 +23,12 @@ import dwarves.vs.zombies.Weapon;
 
 public class Tombmaker extends Weapon {
 
-	Player player;
 	boolean usedSpecial = false;
 	int timer = 0;
 
 	public Tombmaker(Player player)
 	{
-		super(true, true);
-		this.player = player;
+		super(player, true, true);
 	}
 
 	public ItemStack getItem()
@@ -81,12 +79,6 @@ public class Tombmaker extends Weapon {
 	}
 
 	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
-	}
-
-	@Override
 	public void normal()
 	{
 
@@ -97,14 +89,14 @@ public class Tombmaker extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
+			getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
 					+ " more seconds to do that.");
 			return;
 		}
 		usedSpecial = true;
 
-		player.playSound(player.getLocation(), "SOMETHING", 4F, 1F);
-		player.addPotionEffect(
+		getPlayer().playSound(getPlayer().getLocation(), "SOMETHING", 4F, 1F);
+		getPlayer().addPotionEffect(
 				new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
 
 		timer = 15;

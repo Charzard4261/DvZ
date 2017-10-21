@@ -1,7 +1,5 @@
 package dwarves.vs.zombies.monsters.weapons;
 
-import java.util.ArrayList;
-
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
 import net.minecraft.server.v1_11_R1.NBTTagInt;
 import net.minecraft.server.v1_11_R1.NBTTagList;
@@ -19,16 +17,16 @@ import dwarves.vs.zombies.Weapon;
 
 public class Club extends Weapon {
 
-	public Club()
+	public Club(Player player)
 	{
-		super(false, false);
+		super(player, false, false);
 	}
 
 	@Override
 	public ItemStack getItem()
 	{
 
-		ItemStack item = new ItemStack(Material.WOODEN_HOE, 1, (short) 1); //not sure what item ogre uses
+		ItemStack item = new ItemStack(Material.WOOD_HOE, 1, (short) 1); //not sure what item ogre uses
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Ogre Club");
 		item.setItemMeta(meta);
@@ -77,12 +75,6 @@ public class Club extends Weapon {
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 
 		return item;
-	}
-
-	@Override
-	public void setPlayer(Player player)
-	{
-
 	}
 
 	@Override

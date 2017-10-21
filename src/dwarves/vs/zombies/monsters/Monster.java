@@ -1,19 +1,19 @@
 package dwarves.vs.zombies.monsters;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
-import dwarves.vs.zombies.Weapon;
+import dwarves.vs.zombies.monsters.monsters.Zombie;
 
-public abstract class Monster {
+public class Monster {
 
-	private UUID uuid;
-	private Weapon weapon;
+	public UUID uuid;
+		
+	public Zombie zombie;
+	
+	private MonsterClass mc;
 
 	public Monster(UUID uuid)
 	{
@@ -24,23 +24,10 @@ public abstract class Monster {
 	{
 		return Bukkit.getPlayer(uuid);
 	}
-
-	public void setWeapon(Weapon weapon)
+	
+	public MonsterClass getMonster()
 	{
-		this.weapon = weapon;
+		return mc;
 	}
-
-	public Weapon getWeapon()
-	{
-		return weapon;
-	}
-
-	public abstract void equipArmour();
-
-	public abstract ArrayList<ItemStack> getItems();
-
-	public abstract void onLeftClick(PlayerInteractEvent event);
-
-	public abstract void onRightClick(PlayerInteractEvent event);
 
 }

@@ -1,7 +1,5 @@
 package dwarves.vs.zombies.monsters.weapons;
 
-import java.util.ArrayList;
-
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
 import net.minecraft.server.v1_11_R1.NBTTagInt;
 import net.minecraft.server.v1_11_R1.NBTTagList;
@@ -21,9 +19,9 @@ import dwarves.vs.zombies.Weapon;
 
 public class Fangs extends Weapon {
 
-	public Fangs()
+	public Fangs(Player player)
 	{
-		super(false, false);
+		super(player, false, false);
 	}
 
 	@Override
@@ -68,12 +66,6 @@ public class Fangs extends Weapon {
 	}
 
 	@Override
-	public void setPlayer(Player player)
-	{
-
-	}
-
-	@Override
 	public void normal()
 	{
 		// THIS FIRES WHEN THE PLAYER PUNCHES NESSIE LOOK AT THESE TWO METHODS
@@ -94,12 +86,12 @@ public class Fangs extends Weapon {
 		Player player = (Player) event.getDamager(); //CRITICAL but for this event it's   does sound need to be imported from anywhere? (bet nothing i put here is good)
                 player.playSound(player.getLocation(), "ENTITY_WOLF_GROWL", 4F, 1F);                          // plays growl sound
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 1, false, false), false);  // gives the speed
-		player.heal(2);
+		player.setHealth(player.getHealth() + 2);
 		
 		if(player.getWorld().getTime() > 23850) 
 		{
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 8, 1, false, false), false);
-			player.heal(4);
+			player.setHealth(player.getHealth() + 4);
 		}
 			
 	}

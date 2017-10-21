@@ -1,7 +1,5 @@
 package dwarves.vs.zombies.monsters.weapons;
 
-import java.util.ArrayList;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -15,7 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import dwarves.vs.zombies.Bow;
 
 
-public class BoneToothBow extends Bow implements Listener {
+public class NetherBow extends Bow implements Listener {
 
 	Player player;
 
@@ -24,10 +22,7 @@ public class BoneToothBow extends Bow implements Listener {
 	{
 		ItemStack item = new ItemStack(Material.BOW);
 	    ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + "BoneTooth Bow");
-		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
-		meta.setLore(lore);
+		meta.setDisplayName(ChatColor.RED + "Nether Bow");
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
 		return item;
@@ -43,13 +38,12 @@ public class BoneToothBow extends Bow implements Listener {
 	public void onFire(EntityShootBowEvent event)
 	{
 		Arrow arrow = (Arrow) event.getProjectile();
-		arrow.setFireTicks(100);
+		arrow.setFireTicks(0);
 		arrow.setVelocity(arrow.getVelocity().multiply(1));
 		arrow.setKnockbackStrength(1);
 		arrow.setCritical(false);
-		arrow.spigot().setDamage(5); // Damage not sure this is the right amount but the wiki said it
+		arrow.spigot().setDamage(7);
 		
-		// add volley
 	}
 
 	@Override

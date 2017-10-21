@@ -1,7 +1,5 @@
 package dwarves.vs.zombies.monsters.weapons;
 
-import java.util.ArrayList;
-
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
 import net.minecraft.server.v1_11_R1.NBTTagInt;
 import net.minecraft.server.v1_11_R1.NBTTagList;
@@ -19,9 +17,9 @@ import dwarves.vs.zombies.Weapon;
 
 public class Talons extends Weapon {
 
-	public Talons()
+	public Talons(Player player)
 	{
-		super(false, false);
+		super(player, false, false);
 	}
 
 	@Override
@@ -63,12 +61,6 @@ public class Talons extends Weapon {
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 
 		return null;
-	}
-
-	@Override
-	public void setPlayer(Player player)
-	{
-
 	}
 
 	@Override

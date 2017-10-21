@@ -22,14 +22,12 @@ import dwarves.vs.zombies.Weapon;
 
 public class ElvenDagger extends Weapon {
 
-	Player player;
 	boolean usedSpecial = false;
 	int timer = 0;
 
 	public ElvenDagger(Player player)
 	{
-		super(true, true);
-		this.player = player;
+		super(player, true, true);
 	}
 
 	public ItemStack getItem()
@@ -63,9 +61,9 @@ public class ElvenDagger extends Weapon {
 		speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
 		speed.set("Name", new NBTTagString("generic.movementSpeed"));
 		speed.set("Amount", new NBTTagDouble(0.8));
-		damage.set("Operation", new NBTTagInt(0));
-		damage.set("UUIDLeast", new NBTTagInt(894654));
-		damage.set("UUIDMost", new NBTTagInt(2872));
+		speed.set("Operation", new NBTTagInt(0));
+		speed.set("UUIDLeast", new NBTTagInt(894654));
+		speed.set("UUIDMost", new NBTTagInt(2872));
 		modifiers.add(speed);
 		
 		NBTTagCompound attackSpeed = new NBTTagCompound();
@@ -88,12 +86,6 @@ public class ElvenDagger extends Weapon {
 	}
 
 	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
-	}
-
-	@Override
 	public void normal()
 	{
 
@@ -104,13 +96,13 @@ public class ElvenDagger extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
+			getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
 					+ " more seconds to do that.");
 			return;
 		}
 		usedSpecial = true;
 
-		player.playSound(player.getLocation(), "runebladeRunedash", 4F, 1F);
+		getPlayer().playSound(getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
 
 		timer = 60;
 		EviserateTimer task = new EviserateTimer();
