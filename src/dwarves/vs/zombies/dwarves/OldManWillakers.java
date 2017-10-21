@@ -1,17 +1,17 @@
 package dwarves.vs.zombies.dwarves;
 
-import org.bukkit.entity.Player;
+import java.util.UUID;
 
 import dwarves.vs.zombies.dwarves.bows.Virendra;
 import dwarves.vs.zombies.dwarves.weapons.Excaliju;
 
 public class OldManWillakers extends Dwarf {
 
-	public OldManWillakers(Player player)
+	public OldManWillakers(UUID uuid)
 	{
-		super(player.getUniqueId());
-		setWeapon(new Excaliju(player));
-		setBow(new Virendra());
+		super(uuid);
+		setWeapon(new Excaliju(uuid));
+		setBow(new Virendra(uuid));
 	}
 
 	@Override

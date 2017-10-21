@@ -1,11 +1,11 @@
 package dwarves.vs.zombies.dwarves.bows;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -17,7 +17,11 @@ import dwarves.vs.zombies.Core;
 
 public class DragonskinBow extends Bow implements Listener {
 
-	Player player;
+	public DragonskinBow(UUID uuid)
+	{
+		super(uuid);
+	}
+
 	public int timer;
 	public boolean usedSpecial;
 
@@ -39,12 +43,6 @@ public class DragonskinBow extends Bow implements Listener {
 	}
 
 	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
-	}
-
-	@Override
 	public void onFire(EntityShootBowEvent event)
 	{
 		Arrow arrow = (Arrow) event.getProjectile();
@@ -60,6 +58,6 @@ public class DragonskinBow extends Bow implements Listener {
 	{
 		if (!(event.getEntity().isDead()))
 			return;
-		Core.getInstance().getDwarf(player).giveProc();
+		Core.getInstance().getDwarf(getPlayer()).giveProc();
 	}
 }

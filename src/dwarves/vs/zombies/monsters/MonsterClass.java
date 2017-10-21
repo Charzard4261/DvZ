@@ -1,14 +1,18 @@
 package dwarves.vs.zombies.monsters;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import dwarves.vs.zombies.Weapon;
+
 public abstract class MonsterClass {
 
 	public UUID uuid;
+	public ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 
 	public MonsterClass(UUID uuid)
 	{
@@ -22,8 +26,20 @@ public abstract class MonsterClass {
 
 	public abstract void equipItems();
 	
-	public abstract void onLeftClick(PlayerInteractEvent event);
+	// If these are needed, copy & paste with @Override before them to override these methods
+	
+	public void onLeftClick(PlayerInteractEvent event)
+	{
+		for (Weapon w : weapons)
+			if (event.getItem() == w.getItem())
+				w.normal();
+	}
 
-	public abstract void onRightClick(PlayerInteractEvent event);
+	public void onRightClick(PlayerInteractEvent event)
+	{                                        
+		for (Weapon w : weapons)
+			if (event.getItem() == w.getItem())
+				w.special();
+	}
 	
 }

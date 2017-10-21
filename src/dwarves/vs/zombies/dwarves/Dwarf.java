@@ -13,7 +13,6 @@ import dwarves.vs.zombies.dwarves.weapons.GreaterRuneblade;
 public class Dwarf {
 
 	private UUID uuid;
-//	private Player player;
 	private Weapon weapon;
 	private Bow bow;
 	protected int proccing = 0;
@@ -21,8 +20,8 @@ public class Dwarf {
 	public Dwarf(UUID uuid)
 	{
 		this.uuid = uuid;
-		this.weapon = new GreaterRuneblade(Bukkit.getPlayer(uuid));
-		this.bow = new DragonskinBow();
+		this.weapon = new GreaterRuneblade(uuid);
+		this.bow = new DragonskinBow(uuid);
 	}
 
 	public Player getPlayer()

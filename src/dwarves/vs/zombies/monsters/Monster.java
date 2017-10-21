@@ -10,9 +10,9 @@ import dwarves.vs.zombies.monsters.monsters.Zombie;
 public class Monster {
 
 	public UUID uuid;
-		
+
 	public Zombie zombie;
-	
+
 	private MonsterClass mc;
 
 	public Monster(UUID uuid)
@@ -24,10 +24,11 @@ public class Monster {
 	{
 		return Bukkit.getPlayer(uuid);
 	}
-	
-	public MonsterClass getMonster()
+
+	public void spawnMonster()
 	{
-		return mc;
+		// TP player to spawn
+		mc.equipItems();
 	}
 
 }

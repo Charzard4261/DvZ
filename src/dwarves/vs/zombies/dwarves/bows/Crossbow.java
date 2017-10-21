@@ -1,11 +1,11 @@
 package dwarves.vs.zombies.dwarves.bows;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +16,11 @@ import dwarves.vs.zombies.Core;
 
 public class Crossbow extends Bow {
 
-	Player player;
+	public Crossbow(UUID uuid)
+	{
+		super(uuid);
+	}
+
 	public int timer;
 	public boolean usedSpecial;
 
@@ -37,17 +41,11 @@ public class Crossbow extends Bow {
 		return item;
 	}
 
-	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
-	}
-
 	public void special()
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
+			getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
 					+ " more seconds to do that.");
 			return;
 		}
@@ -85,14 +83,12 @@ public class Crossbow extends Bow {
 	@Override
 	public void onFire(EntityShootBowEvent event)
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onHit(EntityDamageByEntityEvent event)
 	{
-		// TODO Auto-generated method stub
 		
 	}
 }

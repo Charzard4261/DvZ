@@ -12,21 +12,16 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
+import dwarves.vs.zombies.Weapon;
 import dwarves.vs.zombies.monsters.MonsterClass;
-import dwarves.vs.zombies.monsters.weapons.MakeshiftPickaxe;
+import dwarves.vs.zombies.monsters.weapons.NetherBow;
 
-public class Zombie extends MonsterClass {
+public class WitherSkeleton extends MonsterClass {
 
-	/**
-	 * THIS CLASS IS UNIQUE AND SHOULD NOT BE COPIED
-	 **/
-
-	private MakeshiftPickaxe weapon;
-
-	public Zombie(UUID uuid)
+	public WitherSkeleton(UUID uuid)
 	{
 		super(uuid);
-		weapons.add(weapon);
+		weapons.add(new NetherBow(uuid)); 
 	}
 
 	@Override
@@ -44,14 +39,14 @@ public class Zombie extends MonsterClass {
 			NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
 			NBTTagList modifiers = new NBTTagList();
 
-			NBTTagCompound speed = new NBTTagCompound();
-			speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
-			speed.set("Name", new NBTTagString("generic.movementSpeed"));
-			speed.set("Amount", new NBTTagDouble(0.8));
-			speed.set("Operation", new NBTTagInt(0));
-			speed.set("UUIDLeast", new NBTTagInt(894654));
-			speed.set("UUIDMost", new NBTTagInt(2872));
-			modifiers.add(speed);
+			NBTTagCompound health = new NBTTagCompound();
+			health.set("AttributeName", new NBTTagString("generic.maxHealth"));
+			health.set("Name", new NBTTagString("generic.maxHealth"));
+			health.set("Amount", new NBTTagDouble(20));
+			health.set("Operation", new NBTTagInt(0));
+			health.set("UUIDLeast", new NBTTagInt(894654));
+			health.set("UUIDMost", new NBTTagInt(2872));
+			modifiers.add(health);
 
 			compound.set("AttributeModifiers", modifiers);
 			nmsStack.setTag(compound);
@@ -67,7 +62,8 @@ public class Zombie extends MonsterClass {
 		//
 		//
 		{
-			getPlayer().getInventory().addItem(weapon.getItem());
+			for (Weapon w : weapons)
+				getPlayer().getInventory().addItem(w.getItem());
 		}
 	}
 

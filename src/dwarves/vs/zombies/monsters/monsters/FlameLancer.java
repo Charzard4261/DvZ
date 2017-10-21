@@ -10,23 +10,21 @@ import net.minecraft.server.v1_11_R1.NBTTagString;
 
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import dwarves.vs.zombies.Weapon;
 import dwarves.vs.zombies.monsters.MonsterClass;
-import dwarves.vs.zombies.monsters.weapons.MakeshiftPickaxe;
+import dwarves.vs.zombies.monsters.weapons.BoneToothBow;
 
-public class Zombie extends MonsterClass {
+public class FlameLancer extends MonsterClass {
 
-	/**
-	 * THIS CLASS IS UNIQUE AND SHOULD NOT BE COPIED
-	 **/
-
-	private MakeshiftPickaxe weapon;
-
-	public Zombie(UUID uuid)
+	public FlameLancer(UUID uuid)
 	{
 		super(uuid);
-		weapons.add(weapon);
+		weapons.add(new BoneToothBow(uuid)); 
 	}
 
 	@Override
@@ -44,14 +42,14 @@ public class Zombie extends MonsterClass {
 			NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
 			NBTTagList modifiers = new NBTTagList();
 
-			NBTTagCompound speed = new NBTTagCompound();
-			speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
-			speed.set("Name", new NBTTagString("generic.movementSpeed"));
-			speed.set("Amount", new NBTTagDouble(0.8));
-			speed.set("Operation", new NBTTagInt(0));
-			speed.set("UUIDLeast", new NBTTagInt(894654));
-			speed.set("UUIDMost", new NBTTagInt(2872));
-			modifiers.add(speed);
+			NBTTagCompound health = new NBTTagCompound();
+			health.set("AttributeName", new NBTTagString("generic.maxHealth"));   // this doesn't do anything but i will leave it here 
+			health.set("Name", new NBTTagString("generic.maxHealth"));           // it may be needed later
+			health.set("Amount", new NBTTagDouble(0));
+			health.set("Operation", new NBTTagInt(0));
+			health.set("UUIDLeast", new NBTTagInt(894654));
+			health.set("UUIDMost", new NBTTagInt(2872));
+			modifiers.add(health);
 
 			compound.set("AttributeModifiers", modifiers);
 			nmsStack.setTag(compound);
@@ -67,7 +65,18 @@ public class Zombie extends MonsterClass {
 		//
 		//
 		{
-			getPlayer().getInventory().addItem(weapon.getItem());
+			for (Weapon w : weapons)
+				getPlayer().getInventory().addItem(w.getItem());
+		}
+		//
+		//
+		// Effects
+		//
+		//
+		{
+			Player player = getPlayer(); //The monster class has a built in player variable
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 8, 4, false, false), false); 
+			player.setHealth(player.getHealth() + 400);
 		}
 	}
 

@@ -9,14 +9,13 @@ import org.bukkit.inventory.ItemStack;
 
 public abstract class Weapon {
 
-//	public Player player;
 	public UUID uuid;
 	boolean proc = false;
 	boolean rolls = false;
 	
-	public Weapon(Player player, boolean canProc, boolean rollsProc)
+	public Weapon(UUID uuid, boolean canProc, boolean rollsProc)
 	{
-		this.uuid = player.getUniqueId();
+		this.uuid = uuid;
 		this.proc = canProc;
 		this.rolls = rollsProc;
 	}

@@ -32,19 +32,19 @@ public class ItemCommand extends ACommand {
 		p.getInventory().remove(Core.getInstance().getDwarf(p).getWeapon().getItem());
 
 		if (args[0].equalsIgnoreCase("Dagger"))
-			Core.getInstance().getDwarf(p).setWeapon(new ElvenDagger(p));
+			Core.getInstance().getDwarf(p).setWeapon(new ElvenDagger(p.getUniqueId()));
 
 		if (args[0].equalsIgnoreCase("Excaliju"))
-			Core.getInstance().getDwarf(p).setWeapon(new Excaliju(p));
+			Core.getInstance().getDwarf(p).setWeapon(new Excaliju(p.getUniqueId()));
 
 		if (args[0].equalsIgnoreCase("Malice"))
-			Core.getInstance().getDwarf(p).setWeapon(new AxeOfMalice(p));
+			Core.getInstance().getDwarf(p).setWeapon(new AxeOfMalice(p.getUniqueId()));
 
 		if (args[0].equalsIgnoreCase("Runeblade"))
-			Core.getInstance().getDwarf(p).setWeapon(new GreaterRuneblade(p));
+			Core.getInstance().getDwarf(p).setWeapon(new GreaterRuneblade(p.getUniqueId()));
 
 		if (args[0].equalsIgnoreCase("Hammer"))
-			Core.getInstance().getDwarf(p).setWeapon(new Warhammer(p));
+			Core.getInstance().getDwarf(p).setWeapon(new Warhammer(p.getUniqueId()));
 
 		p.getInventory().addItem(Core.getInstance().getDwarf(p).getWeapon().getItem());
 

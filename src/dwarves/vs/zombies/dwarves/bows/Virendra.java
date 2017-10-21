@@ -1,6 +1,7 @@
 package dwarves.vs.zombies.dwarves.bows;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
 import net.minecraft.server.v1_11_R1.NBTTagInt;
@@ -10,7 +11,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +21,11 @@ import dwarves.vs.zombies.Core;
 
 public class Virendra extends Bow {
 
-	Player player;
+	public Virendra(UUID uuid)
+	{
+		super(uuid);
+	}
+
 	public int timer;
 	public boolean usedSpecial;
 
@@ -58,12 +62,6 @@ public class Virendra extends Bow {
 
 		return item;
 	}
-	
-	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
-	}
 
 	@Override
 	public void onFire(EntityShootBowEvent event)
@@ -81,6 +79,6 @@ public class Virendra extends Bow {
 	{
 		if (!(event.getEntity().isDead()))
 			return;
-		Core.getInstance().getDwarf(player).giveProc();
+		Core.getInstance().getDwarf(getPlayer()).giveProc();
 	}
 }

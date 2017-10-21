@@ -129,7 +129,7 @@ public class PlayerDwarfListeners implements Listener {
 			return;
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onShoot(EntityShootBowEvent event)
 	{
 		if (event.getEntityType() != EntityType.PLAYER)
