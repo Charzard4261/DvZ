@@ -94,12 +94,12 @@ public class Fangs extends Weapon {
 		Player player = (Player) event.getDamager(); //CRITICAL but for this event it's   does sound need to be imported from anywhere? (bet nothing i put here is good)
                 player.playSound(player.getLocation(), "ENTITY_WOLF_GROWL", 4F, 1F);                          // plays growl sound
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 1, false, false), false);  // gives the speed
-		player.heal(2);
+		player.heal(4);
 		
 		if(player.getWorld().getTime() > 23850) 
 		{
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 8, 1, false, false), false);
-			player.heal(4);
+			player.heal(8);
 		}
 			
 	}
