@@ -1,5 +1,7 @@
 package dwarves.vs.zombies.monsters.weapons;
 
+import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -15,7 +17,10 @@ import dwarves.vs.zombies.Bow;
 
 public class NetherBow extends Bow implements Listener {
 
-	Player player;
+	public NetherBow(UUID uuid)
+	{
+		super(uuid);
+	}
 
 	@Override
     public ItemStack getItem()
@@ -26,12 +31,6 @@ public class NetherBow extends Bow implements Listener {
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
 		return item;
-	}
-
-	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
 	}
 
 	@Override
@@ -49,6 +48,8 @@ public class NetherBow extends Bow implements Listener {
 	@Override
 	public void onHit(EntityDamageByEntityEvent event)
 	{
-
+		Player player = (Player) event.getDamager();
+		
+		player.setHealth(player.getHealth() + 20); //heals 10 full hearts per shot that hits a target
 	}
 }

@@ -1,11 +1,11 @@
 package dwarves.vs.zombies.monsters.weapons;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -17,7 +17,11 @@ import dwarves.vs.zombies.Bow;
 
 public class BoneToothBow extends Bow implements Listener {
 
-	Player player;
+
+	public BoneToothBow(UUID uuid)
+	{
+		super(uuid);
+	}
 
 	@Override
     public ItemStack getItem()
@@ -31,12 +35,6 @@ public class BoneToothBow extends Bow implements Listener {
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
 		return item;
-	}
-
-	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
 	}
 
 	@Override

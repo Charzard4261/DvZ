@@ -215,7 +215,7 @@ public class Core extends JavaPlugin {
 
 	public void spawnOldMan(Player player)
 	{
-		dwarves.add(new OldManWillakers(player));
+		dwarves.add(new OldManWillakers(player.getUniqueId()));
 		player.playSound(mm.getMap().getSpawn(), "bruceIntro", 10F, 1F);
 
 		player.getInventory().clear();

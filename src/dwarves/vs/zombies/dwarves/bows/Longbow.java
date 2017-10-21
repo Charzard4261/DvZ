@@ -1,12 +1,12 @@
 package dwarves.vs.zombies.dwarves.bows;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
@@ -17,14 +17,14 @@ import dwarves.vs.zombies.Core;
 
 public class Longbow extends Bow {
 
-	Player player;
+	public Longbow(UUID uuid)
+	{
+		super(uuid);
+	}
+
 	private int boost = 0;
 	private BoostTimer task;
 	public int timer;
-
-	public Longbow()
-	{
-	}
 
 	public ItemStack getItem()
 	{
@@ -42,12 +42,6 @@ public class Longbow extends Bow {
 		item.setItemMeta(meta);
 
 		return item;
-	}
-
-	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
 	}
 
 	@Override

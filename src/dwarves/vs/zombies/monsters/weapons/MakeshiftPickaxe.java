@@ -16,9 +16,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.Weapon;
 
-public class BaseWeapon extends Weapon {
+public class MakeshiftPickaxe extends Weapon {
 
-	public BaseWeapon(UUID uuid)
+	/**
+	 * THIS CLASS IS UNIQUE AND SHOULD NOT BE COPIED
+	 **/
+	
+	private int level = 0;
+	
+	public MakeshiftPickaxe(UUID uuid)
 	{
 		super(uuid, false, false);
 	}
@@ -26,11 +32,11 @@ public class BaseWeapon extends Weapon {
 	@Override
 	public ItemStack getItem()
 	{
-
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 1);
+		ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1, (short) 1);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.AQUA + "Axe Of Malice");
+		meta.setDisplayName(ChatColor.RED + "Goblin Pick");
 		item.setItemMeta(meta);
+		meta.setUnbreakable(true);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
@@ -38,7 +44,7 @@ public class BaseWeapon extends Weapon {
 		NBTTagCompound damage = new NBTTagCompound();
 		damage.set("AttributeName", new NBTTagString("generic.attackDamage"));
 		damage.set("Name", new NBTTagString("generic.attackDamage"));
-		damage.set("Amount", new NBTTagInt(20));
+		damage.set("Amount", new NBTTagInt(5 + level));
 		damage.set("Operation", new NBTTagInt(0));
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
@@ -60,29 +66,31 @@ public class BaseWeapon extends Weapon {
 		nmsStack.setTag(compound);
 
 		item = CraftItemStack.asBukkitCopy(nmsStack);
-
+		
 		return item;
 	}
 
 	@Override
 	public void normal()
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void special()
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
 	{
-		// TODO Auto-generated method stub
-		
+
+	}
+	
+	public void levelup()
+	{
+		level++;
 	}
 
 }
