@@ -19,9 +19,9 @@ import dwarves.vs.zombies.Weapon;
 
 public class BaseWeapon extends Weapon {
 
-	public BaseWeapon()
+	public BaseWeapon(Player player)
 	{
-		super(false, false);
+		super(player, false, false);
 	}
 
 	@Override
@@ -71,13 +71,6 @@ public class BaseWeapon extends Weapon {
 		item = CraftItemStack.asBukkitCopy(nmsStack);
 
 		return null;
-	}
-
-	@Override
-	public void setPlayer(Player player)
-	{
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

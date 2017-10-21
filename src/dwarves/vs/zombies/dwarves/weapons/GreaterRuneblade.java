@@ -23,14 +23,12 @@ import dwarves.vs.zombies.Weapon;
 
 public class GreaterRuneblade extends Weapon {
 
-	Player player;
 	boolean usedSpecial = false;
 	int timer = 0;
 
 	public GreaterRuneblade(Player player)
 	{
-		super(true, true);
-		this.player = player;
+		super(player, true, true);
 	}
 
 	public ItemStack getItem()
@@ -80,12 +78,6 @@ public class GreaterRuneblade extends Weapon {
 	}
 
 	@Override
-	public void setPlayer(Player player)
-	{
-		this.player = player;
-	}
-
-	@Override
 	public void normal()
 	{
 
@@ -96,17 +88,17 @@ public class GreaterRuneblade extends Weapon {
 	{
 		if (usedSpecial)
 		{
-			player.sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
+			getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
 					+ " more seconds to do that.");
 			return;
 		}
 		usedSpecial = true;
 
-		player.playSound(player.getLocation(), "runebladeRunedash", 4F, 1F);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, 255, false,
+		getPlayer().playSound(getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, 255, false,
 				false), false);
-		player.setVelocity(player.getLocation().getDirection().multiply(2).setY(0.2));
+		getPlayer().setVelocity(getPlayer().getLocation().getDirection().multiply(2).setY(0.2));
 
 		timer = 15;
 		dashTimer task = new dashTimer();

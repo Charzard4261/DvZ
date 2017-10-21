@@ -1,7 +1,5 @@
 package dwarves.vs.zombies.monsters.weapons;
 
-import java.util.ArrayList;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;

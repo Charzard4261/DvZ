@@ -13,7 +13,7 @@ import dwarves.vs.zombies.dwarves.weapons.GreaterRuneblade;
 public class Dwarf {
 
 	private UUID uuid;
-	private Player player;
+//	private Player player;
 	private Weapon weapon;
 	private Bow bow;
 	protected int proccing = 0;
@@ -21,22 +21,13 @@ public class Dwarf {
 	public Dwarf(UUID uuid)
 	{
 		this.uuid = uuid;
-		this.player = Bukkit.getPlayer(uuid);
-		this.weapon = new GreaterRuneblade(player);
+		this.weapon = new GreaterRuneblade(Bukkit.getPlayer(uuid));
 		this.bow = new DragonskinBow();
-		setPlayer();
-	}
-
-	public void setPlayer()
-	{
-		this.player = Bukkit.getPlayer(uuid);
-		this.weapon.setPlayer(player);
-		this.bow.setPlayer(player);
 	}
 
 	public Player getPlayer()
 	{
-		return player;
+		return Bukkit.getPlayer(uuid);
 	}
 
 	public Weapon getWeapon()
@@ -48,7 +39,6 @@ public class Dwarf {
 	{
 		this.weapon = null;
 		this.weapon = weapon;
-		setPlayer();
 	}
 
 	public Bow getBow()
@@ -60,7 +50,6 @@ public class Dwarf {
 	{
 		this.bow = null;
 		this.bow = bow;
-		setPlayer();
 	}
 
 	public boolean isProccing()
