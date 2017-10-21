@@ -75,7 +75,8 @@ public class FlameLancer extends MonsterClass {
 		//
 		{
 			Player player = getPlayer(); //The monster class has a built in player variable
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 8, 4, false, false), false); 
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10, 4, false, false), false); 
+			player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 9999, 10, false, false), false); 
 			player.setHealth(player.getHealth() + 400);
 		}
 	}
