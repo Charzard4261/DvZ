@@ -56,8 +56,6 @@ public class Lightbow extends Bow implements Listener {
 	@Override
 	public void onHit(EntityDamageByEntityEvent event)
 	{
-		if (!(event.getEntity().isDead()))
-			return;
-		Core.getInstance().getDwarf(getPlayer()).giveProc();
+
 	}
 }
