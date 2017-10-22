@@ -81,7 +81,8 @@ public class SpiderFangs extends Weapon {
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
 	{   
-			
+		Player hit = (Player) event.getEntity();
+		hit.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 6, 2, false, false), false);
 	}
 
 }
