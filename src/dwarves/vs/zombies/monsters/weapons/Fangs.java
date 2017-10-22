@@ -77,8 +77,9 @@ public class Fangs extends Weapon {
 	@Override
 	public void special()
 	{
-		// THIS IS USE SPECIAL, AKA LEAP
-		
+		Player player = getPlayer();
+		player.setVelocity(new Vector(0,1,0));  // launches player in the air
+		getPlayer().setVelocity(getPlayer().getLocation().getDirection().multiply(4).setY(0)); // sends the player in the direction they are looking
 	}
 
 	@Override
