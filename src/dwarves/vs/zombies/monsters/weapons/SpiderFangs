@@ -68,7 +68,6 @@ public class SpiderFangs extends Weapon {
 	@Override
 	public void normal()
 	{
-		// THIS FIRES WHEN THE PLAYER PUNCHES add poison
 
 	}
 
