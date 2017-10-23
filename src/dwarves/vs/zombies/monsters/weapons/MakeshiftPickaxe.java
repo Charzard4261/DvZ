@@ -34,9 +34,12 @@ public class MakeshiftPickaxe extends Weapon {
 	{
 		ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1, (short) 1);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + "Goblin Pick");
-		item.setItemMeta(meta);
+		meta.setDisplayName(ChatColor.RED + "Makeshift Blade");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		meta.setLore(lore);
 		meta.setUnbreakable(true);
+		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();

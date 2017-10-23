@@ -33,6 +33,9 @@ public class SpiderFangs extends Weapon {
 		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 2);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Spider Fangs");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		meta.setLore(lore);
 		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
@@ -70,7 +73,7 @@ public class SpiderFangs extends Weapon {
 	@Override
 	public void normal()
 	{
-		// THIS FIRES WHEN THE PLAYER PUNCHES add poison
+		// THIS FIRES WHEN THE PLAYER PUNCHES
 
 	}
 
@@ -87,5 +90,6 @@ public class SpiderFangs extends Weapon {
 		Player hit = (Player) event.getEntity();
 		hit.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 6, 2, false, false), false);
 	}
+
 
 }

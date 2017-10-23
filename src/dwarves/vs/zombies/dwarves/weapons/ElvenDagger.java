@@ -135,9 +135,9 @@ public class ElvenDagger extends Weapon {
 
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
-	{
-		// TODO Auto-generated method stub
-		
+	{   
+		Player hit = (Player) event.getEntity();
+		hit.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 6, 3, false, false), false); //not sure if this is the right amount
 	}
 
 }

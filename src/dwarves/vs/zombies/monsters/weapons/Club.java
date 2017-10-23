@@ -30,8 +30,11 @@ public class Club extends Weapon {
 		ItemStack item = new ItemStack(Material.WOOD_HOE, 1, (short) 1); //not sure what item ogre uses
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Ogre Club");
-		item.setItemMeta(meta);
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		meta.setLore(lore);
 		meta.setUnbreakable(true);
+		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
