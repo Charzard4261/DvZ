@@ -39,6 +39,9 @@ public class Zombie extends MonsterClass {
 		//
 		{
 			ItemStack item = new ItemStack(Material.SLIME_BALL);
+			ArrayList<String> lore = new ArrayList<String>();
+		        lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		        meta.setLore(lore);
 
 			net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 			NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
