@@ -10,9 +10,12 @@ import net.minecraft.server.v1_11_R1.NBTTagString;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Weapon;
 
@@ -78,12 +81,12 @@ public class SpiderFangs extends Weapon {
 	public void special()
 	{
 		// THIS IS USE SPECIAL, AKA LEAP
-		
+
 	}
 
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
-	{   
+	{
 		Player hit = (Player) event.getEntity();
 		hit.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 6, 2, false, false), false);
 	}
