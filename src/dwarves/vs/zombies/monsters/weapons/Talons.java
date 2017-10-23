@@ -30,6 +30,9 @@ public class Talons extends Weapon {
 		ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1, (short) 1); // i dont know what the rat item is do you have any screenshots of the mob items?
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Rat Talons");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		meta.setLore(lore);
 		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
