@@ -21,9 +21,7 @@ public class Wolf extends MonsterClass {
 	public Wolf(UUID uuid)
 	{
 		super(uuid);
-		weapons.add(new Fangs(uuid)); // Weapons array is made in the superclass
-										// (Monster Class) so it doesn't waste
-										// storage for every class
+		weapons.add(new Fangs(uuid));
 	}
 
 	@Override
@@ -36,6 +34,10 @@ public class Wolf extends MonsterClass {
 		//
 		{
 			ItemStack item = new ItemStack(Material.SLIME_BALL);
+			ArrayList<String> lore = new ArrayList<String>();
+		        lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		        meta.setLore(lore);
+		        meta.setUnbreakable(true);
 
 			net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 			NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
