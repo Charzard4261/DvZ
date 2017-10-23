@@ -1,5 +1,6 @@
 package dwarves.vs.zombies.monsters.weapons;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
@@ -27,7 +28,11 @@ public class NetherBow extends Bow implements Listener {
 	{
 		ItemStack item = new ItemStack(Material.BOW);
 	    ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + "Nether Bow");
+		meta.setDisplayName(ChatColor.RED + "Nether Tooth Bow");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.AQUA + "A powerful bow crafted from the bones");
+		lore.add(ChatColor.AQUA + "of dead Dwarves");
+		meta.setLore(lore);
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
 		return item;

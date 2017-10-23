@@ -81,6 +81,7 @@ public class PlayerDwarfListeners implements Listener {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler(ignoreCancelled = true)
 	public void onAttack(EntityDamageByEntityEvent event)
 	{
@@ -93,7 +94,8 @@ public class PlayerDwarfListeners implements Listener {
 
 		Dwarf dwarf = Core.getInstance().getDwarf((Player) event.getDamager());
 		
-		dwarf.getWeapon().damage(event);
+		if (((Player) event.getDamager()).getItemInHand().equals(dwarf.getWeapon().getItem()))
+			dwarf.getWeapon().damage(event);
 
 		// TODO Add check for monster class, I.E. Dire Wolves, Mob Heroes
 

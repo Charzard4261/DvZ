@@ -1,5 +1,6 @@
 package dwarves.vs.zombies.monsters.weapons;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
@@ -20,18 +21,24 @@ public class AncientPick extends Weapon {
 
 	public AncientPick(UUID uuid)
 	{
-		super(uuid, false, false);   
+		super(uuid, false, false);
 	}
 
 	@Override
 	public ItemStack getItem()
 	{
 
-		ItemStack item = new ItemStack(Material.SUGAR, 1, (short) 1);  // find what the item is
+		ItemStack item = new ItemStack(Material.SUGAR, 1, (short) 1); // find
+																		// what
+																		// the
+																		// item
+																		// is
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Ancient Pickaxe");
-                ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.AQUA + "An ancient pickaxe with untold powers.");
+		lore.add(ChatColor.AQUA + "Deals high damage and causes explosions");
+		lore.add(ChatColor.AQUA + "with every swing!");
 		meta.setLore(lore);
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
@@ -77,13 +84,13 @@ public class AncientPick extends Weapon {
 	@Override
 	public void special()
 	{
-		// THIS IS USE SPECIAL 
+		// THIS IS USE SPECIAL
 	}
 
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
-	{   
-			
+	{
+
 	}
 
 }

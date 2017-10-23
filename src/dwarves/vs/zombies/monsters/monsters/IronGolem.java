@@ -1,5 +1,6 @@
 package dwarves.vs.zombies.monsters.monsters;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
@@ -8,11 +9,12 @@ import net.minecraft.server.v1_11_R1.NBTTagInt;
 import net.minecraft.server.v1_11_R1.NBTTagList;
 import net.minecraft.server.v1_11_R1.NBTTagString;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -37,12 +39,13 @@ public class IronGolem extends MonsterClass {
 		//
 		//
 		{
-			ItemStack item = new ItemStack(Material.SLIME_BALL); // change to gold chestplate
-			ArrayList<String> lore = new ArrayList<String>();
-		        lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
-		        meta.setLore(lore);
-		        meta.setUnbreakable(true);
+			ItemStack item = new ItemStack(Material.SLIME_BALL);
 
+			ItemMeta meta = item.getItemMeta();
+			meta.setDisplayName(ChatColor.RED + "Golem Chest");
+			ArrayList<String> lore = new ArrayList<String>();
+			meta.setLore(lore);
+			
 			net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 			NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
 			NBTTagList modifiers = new NBTTagList();
@@ -55,7 +58,7 @@ public class IronGolem extends MonsterClass {
 			health.set("UUIDLeast", new NBTTagInt(894654));
 			health.set("UUIDMost", new NBTTagInt(2872));
 			modifiers.add(health);
-			
+
 			NBTTagCompound kb = new NBTTagCompound();
 			kb.set("AttributeName", new NBTTagString("generic.knockbackResistance"));
 			kb.set("Name", new NBTTagString("generic.knockbackResistance"));
@@ -64,11 +67,11 @@ public class IronGolem extends MonsterClass {
 			kb.set("UUIDLeast", new NBTTagInt(894654));
 			kb.set("UUIDMost", new NBTTagInt(2872));
 			modifiers.add(kb);
-			
+
 			NBTTagCompound speed = new NBTTagCompound();
 			speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
 			speed.set("Name", new NBTTagString("generic.movementSpeed"));
-			speed.set("Amount", new NBTTagInt(1));
+			speed.set("Amount", new NBTTagDouble(-0.17));
 			speed.set("Operation", new NBTTagInt(0));
 			speed.set("UUIDLeast", new NBTTagInt(894654));
 			speed.set("UUIDMost", new NBTTagInt(2872));
@@ -97,10 +100,9 @@ public class IronGolem extends MonsterClass {
 		//
 		//
 		{
-			Player player = getPlayer(); //The monster class has a built in player variable
-			player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 9999, 10, false, false), false);
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 9999, 5, false, false), false); 
-			player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999, 2, false, false), false);
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 99999, 6, false, false), false);
+			getPlayer().setHealth(getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
 		}
 	}
 

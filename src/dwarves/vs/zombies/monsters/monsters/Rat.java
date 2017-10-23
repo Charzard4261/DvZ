@@ -17,14 +17,14 @@ import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Weapon;
 import dwarves.vs.zombies.monsters.MonsterClass;
-import dwarves.vs.zombies.monsters.weapons.Club;
+import dwarves.vs.zombies.monsters.weapons.Talons;
 
-public class Ogre extends MonsterClass {
+public class Rat extends MonsterClass {
 
-	public Ogre(UUID uuid)
+	public Rat(UUID uuid)
 	{
 		super(uuid);
-		weapons.add(new Club(uuid));
+		weapons.add(new Talons(uuid));
 	}
 
 	@Override
@@ -45,20 +45,11 @@ public class Ogre extends MonsterClass {
 			NBTTagCompound health = new NBTTagCompound();
 			health.set("AttributeName", new NBTTagString("generic.maxHealth"));
 			health.set("Name", new NBTTagString("generic.maxHealth"));
-			health.set("Amount", new NBTTagDouble(100));
+			health.set("Amount", new NBTTagDouble(0));
 			health.set("Operation", new NBTTagInt(0));
 			health.set("UUIDLeast", new NBTTagInt(894654));
 			health.set("UUIDMost", new NBTTagInt(2872));
 			modifiers.add(health);
-
-			NBTTagCompound kb = new NBTTagCompound();
-			kb.set("AttributeName", new NBTTagString("generic.knockbackResistance"));
-			kb.set("Name", new NBTTagString("generic.knockbackResistance"));
-			kb.set("Amount", new NBTTagInt(1));
-			kb.set("Operation", new NBTTagInt(0));
-			kb.set("UUIDLeast", new NBTTagInt(894654));
-			kb.set("UUIDMost", new NBTTagInt(2872));
-			modifiers.add(kb);
 
 			compound.set("AttributeModifiers", modifiers);
 			nmsStack.setTag(compound);
@@ -82,9 +73,11 @@ public class Ogre extends MonsterClass {
 		// Effects
 		//
 		//
-		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 3, false, false), false);
-		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999, 2, false, false), false);
-		getPlayer().setHealth(getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
+		{
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 2, false, false), false);
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999, 2, false, false), false);
+			getPlayer().setHealth(getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
+		}
 	}
 
 }

@@ -9,8 +9,11 @@ import net.minecraft.server.v1_11_R1.NBTTagList;
 import net.minecraft.server.v1_11_R1.NBTTagString;
 
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Weapon;
 import dwarves.vs.zombies.monsters.MonsterClass;
@@ -34,9 +37,6 @@ public class Wolf extends MonsterClass {
 		//
 		{
 			ItemStack item = new ItemStack(Material.SLIME_BALL);
-			ArrayList<String> lore = new ArrayList<String>();
-		        lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
-		        meta.setLore(lore);
 
 			net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 			NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
@@ -68,6 +68,14 @@ public class Wolf extends MonsterClass {
 			for (Weapon w : weapons)
 				getPlayer().getInventory().addItem(w.getItem());
 		}
+		//
+		//
+		// Effects
+		//
+		//
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 2, false, false), false);
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999, 2, false, false), false);
+		getPlayer().setHealth(getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
 	}
 
 }

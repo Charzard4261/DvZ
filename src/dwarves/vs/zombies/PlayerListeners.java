@@ -71,8 +71,7 @@ public class PlayerListeners implements Listener {
 		}
 
 		event.getRecipients().clear();
-		event.setFormat(ChatColor.WHITE + "<" + event.getPlayer().getCustomName() + ChatColor.WHITE + "> "
-				+ event.getMessage());
+		event.setFormat(ChatColor.WHITE + "<" + event.getPlayer().getCustomName() + ChatColor.WHITE + "> " + event.getMessage());
 		if (Core.getInstance().getDwarf(event.getPlayer()) != null)
 		{
 			for (Player p : Bukkit.getOnlinePlayers())
@@ -104,11 +103,9 @@ public class PlayerListeners implements Listener {
 		case Lobby:
 			event.setRespawnLocation(Core.getInstance().mm.getLobby());
 			break;
-		case Startup:
-			event.setRespawnLocation(Core.getInstance().mm.getLobby());
-			break;
 		case Build_Phase:
 			event.setRespawnLocation(Core.getInstance().mm.getMap().getSpawn());
+			break;
 		case Game:
 			event.setRespawnLocation(Core.getInstance().mm.getCurrentShrine().getMonsterSpawn());
 			break;
@@ -128,12 +125,12 @@ public class PlayerListeners implements Listener {
 
 			double radiusSquared = radius * radius;
 
-			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(
-					Core.getInstance().mm.getCurrentShrine().getLocation(), radius, radius, radius); // All
-																										// entities
-																										// within
-																										// a
-																										// box
+			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(Core.getInstance().mm.getCurrentShrine().getLocation(),
+					radius, radius, radius); // All
+												// entities
+												// within
+												// a
+												// box
 			for (Entity entity : entities)
 			{
 
@@ -148,8 +145,7 @@ public class PlayerListeners implements Listener {
 					{
 						// TODO Check if can go past mob protection
 						event.getPlayer().damage(9999);
-						event.getPlayer().sendMessage(
-								ChatColor.DARK_RED + "You were killed because you were too close to the next shrine!");
+						event.getPlayer().sendMessage(ChatColor.DARK_RED + "You were killed because you were too close to the next shrine!");
 						event.getPlayer().sendMessage(ChatColor.DARK_RED + "Destroy the current one first!");
 					}
 				}
@@ -164,8 +160,8 @@ public class PlayerListeners implements Listener {
 
 			double radiusSquared = radius * radius;
 
-			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(
-					Core.getInstance().mm.getCurrentShrine().getLocation(), radius, radius, radius); // All entities within a box
+			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(Core.getInstance().mm.getCurrentShrine().getLocation(),
+					radius, radius, radius); // All entities within a box
 			for (Entity entity : entities)
 			{
 
