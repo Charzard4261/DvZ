@@ -33,6 +33,9 @@ public class Fangs extends Weapon {
 		ItemStack item = new ItemStack(Material.SUGAR, 1, (short) 1);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Wolf Fangs");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		meta.setLore(lore);
 		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
