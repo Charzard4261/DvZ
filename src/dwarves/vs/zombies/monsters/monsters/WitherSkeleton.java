@@ -41,7 +41,6 @@ public class WitherSkeleton extends MonsterClass {
 			ArrayList<String> lore = new ArrayList<String>();
 		        lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
 		        meta.setLore(lore);
-		        meta.setUnbreakable(true);
 
 			net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 			NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
