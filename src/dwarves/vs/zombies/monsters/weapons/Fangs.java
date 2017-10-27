@@ -9,6 +9,7 @@ import net.minecraft.server.v1_11_R1.NBTTagString;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -16,7 +17,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
 
 import dwarves.vs.zombies.Weapon;
 
@@ -31,12 +31,9 @@ public class Fangs extends Weapon {
 	public ItemStack getItem()
 	{
 
-		ItemStack item = new ItemStack(Material.SUGAR, 1, (short) 1);
+		ItemStack item = new ItemStack(Material.SUGAR, 1);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Wolf Fangs");
-		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
-		meta.setLore(lore);
 		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
@@ -81,26 +78,26 @@ public class Fangs extends Weapon {
 	@Override
 	public void special()
 	{
-		Player player = getPlayer();
-		player.setVelocity(new Vector(0,1,0));  // launches player in the air
-		getPlayer().setVelocity(getPlayer().getLocation().getDirection().multiply(4).setY(0)); // sends the player in the direction they are looking
+		getPlayer().getWorld().playSound(getPlayer().getLocation(), Sound.ENTITY_WOLF_HOWL, 2F, 1F);
+		getPlayer().setVelocity(getPlayer().getLocation().getDirection().multiply(4).setY(2));
 	}
 
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
-	{   
-		// At this point, 'player' doesn't exist as a variable
-		Player player = (Player) event.getDamager(); //CRITICAL but for this event it's   
-        player.playSound(player.getLocation(), "ENTITY_WOLF_GROWL", 4F, 1F);                          // plays growl sound
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 1, false, false), false);  // gives the speed
-		player.setHealth(player.getHealth() + 4);
-		
-		if(player.getWorld().getTime() > 23850) 
+	{
+		Player player = (Player) event.getDamager();
+		player.getWorld().playSound(player.getLocation(), Sound.ENTITY_WOLF_GROWL, 2F, 1F);
+
+		if (player.getWorld().getTime() > 23850)
 		{
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 8, 1, false, false), false);
-			player.setHealth(player.getHealth() + 8);
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 160, 0, false, false), false);
+			player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 2, false, false), false);
+		} else
+		{
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), false);
+			player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false), false);
 		}
-			
+
 	}
 
 }

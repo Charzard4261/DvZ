@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,6 +30,9 @@ public class PlayerListeners implements Listener {
 		case Lobby:
 			event.getPlayer().setCustomName(event.getPlayer().getDisplayName());
 			event.getPlayer().setPlayerListName(event.getPlayer().getDisplayName());
+			event.getPlayer().setHealth(event.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+			event.getPlayer().getInventory().clear();
+			event.getPlayer().setLevel(0);
 			event.getPlayer().teleport(Core.getInstance().mm.getLobby());
 			break;
 		case Build_Phase:
@@ -51,6 +55,10 @@ public class PlayerListeners implements Listener {
 
 			} else if (Core.getInstance().getMonster(event.getPlayer()) == null)
 			{
+				event.getPlayer().setHealth(event.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+				event.getPlayer().getInventory().clear();
+				event.getPlayer().setLevel(0);
+				
 				Core.getInstance().spawnMonster(event.getPlayer());
 			}
 			break;
@@ -71,8 +79,7 @@ public class PlayerListeners implements Listener {
 		}
 
 		event.getRecipients().clear();
-		event.setFormat(ChatColor.WHITE + "<" + event.getPlayer().getCustomName() + ChatColor.WHITE + "> "
-				+ event.getMessage());
+		event.setFormat(ChatColor.WHITE + "<" + event.getPlayer().getCustomName() + ChatColor.WHITE + "> " + event.getMessage());
 		if (Core.getInstance().getDwarf(event.getPlayer()) != null)
 		{
 			for (Player p : Bukkit.getOnlinePlayers())
@@ -104,11 +111,9 @@ public class PlayerListeners implements Listener {
 		case Lobby:
 			event.setRespawnLocation(Core.getInstance().mm.getLobby());
 			break;
-		case Startup:
-			event.setRespawnLocation(Core.getInstance().mm.getLobby());
-			break;
 		case Build_Phase:
 			event.setRespawnLocation(Core.getInstance().mm.getMap().getSpawn());
+			break;
 		case Game:
 			event.setRespawnLocation(Core.getInstance().mm.getCurrentShrine().getMonsterSpawn());
 			break;
@@ -128,12 +133,12 @@ public class PlayerListeners implements Listener {
 
 			double radiusSquared = radius * radius;
 
-			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(
-					Core.getInstance().mm.getCurrentShrine().getLocation(), radius, radius, radius); // All
-																										// entities
-																										// within
-																										// a
-																										// box
+			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(Core.getInstance().mm.getCurrentShrine().getLocation(),
+					radius, radius, radius); // All
+												// entities
+												// within
+												// a
+												// box
 			for (Entity entity : entities)
 			{
 
@@ -142,14 +147,11 @@ public class PlayerListeners implements Listener {
 
 				if (entity instanceof Player)
 				{
-					if (Core.getInstance().getDwarf(event.getPlayer()) != null)
-					{
-					} else if (Core.getInstance().getMonster(event.getPlayer()) != null)
+					if (Core.getInstance().getMonster(event.getPlayer()) != null)
 					{
 						// TODO Check if can go past mob protection
 						event.getPlayer().damage(9999);
-						event.getPlayer().sendMessage(
-								ChatColor.DARK_RED + "You were killed because you were too close to the next shrine!");
+						event.getPlayer().sendMessage(ChatColor.DARK_RED + "You were killed because you were too close to the next shrine!");
 						event.getPlayer().sendMessage(ChatColor.DARK_RED + "Destroy the current one first!");
 					}
 				}
@@ -164,8 +166,8 @@ public class PlayerListeners implements Listener {
 
 			double radiusSquared = radius * radius;
 
-			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(
-					Core.getInstance().mm.getCurrentShrine().getLocation(), radius, radius, radius); // All entities within a box
+			Collection<Entity> entities = Core.getInstance().mm.getWorld().getNearbyEntities(Core.getInstance().mm.getCurrentShrine().getLocation(),
+					radius, radius, radius); // All entities within a box
 			for (Entity entity : entities)
 			{
 

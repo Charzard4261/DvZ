@@ -30,7 +30,8 @@ public class BoneToothBow extends Bow implements Listener {
 	    ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "BoneTooth Bow");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		lore.add(ChatColor.AQUA + "A powerful bow crafted from the bones");
+		lore.add(ChatColor.AQUA + "of dead Dwarves");
 		meta.setLore(lore);
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);

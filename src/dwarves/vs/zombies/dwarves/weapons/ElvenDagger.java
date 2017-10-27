@@ -13,9 +13,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.Weapon;
@@ -136,7 +139,7 @@ public class ElvenDagger extends Weapon {
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
 	{   
-		Player hit = (Player) event.getEntity();
+		Player hit = (Player) event.getDamager();
 		hit.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 6, 3, false, false), false); //not sure if this is the right amount
 	}
 

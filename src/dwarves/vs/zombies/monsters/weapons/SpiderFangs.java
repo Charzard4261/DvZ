@@ -1,5 +1,6 @@
 package dwarves.vs.zombies.monsters.weapons;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
@@ -34,7 +35,9 @@ public class SpiderFangs extends Weapon {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Spider Fangs");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		lore.add(ChatColor.AQUA + "Left click to poison nearby Dwarves");
+		lore.add(ChatColor.AQUA + "and right click to spraw poison that");
+		lore.add(ChatColor.AQUA + "corrodes walls it touches.");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 
@@ -90,6 +93,5 @@ public class SpiderFangs extends Weapon {
 		Player hit = (Player) event.getEntity();
 		hit.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 6, 2, false, false), false);
 	}
-
 
 }

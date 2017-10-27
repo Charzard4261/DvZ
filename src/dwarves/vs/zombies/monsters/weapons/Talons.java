@@ -1,5 +1,6 @@
 package dwarves.vs.zombies.monsters.weapons;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
@@ -27,11 +28,13 @@ public class Talons extends Weapon {
 	public ItemStack getItem()
 	{
 
-		ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1, (short) 1); // i dont know what the rat item is do you have any screenshots of the mob items?
+		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 7); // i dont know what the rat item is do you have any screenshots of the mob items?
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Rat Talons");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
+		lore.add(ChatColor.AQUA + "Deals almost no damage. however when");
+		lore.add(ChatColor.AQUA + "breaking torches gives a massive amount");
+		lore.add(ChatColor.AQUA + "of mana to the monster");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 

@@ -1,5 +1,6 @@
 package dwarves.vs.zombies.monsters.monsters;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
@@ -8,9 +9,14 @@ import net.minecraft.server.v1_11_R1.NBTTagInt;
 import net.minecraft.server.v1_11_R1.NBTTagList;
 import net.minecraft.server.v1_11_R1.NBTTagString;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.monsters.MonsterClass;
 import dwarves.vs.zombies.monsters.weapons.MakeshiftPickaxe;
@@ -38,10 +44,14 @@ public class Zombie extends MonsterClass {
 		//
 		//
 		{
-			ItemStack item = new ItemStack(Material.SLIME_BALL);
+			ItemStack item = new ItemStack(Material.ROTTEN_FLESH);
+			ItemMeta meta = item.getItemMeta();
+			meta.setDisplayName(ChatColor.RED + "Zombie Flesh");
+			meta.setUnbreakable(true);
 			ArrayList<String> lore = new ArrayList<String>();
-		        lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
-		        meta.setLore(lore);
+			lore.add(ChatColor.AQUA + "The stronger the flesh, the longer you");
+			lore.add(ChatColor.AQUA + "last in battle meatbag!");
+			meta.setLore(lore);
 
 			net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 			NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
@@ -71,6 +81,16 @@ public class Zombie extends MonsterClass {
 		//
 		{
 			getPlayer().getInventory().addItem(weapon.getItem());
+		}
+		//
+		//
+		// Effects
+		//
+		//
+		{
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 2, false, false), false);
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999, 2, false, false), false); 
+			getPlayer().setHealth(getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
 		}
 	}
 

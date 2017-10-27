@@ -1,5 +1,6 @@
 package dwarves.vs.zombies.monsters.weapons;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
@@ -27,13 +28,15 @@ public class GoboPick extends Weapon {
 	public ItemStack getItem()
 	{
 
-		ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1, (short) 1);
+		ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1, (short) 0);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Goblin Pick");
-		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
-		meta.setLore(lore);
 		meta.setUnbreakable(true);
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.AQUA + "A weak pick that won't last long but");
+		lore.add(ChatColor.AQUA + "allows the Goblin to dig very quickly");
+		lore.add(ChatColor.AQUA + "through most blocks.");
+		meta.setLore(lore);
 		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
@@ -79,13 +82,13 @@ public class GoboPick extends Weapon {
 	public void special()
 	{
 		// THIS IS USE SPECIAL, AKA LEAP
-		
+
 	}
 
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
-	{   
-			
+	{
+
 	}
 
 }

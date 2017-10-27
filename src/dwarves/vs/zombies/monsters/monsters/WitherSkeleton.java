@@ -11,7 +11,6 @@ import net.minecraft.server.v1_11_R1.NBTTagString;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -25,7 +24,7 @@ public class WitherSkeleton extends MonsterClass {
 	public WitherSkeleton(UUID uuid)
 	{
 		super(uuid);
-		weapons.add(new NetherBow(uuid)); 
+		weapons.add(new NetherBow(uuid));
 	}
 
 	@Override
@@ -38,9 +37,6 @@ public class WitherSkeleton extends MonsterClass {
 		//
 		{
 			ItemStack item = new ItemStack(Material.SLIME_BALL);
-			ArrayList<String> lore = new ArrayList<String>();
-		        lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
-		        meta.setLore(lore);
 
 			net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 			NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
@@ -78,9 +74,9 @@ public class WitherSkeleton extends MonsterClass {
 		//
 		//
 		{
-			Player player = getPlayer(); //The monster class has a built in player variable
-			player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 9999, 10, false, false), false); 
-			player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 2, false, false), false);
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999, 2, false, false), false); 
+			getPlayer().setHealth(getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
 		}
 	}
 

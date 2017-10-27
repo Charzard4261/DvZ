@@ -1,5 +1,6 @@
 package dwarves.vs.zombies.monsters.weapons;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
@@ -21,9 +22,9 @@ public class MakeshiftPickaxe extends Weapon {
 	/**
 	 * THIS CLASS IS UNIQUE AND SHOULD NOT BE COPIED
 	 **/
-	
+
 	private int level = 0;
-	
+
 	public MakeshiftPickaxe(UUID uuid)
 	{
 		super(uuid, false, false);
@@ -32,13 +33,13 @@ public class MakeshiftPickaxe extends Weapon {
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1, (short) 1);
+		ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1, (short) 0);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Makeshift Blade");
-		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
-		meta.setLore(lore);
 		meta.setUnbreakable(true);
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.AQUA + "Deals mele damage to Dwarves");
+		meta.setLore(lore);
 		item.setItemMeta(meta);
 
 		net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
@@ -69,7 +70,7 @@ public class MakeshiftPickaxe extends Weapon {
 		nmsStack.setTag(compound);
 
 		item = CraftItemStack.asBukkitCopy(nmsStack);
-		
+
 		return item;
 	}
 
@@ -90,7 +91,7 @@ public class MakeshiftPickaxe extends Weapon {
 	{
 
 	}
-	
+
 	public void levelup()
 	{
 		level++;

@@ -9,8 +9,8 @@ import net.minecraft.server.v1_11_R1.NBTTagList;
 import net.minecraft.server.v1_11_R1.NBTTagString;
 
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -74,10 +74,10 @@ public class FlameLancer extends MonsterClass {
 		//
 		//
 		{
-			Player player = getPlayer(); //The monster class has a built in player variable
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10, 4, false, false), false); 
-			player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 9999, 10, false, false), false); 
-			player.setHealth(player.getHealth() + 400);
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 2, false, false), false);
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999, 2, false, false), false);
+			getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 140, 4, false, false), false);
+			getPlayer().setHealth(getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
 		}
 	}
 

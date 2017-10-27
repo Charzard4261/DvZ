@@ -27,12 +27,9 @@ public class Club extends Weapon {
 	public ItemStack getItem()
 	{
 
-		ItemStack item = new ItemStack(Material.WOOD_HOE, 1, (short) 1); //not sure what item ogre uses
+		ItemStack item = new ItemStack(Material.IRON_HOE, 1, (short) 0);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.RED + "Ogre Club");
-		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.RED + "Made from the bones of dead dwarves");
-		meta.setLore(lore);
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
 
@@ -90,13 +87,13 @@ public class Club extends Weapon {
 	@Override
 	public void special()
 	{
-		// THIS IS USE SPECIAL 
+		// THIS IS USE SPECIAL
 	}
 
 	@Override
 	public void damage(EntityDamageByEntityEvent event)
-	{   
-			
+	{
+
 	}
 
 }
