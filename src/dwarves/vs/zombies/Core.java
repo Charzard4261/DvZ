@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
@@ -17,6 +18,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import dwarves.vs.zombies.command.CommandFactory;
 import dwarves.vs.zombies.command.commands.GameCommand;
@@ -37,12 +39,14 @@ public class Core extends JavaPlugin {
 
 	public GameState gs = GameState.Lobby; // What phase the game is in
 	public MapManager mm;
-	public ArrayList<Dwarf> dwarves = new ArrayList<Dwarf>(); // A list of the dwarves
-	public ArrayList<Monster> monsters = new ArrayList<Monster>(); // A list of the monsters
+	public ArrayList<Dwarf> dwarves = new ArrayList<Dwarf>(); // Dwarves
+	public ArrayList<Monster> monsters = new ArrayList<Monster>(); // Monsters
 	public boolean monstersReleased = false; // Monsters released true/false
 
 	public BossBar bb = Bukkit.createBossBar("Waiting for players", BarColor.BLUE, BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC);
-	
+
+	private int manatimer;
+
 	public Player oldMan;
 	String omV;
 	String omS;
@@ -67,10 +71,10 @@ public class Core extends JavaPlugin {
 		cm.registerCommand(new GameCommand());
 		cm.registerCommand(new ItemCommand());
 		cm.registerCommand(new OnlineCommand());
-		
+
 		bb.removeFlag(BarFlag.PLAY_BOSS_MUSIC);
 		bb.setProgress(1.0);
-		
+
 		for (Player player : Bukkit.getOnlinePlayers())
 			bb.addPlayer(player);
 	}
@@ -78,12 +82,9 @@ public class Core extends JavaPlugin {
 	@Override
 	public void onDisable()
 	{
-		if (gs != GameState.Lobby)
-			endGame();
-		
 		for (Player player : Bukkit.getOnlinePlayers())
 			bb.removePlayer(player);
-		
+
 		bb = null;
 		cm = null;
 		mm = null;
@@ -91,7 +92,7 @@ public class Core extends JavaPlugin {
 	}
 
 	public enum GameState {
-		Lobby, Startup, Build_Phase, Game;
+		Lobby, Build_Phase, Game;
 	}
 
 	public static Core getInstance()
@@ -108,14 +109,12 @@ public class Core extends JavaPlugin {
 		mm.chooseMap();
 
 		int max = Bukkit.getOnlinePlayers().size();
-		int oldManint = 1 + (int) (Math.random() * max);
+		int oldManint = (Bukkit.getOnlinePlayers().size() >= 2) ? 1 + (int) (Math.random() * max) : -100;
 		int i = 0;
 
 		for (Player p : Bukkit.getOnlinePlayers())
 		{
 			i++;
-			p.setCustomName(ChatColor.DARK_AQUA + p.getDisplayName());
-			p.setPlayerListName(p.getCustomName());
 			if (i == oldManint)
 			{
 				oldMan = p;
@@ -128,23 +127,22 @@ public class Core extends JavaPlugin {
 			{
 				if (oldMan != null)
 				{
-					omV = ((CraftPlayer) oldMan).getHandle().getProfile().getProperties()
-							.get("textures").iterator().next().getValue();
-					omS = ((CraftPlayer) oldMan).getHandle().getProfile().getProperties()
-							.get("textures").iterator().next().getSignature();
-					Bukkit.broadcastMessage(oldMan.getCustomName() + ChatColor.LIGHT_PURPLE
-							+ " has become the Dwarvern Hero " + ChatColor.GOLD
+					omV = ((CraftPlayer) oldMan).getHandle().getProfile().getProperties().get("textures").iterator().next().getValue();
+					omS = ((CraftPlayer) oldMan).getHandle().getProfile().getProperties().get("textures").iterator().next().getSignature();
+					Bukkit.broadcastMessage(oldMan.getCustomName() + ChatColor.LIGHT_PURPLE + " has become the Dwarvern Hero " + ChatColor.GOLD
 							+ "Bruce Willakers");
 					oldMan.setCustomName(ChatColor.GOLD + "BruceWillakers");
 					oldMan.setPlayerListName(oldMan.getCustomName());
 					PlayerSkinEditor.applyOldMan(oldMan.getUniqueId());
 					spawnOldMan(oldMan);
-					oldMan.sendTitle(ChatColor.AQUA + "It's time to play!", ChatColor.DARK_AQUA
-							+ "Dwarves" + ChatColor.GOLD + " Vs " + ChatColor.DARK_RED + "Zombies",
-							0, 100, 20);
+					oldMan.sendTitle(ChatColor.AQUA + "It's time to play!", ChatColor.DARK_AQUA + "Dwarves" + ChatColor.GOLD + " Vs "
+							+ ChatColor.DARK_RED + "Zombies", 0, 100, 20);
 				}
 			}
 		}
+
+		manatimer = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ManaTimer(), 0, 20);
+
 	}
 
 	public void postWarmup()
@@ -159,58 +157,58 @@ public class Core extends JavaPlugin {
 
 	public void endGame()
 	{
+		Bukkit.getScheduler().cancelTask(manatimer);
+
 		Bukkit.broadcastMessage(ChatColor.DARK_RED + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 		Bukkit.broadcastMessage(ChatColor.DARK_RED + "THE FINAL SHRINE HAS FALLEN!");
 		Bukkit.broadcastMessage(ChatColor.DARK_RED + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-		
-		dwarves.vs.zombies.Core.endTimer task = new dwarves.vs.zombies.Core.endTimer();
-		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
+
+		new BukkitRunnable() {
+			@Override
+			public void run()
+			{
+				endGameS();
+				this.cancel();
+			}
+		}.runTaskLater(this, 200);
+
+		new BukkitRunnable() {
+			@Override
+			public void run()
+			{
+				delete(mm.getMap().getWorld());
+				this.cancel();
+			}
+		}.runTaskLater(this, 300);
 
 	}
 
-	public class endTimer implements Runnable {
+	private void endGameS()
+	{
+		gs = GameState.Lobby;
+		dwarves.clear();
+		monsters.clear();
 
-		private int id;
-		private int timer = 10;
-		
-		@Override
-		public void run()
+		for (Player p : Bukkit.getOnlinePlayers())
 		{
-			timer -= 1;
+			p.setCustomName(p.getDisplayName());
+			p.setPlayerListName(p.getDisplayName());
 
-			if (timer == 0)
-			{
-				gs = GameState.Lobby;
-				dwarves.clear();
-				monsters.clear();
-				
-				for (Player p : Bukkit.getOnlinePlayers())
-				{
-					p.setCustomName(p.getDisplayName());
-					p.setPlayerListName(p.getDisplayName());
-
-					p.getInventory().clear();
-					p.teleport(mm.getLobby());
-				}
-				
-				if (oldMan != null) {
-					UUID oldManUUID = oldMan.getUniqueId();
-					PlayerSkinEditor.swapSkins(oldManUUID, omV, omS);
-					oldMan = null;
-				}
-				roamin = null;
-				nisovin = null;
-				delete(mm.getMap().getWorld());
-				bb.setTitle("Waiting for players");
-				Bukkit.getScheduler().cancelTask(id);
-			}
+			p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+			p.getInventory().clear();
+			p.setLevel(0);
+			p.teleport(mm.getLobby());
 		}
 
-		public void setId(int id)
+		if (oldMan != null)
 		{
-			this.id = id;
+			UUID oldManUUID = oldMan.getUniqueId();
+			PlayerSkinEditor.swapSkins(oldManUUID, omV, omS);
+			oldMan = null;
 		}
-
+		roamin = null;
+		nisovin = null;
+		bb.setTitle("Waiting for players");
 	}
 
 	public void spawnOldMan(Player player)
@@ -219,6 +217,7 @@ public class Core extends JavaPlugin {
 		player.playSound(mm.getMap().getSpawn(), "bruceIntro", 10F, 1F);
 
 		player.getInventory().clear();
+		player.setLevel(1000);
 
 		player.getInventory().addItem(getDwarf(player).getWeapon().getItem());
 		player.getInventory().addItem(getDwarf(player).getBow().getItem());
@@ -228,12 +227,16 @@ public class Core extends JavaPlugin {
 	public void spawnDwarf(Player player)
 	{
 		dwarves.add(new Dwarf(player.getUniqueId()));
+		player.setCustomName(ChatColor.DARK_AQUA + player.getDisplayName());
+		player.setPlayerListName(player.getCustomName());
 		player.teleport(mm.getMap().getSpawn());
-		player.sendTitle(ChatColor.AQUA + "It's time to play!", ChatColor.DARK_AQUA + "Dwarves"
-				+ ChatColor.GOLD + " Vs " + ChatColor.DARK_RED + "Zombies", 0, 100, 20);
+		player.sendTitle(ChatColor.AQUA + "It's time to play!", ChatColor.DARK_AQUA + "Dwarves" + ChatColor.GOLD + " Vs " + ChatColor.DARK_RED
+				+ "Zombies", 0, 100, 20);
 		player.playSound(player.getLocation(), "bruceIntro", 10F, 1F);
 
+		player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 		player.getInventory().clear();
+		player.setLevel(1000);
 	}
 
 	public void spawnMonster(Player player)
@@ -263,15 +266,14 @@ public class Core extends JavaPlugin {
 
 	public World copy(String name)
 	{
-		Bukkit.broadcastMessage(name);
 		File dataFolder = new File(this.getServer().getWorldContainer().getAbsolutePath());
 		String strData = dataFolder.toString();
 		strData = strData.substring(0, strData.length() - 1);
 
-		File srcDir = new File(strData + "backup");
+		File srcDir = new File(strData + "backup\\" + name);
 		if (!srcDir.exists())
 		{
-			Bukkit.getLogger().warning("Backup does not exist!");
+			Bukkit.getLogger().warning("Map does not exist in backup folder!");
 			return null;
 		}
 

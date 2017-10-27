@@ -33,7 +33,7 @@ public class Excaliju extends Weapon {
 
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 2);
+		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 0);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD + "Excaliju");
 		ArrayList<String> lore = new ArrayList<String>();
