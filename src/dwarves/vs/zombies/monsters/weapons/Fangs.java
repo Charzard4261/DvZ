@@ -86,16 +86,19 @@ public class Fangs extends Weapon {
 	public void damage(EntityDamageByEntityEvent event)
 	{
 		Player player = (Player) event.getDamager();
+		Player hit = (Player) event.getEntity();
 		player.getWorld().playSound(player.getLocation(), Sound.ENTITY_WOLF_GROWL, 2F, 1F);
 
 		if (player.getWorld().getTime() > 23850)
 		{
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 160, 0, false, false), false);
 			player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 2, false, false), false);
+			hit.giveExpLevels(-5);
 		} else
 		{
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), false);
 			player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false), false);
+			hit.giveExpLevels(-5);
 		}
 
 	}
