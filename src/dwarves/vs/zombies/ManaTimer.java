@@ -18,28 +18,28 @@ public class ManaTimer implements Runnable {
 
 				} else
 				{
-					if (player.getFoodLevel() >= 16)
+					if (player.getFoodLevel() >= 10)
 					{
 						if (player.getLevel() > 975)
 							player.setLevel(1000);
 						else
 							player.giveExpLevels(25);
-					} else if (player.getFoodLevel() >= 12)
+					} else if (player.getFoodLevel() >= 4)
 						if (player.getLevel() > 980)
 							player.setLevel(1000);
 						else
-							player.giveExpLevels(20);
-					else if (player.getFoodLevel() >= 8)
+							player.giveExpLevels(15);
+					else if (player.getFoodLevel() >= 0)
 						if (player.getLevel() > 985)
 							player.setLevel(1000);
 						else
-							player.giveExpLevels(15);
+							player.giveExpLevels(10);
 					else if (player.getFoodLevel() >= 4)
 						if (player.getLevel() > 995)
 							player.setLevel(1000);
 						else
 							player.giveExpLevels(5);
-					else if (player.getFoodLevel() >= 0)
+					else if (player.getFoodLevel() == 0)
 						if (player.getLevel() > 998)
 							player.setLevel(1000);
 						else
