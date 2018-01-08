@@ -73,6 +73,11 @@ public class Dwarf {
 		proccing = 2;
 	}
 	
+	public void giveTombmakerProc()
+	{
+		proccing = 5;
+	}
+	
 	public void giveProc()
 	{
 		proccing = 3;
