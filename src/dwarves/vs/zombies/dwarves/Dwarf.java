@@ -58,6 +58,21 @@ public class Dwarf {
 		return false;
 	}
 
+	public void giveBruceProc()
+	{
+		proccing = 5;
+	}
+	
+	public void giveMaliceProc() //also can be used for horn
+	{
+		proccing = 8;
+	}
+	
+	public void giveDragonskinProc()
+	{
+		proccing = 2;
+	}
+	
 	public void giveProc()
 	{
 		proccing = 3;
