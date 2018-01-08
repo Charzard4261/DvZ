@@ -45,8 +45,6 @@ public class Crossbow extends Bow {
 	{
 		if (usedSpecial)
 		{
-			getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + timer
-					+ " more seconds to do that.");
 			return;
 		}
 		usedSpecial = true;
