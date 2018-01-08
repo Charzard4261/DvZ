@@ -101,6 +101,8 @@ public class AxeOfMalice extends Weapon {
 				false);
 		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 160, 0, false,
 				false), false);
+		
+		dwarf.giveMaliceProc()
 
 		timer = 60;
 
