@@ -37,7 +37,7 @@ public class Tombmaker extends Weapon {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA + "Tomb Maker");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "4");
+		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "8");
 		lore.add(ChatColor.YELLOW + "With this Shovel, you gain a Powerful Rampage for 5");
 		lore.add(ChatColor.YELLOW + "seconds when shoveling gravel. Additionak kills while");
 		lore.add(ChatColor.YELLOW + "on a rampage will allow you to extend the duration.");
@@ -53,7 +53,7 @@ public class Tombmaker extends Weapon {
 		NBTTagCompound damage = new NBTTagCompound();
 		damage.set("AttributeName", new NBTTagString("generic.attackDamage"));
 		damage.set("Name", new NBTTagString("generic.attackDamage"));
-		damage.set("Amount", new NBTTagInt(4));
+		damage.set("Amount", new NBTTagInt(8));
 		damage.set("Operation", new NBTTagInt(0));
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
