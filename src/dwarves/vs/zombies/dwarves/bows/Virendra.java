@@ -80,5 +80,21 @@ public class Virendra extends Bow {
 		if (!(event.getEntity().isDead()))
 			return;
 		Core.getInstance().getDwarf(getPlayer()).giveProc();
+		
+        if (event.getDamager() instanceof Arrow)
+        {
+            Arrow a = (Arrow) event.getDamager();
+            if (a.getShooter() instanceof Player)
+            {
+                Player p = (Player) a.getShooter();
+                Player p2 = (Player) event.getEntity();
+                Location loc = event.getEntity().getLocation();
+                Location loc2 = event.getDamager().getLocation();
+               
+                if (loc.distance(loc2) >= 5) {
+                    p2.damage(200);
+                }
+               
+            }
 	}
 }
