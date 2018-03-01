@@ -4,34 +4,29 @@ import org.bukkit.Location;
 
 public class Shrine {
 
-	private String name;
-	private Location location;
-	private Location monsterSpawn;
-	public int destroy;
-	public int prot;
+	private int radius;
+	private Location shrineloc, monsterspawn;
 	
-	public Shrine(String name, Location location, int destroyRadius, int shrineProtRadius, Location monsterSpawn)
+	public Shrine (Location shrineloc, int radius, Location monsterspawn)
 	{
-		this.name = name;
-		this.location = location;
-		this.destroy = destroyRadius;
-		this.prot = shrineProtRadius;
-		this.monsterSpawn = monsterSpawn;
+		this.shrineloc = shrineloc;
+		this.radius = radius;
+		this.monsterspawn = monsterspawn;
 	}
 	
-	public String getName()
+	public Location getShrineLocation()
 	{
-		return name;
-	}
-	
-	public Location getLocation()
-	{
-		return location;
+		return shrineloc;
 	}
 
-	public Location getMonsterSpawn()
+	public Location getMonsterspawn()
 	{
-		return monsterSpawn;
+		return monsterspawn;
 	}
-
+	
+	public int getRadius()
+	{
+		return radius;
+	}
+	
 }

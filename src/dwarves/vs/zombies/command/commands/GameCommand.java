@@ -1,48 +1,55 @@
 package dwarves.vs.zombies.command.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import dwarves.vs.zombies.Core;
-import dwarves.vs.zombies.Core.GameState;
 import dwarves.vs.zombies.command.ACommand;
+import dwarves.vs.zombies.enums.Stage;
+import net.md_5.bungee.api.ChatColor;
 
 public class GameCommand extends ACommand {
 
 	public GameCommand()
 	{
-		super("game", "GameMaster", new String[] {});
+		super("game", "Game Master", new String[] {});
 	}
 
 	@Override
 	protected void callCommand(Player p, String[] args)
 	{
-		if (!(p.isOp()))
+		if (!p.isOp())
+		{
 			return;
+		}
+		if (args.length < 1)
+			p.sendMessage(ChatColor.RED + "Correct usage is /game <start/stop>");
+		else
+		{
+			switch (args[0])
+			{
+			case "start":
+				if (Core.getInstance().getGm().stage == Stage.LOBBY)
+				{
+					Core.getInstance().start();
+				}
+				else
+					p.sendMessage(ChatColor.RED + "Game is in progress");
+				break;
+			case "stop":
+				if (Core.getInstance().getGm().stage != Stage.LOBBY)
+				{
+					Core.getInstance().end();
+				}
+				else
+					p.sendMessage(ChatColor.RED + "Game is not in progress");
+				break;
+			default:
+				p.sendMessage(ChatColor.RED + "Correct usage is /game <start/stop>");
+				break;
 
-		if (args.length == 0 || args.length > 1)
-		{
-			p.sendMessage(ChatColor.RED + "Invalid Command Arguments: /game <Start/Stop>");
-		} else if (args.length == 1)
-		{
-			if (args[0].equalsIgnoreCase("start"))
-			{
-				if (Core.getInstance().gs == GameState.Lobby)
-					Core.getInstance().startGame();
-				else 
-					p.sendMessage("A game is already in progress!");
-			} else if (args[0].equalsIgnoreCase("stop"))
-			{
-				if (Core.getInstance().gs == GameState.Lobby)
-					p.sendMessage("A game is not in progress!");
-				else 
-					Core.getInstance().endGame();
-			} else
-			{
-				p.sendMessage(ChatColor.RED + "Invalid Command Arguments: /game <Start/Stop>");
-				p.sendMessage(ChatColor.RED + args[0]);
 			}
 		}
+
 	}
 
 }

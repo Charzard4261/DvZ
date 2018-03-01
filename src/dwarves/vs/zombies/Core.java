@@ -1,309 +1,224 @@
 package dwarves.vs.zombies;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 
-import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import dwarves.vs.zombies.command.CommandFactory;
 import dwarves.vs.zombies.command.commands.GameCommand;
-import dwarves.vs.zombies.command.commands.ItemCommand;
-import dwarves.vs.zombies.command.commands.OnlineCommand;
-import dwarves.vs.zombies.dwarves.Dwarf;
-import dwarves.vs.zombies.dwarves.OldManWillakers;
-import dwarves.vs.zombies.dwarves.PlayerDwarfListeners;
-import dwarves.vs.zombies.map.MapManager;
-import dwarves.vs.zombies.monsters.Monster;
-import dwarves.vs.zombies.monsters.PlayerMonsterListeners;
-import dwarves.vs.zombies.util.PlayerSkinEditor;
+import dwarves.vs.zombies.dwarf.Dwarf;
+import dwarves.vs.zombies.enums.Stage;
+import dwarves.vs.zombies.listeners.BowListener;
+import dwarves.vs.zombies.listeners.ChatListener;
+import dwarves.vs.zombies.listeners.EntityDamagedListener;
+import dwarves.vs.zombies.listeners.HandSwapListener;
+import dwarves.vs.zombies.listeners.ItemDropListener;
+import dwarves.vs.zombies.listeners.JoinListener;
+import dwarves.vs.zombies.listeners.RespawnListener;
+import dwarves.vs.zombies.listeners.dwarves.BreakBlockListener;
+import dwarves.vs.zombies.listeners.dwarves.ClickBlockListener;
+import dwarves.vs.zombies.listeners.dwarves.WeaponInteractListener;
 
 public class Core extends JavaPlugin {
 
-	public static Core instance;
-	private CommandFactory cm;
+	private static Core core;
+	private GameManager gm;
+	private CommandFactory cf;
 
-	public GameState gs = GameState.Lobby; // What phase the game is in
-	public MapManager mm;
-	public ArrayList<Dwarf> dwarves = new ArrayList<Dwarf>(); // Dwarves
-	public ArrayList<Monster> monsters = new ArrayList<Monster>(); // Monsters
-	public boolean monstersReleased = false; // Monsters released true/false
-
-	public BossBar bb = Bukkit.createBossBar("Waiting for players", BarColor.BLUE, BarStyle.SOLID, BarFlag.PLAY_BOSS_MUSIC);
-
-	private int manatimer;
-
-	public Player oldMan;
-	String omV;
-	String omS;
-	Player roamin;
-	String rV;
-	String rS;
-	Player nisovin;
-	String nV;
-	String nS;
+	int timer;
 
 	@Override
 	public void onEnable()
 	{
-		instance = this;
-		cm = new CommandFactory();
-		mm = new MapManager();
+		core = this;
+		gm = new GameManager();
+		cf = new CommandFactory();
 
-		Bukkit.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new PlayerDwarfListeners(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new PlayerMonsterListeners(), this);
+		getServer().getPluginManager().registerEvents(new BreakBlockListener(), this);
+		getServer().getPluginManager().registerEvents(new ClickBlockListener(), this);
+		getServer().getPluginManager().registerEvents(new WeaponInteractListener(), this);
+		getServer().getPluginManager().registerEvents(new BowListener(), this);
+		getServer().getPluginManager().registerEvents(new ChatListener(), this);
+		getServer().getPluginManager().registerEvents(new EntityDamagedListener(), this);
+		getServer().getPluginManager().registerEvents(new HandSwapListener(), this);
+		getServer().getPluginManager().registerEvents(new ItemDropListener(), this);
+		getServer().getPluginManager().registerEvents(new JoinListener(), this);
+		getServer().getPluginManager().registerEvents(new RespawnListener(), this);
 
-		cm.registerCommand(new GameCommand());
-		cm.registerCommand(new ItemCommand());
-		cm.registerCommand(new OnlineCommand());
-
-		bb.removeFlag(BarFlag.PLAY_BOSS_MUSIC);
-		bb.setProgress(1.0);
-
-		for (Player player : Bukkit.getOnlinePlayers())
-			bb.addPlayer(player);
+		cf.registerCommand(new GameCommand());
 	}
 
 	@Override
 	public void onDisable()
 	{
-		for (Player player : Bukkit.getOnlinePlayers())
-			bb.removePlayer(player);
 
-		bb = null;
-		cm = null;
-		mm = null;
-		instance = null;
-	}
-
-	public enum GameState {
-		Lobby, Build_Phase, Game;
+		gm = null;
+		cf = null;
+		core = null;
 	}
 
 	public static Core getInstance()
 	{
-		return instance;
+		return core;
 	}
 
-	public void startGame()
+	public void start()
 	{
-		gs = GameState.Build_Phase;
-		dwarves = null;
-		dwarves = new ArrayList<Dwarf>();
+		gm.stage = Stage.PRE;
 
-		mm.chooseMap();
+		gm.chooseMap();
+		Bukkit.broadcastMessage(gm.map.world);
 
-		int max = Bukkit.getOnlinePlayers().size();
-		int oldManint = (Bukkit.getOnlinePlayers().size() >= 2) ? 1 + (int) (Math.random() * max) : -100;
-		int i = 0;
+		String path = getDataFolder().getAbsolutePath().substring(0, getDataFolder().getAbsolutePath().length() - 11);
 
-		for (Player p : Bukkit.getOnlinePlayers())
+		Bukkit.broadcastMessage(path);
+
+		// File srcDir = new File(path + "");
+		//
+		// File destDir = new File("");
+
+		gm.board = Bukkit.getScoreboardManager().getNewScoreboard();
+		gm.objective = gm.board.registerNewObjective(ChatColor.AQUA + "Dwarves", "dummy");
+		gm.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+		gm.vaultS = gm.objective.getScore(ChatColor.GOLD + "Vault");
+		gm.vaultS.setScore(0);
+		gm.remainingS = gm.objective.getScore(ChatColor.GREEN + "Remaining");
+
+		for (Player player : Bukkit.getOnlinePlayers())
 		{
-			i++;
-			if (i == oldManint)
-			{
-				oldMan = p;
-			} else
-			{
-				spawnDwarf(p);
-			}
+			gm.spawnDwarf(player);
 
-			if (i == max)
-			{
-				if (oldMan != null)
-				{
-					omV = ((CraftPlayer) oldMan).getHandle().getProfile().getProperties().get("textures").iterator().next().getValue();
-					omS = ((CraftPlayer) oldMan).getHandle().getProfile().getProperties().get("textures").iterator().next().getSignature();
-					Bukkit.broadcastMessage(oldMan.getCustomName() + ChatColor.LIGHT_PURPLE + " has become the Dwarvern Hero " + ChatColor.GOLD
-							+ "Bruce Willakers");
-					oldMan.setCustomName(ChatColor.GOLD + "BruceWillakers");
-					oldMan.setPlayerListName(oldMan.getCustomName());
-					PlayerSkinEditor.applyOldMan(oldMan.getUniqueId());
-					spawnOldMan(oldMan);
-					oldMan.sendTitle(ChatColor.AQUA + "It's time to play!", ChatColor.DARK_AQUA + "Dwarves" + ChatColor.GOLD + " Vs "
-							+ ChatColor.DARK_RED + "Zombies", 0, 100, 20);
-				}
-			}
+			player.setScoreboard(gm.board);
 		}
 
-		manatimer = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new ManaTimer(), 0, 20);
+		gm.remainingS.setScore(gm.dwarves.size());
+		
+		gm.map.getPlayerSpawn().getWorld().setTime(13800);
 
-	}
+		timer = Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), new Runnable() {
 
-	public void postWarmup()
-	{
-		gs = GameState.Game;
+			float dwarfmanatimer = 0;
+
+			@Override
+			public void run()
+			{
+				boolean manatimer = false;
+				if (dwarfmanatimer == 0)
+				{
+					manatimer = true;
+					dwarfmanatimer = 5;
+
+				}
+
+				for (Dwarf dwarf : gm.dwarves.values())
+				{
+					if (dwarf.getPlayer() == null)
+						continue;
+					if (manatimer)
+					{
+
+						if (dwarf.getPlayer().getInventory().getArmorContents()[0] != null)
+						{
+							if (dwarf.getPlayer().getInventory().getArmorContents()[0]
+									.getType() == Material.DIAMOND_BOOTS)
+								dwarf.modifyMana(25);
+						}
+					}
+
+					if (dwarf.isProccing())
+						dwarf.proc--;
+
+					if ((!dwarf.getPlayer().hasPotionEffect(PotionEffectType.NIGHT_VISION))
+							&& (dwarf.getPlayer().getInventory().getItemInMainHand().getType() != Material.TORCH
+									&& dwarf.getPlayer().getInventory().getItemInOffHand().getType() != Material.TORCH)
+							&& dwarf.getPlayer().getLocation().getBlock().getLightLevel() <= 4
+							&& (!(gm.map.getPlayerSpawn().getWorld().getTime() < 13800
+									|| gm.map.getPlayerSpawn().getWorld().getTime() > 23000)
+									|| dwarf.getPlayer().getLocation().getBlock().getLightFromSky() < 6))
+					{
+						dwarf.getPlayer().addPotionEffect(
+								new PotionEffect(PotionEffectType.BLINDNESS, 30, 0, false, false), true);
+					}
+				}
+
+				dwarfmanatimer -= 0.5;
+
+				if (gm.released)
+				{
+					if (gm.doomtimer == 0)
+					{
+						gm.doom();
+					} else if (gm.doomtimer < 0)
+					{
+					} else
+						gm.doomtimer -= 0.5;
+					gm.doomS.setScore((int) gm.doomtimer);
+				}
+			}
+		}, 0, 10);
+
 	}
 
 	public void releaseMonsters()
 	{
-		monstersReleased = true;
+		gm.doomS = gm.objective.getScore(ChatColor.DARK_RED + "Doom Clock");
+		gm.doomS.setScore(500);
 	}
 
-	public void endGame()
+	public void end()
 	{
-		Bukkit.getScheduler().cancelTask(manatimer);
+		gm.stage = Stage.LOBBY;
 
-		Bukkit.broadcastMessage(ChatColor.DARK_RED + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-		Bukkit.broadcastMessage(ChatColor.DARK_RED + "THE FINAL SHRINE HAS FALLEN!");
-		Bukkit.broadcastMessage(ChatColor.DARK_RED + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+		Bukkit.getScheduler().cancelTask(timer);
 
-		new BukkitRunnable() {
-			@Override
-			public void run()
-			{
-				endGameS();
-				this.cancel();
-			}
-		}.runTaskLater(this, 200);
+		Bukkit.broadcastMessage(ChatColor.DARK_RED + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+		Bukkit.broadcastMessage(ChatColor.DARK_RED + "  THE FINAL DWARVERN SHRINE HAS FALLEN");
+		Bukkit.broadcastMessage(ChatColor.DARK_RED + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 
-		new BukkitRunnable() {
-			@Override
-			public void run()
-			{
-				delete(mm.getMap().getWorld());
-				this.cancel();
-			}
-		}.runTaskLater(this, 300);
-
-	}
-
-	private void endGameS()
-	{
-		gs = GameState.Lobby;
-		dwarves.clear();
-		monsters.clear();
-
-		for (Player p : Bukkit.getOnlinePlayers())
+		Iterator<UUID> it = gm.dwarves.keySet().iterator();
+		while (it.hasNext())
 		{
-			p.setCustomName(p.getDisplayName());
-			p.setPlayerListName(p.getDisplayName());
+			UUID uuid = it.next();
 
-			p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-			p.getInventory().clear();
-			p.setLevel(0);
-			p.teleport(mm.getLobby());
+			gm.dwarves.get(uuid).getPlayer().getInventory().clear();
+			gm.dwarves.get(uuid).getPlayer().setCustomName(gm.dwarves.get(uuid).getPlayer().getDisplayName());
+			gm.dwarves.get(uuid).getPlayer().setPlayerListName(gm.dwarves.get(uuid).getPlayer().getCustomName());
+			gm.dwarves.get(uuid).getPlayer().setLevel(0);
+			gm.dwarves.get(uuid).getPlayer().setExp(0f);
+			gm.dwarves.get(uuid).getPlayer().setHealth(20);
+			gm.dwarves.get(uuid).getPlayer().setFoodLevel(20);
+			for (PotionEffect effect : gm.dwarves.get(uuid).getPlayer().getActivePotionEffects())
+				gm.dwarves.get(uuid).getPlayer().removePotionEffect(effect.getType());
+			gm.dwarves.get(uuid).getPlayer().teleport(gm.lobby);
+
+			it.remove();
 		}
 
-		if (oldMan != null)
+		for (Player player : Bukkit.getOnlinePlayers())
 		{
-			UUID oldManUUID = oldMan.getUniqueId();
-			PlayerSkinEditor.swapSkins(oldManUUID, omV, omS);
-			oldMan = null;
+			player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		}
-		roamin = null;
-		nisovin = null;
-		bb.setTitle("Waiting for players");
+
+		gm.reset();
 	}
 
-	public void spawnOldMan(Player player)
+	public GameManager getGm()
 	{
-		dwarves.add(new OldManWillakers(player.getUniqueId()));
-		player.playSound(mm.getMap().getSpawn(), "bruceIntro", 10F, 1F);
+		return gm;
+	}
 
+	public void spawnSpectator(Player player)
+	{
 		player.getInventory().clear();
-		player.setLevel(1000);
-
-		player.getInventory().addItem(getDwarf(player).getWeapon().getItem());
-		player.getInventory().addItem(getDwarf(player).getBow().getItem());
-
-	}
-
-	public void spawnDwarf(Player player)
-	{
-		dwarves.add(new Dwarf(player.getUniqueId()));
-		player.setCustomName(ChatColor.DARK_AQUA + player.getDisplayName());
-		player.setPlayerListName(player.getCustomName());
-		player.teleport(mm.getMap().getSpawn());
-		player.sendTitle(ChatColor.AQUA + "It's time to play!", ChatColor.DARK_AQUA + "Dwarves" + ChatColor.GOLD + " Vs " + ChatColor.DARK_RED
-				+ "Zombies", 0, 100, 20);
-		player.playSound(player.getLocation(), "bruceIntro", 10F, 1F);
-
-		player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-		player.getInventory().clear();
-		player.setLevel(1000);
-	}
-
-	public void spawnMonster(Player player)
-	{
-
-	}
-
-	public Dwarf getDwarf(Player player)
-	{
-		for (Dwarf dw : dwarves)
-		{
-			if (dw.getPlayer().getUniqueId().equals(player.getUniqueId()))
-				return dw;
-		}
-		return null;
-	}
-
-	public Monster getMonster(Player player)
-	{
-		for (Monster mon : monsters)
-		{
-			if (mon.getPlayer().getUniqueId().equals(player.getUniqueId()))
-				return mon;
-		}
-		return null;
-	}
-
-	public World copy(String name)
-	{
-		File dataFolder = new File(this.getServer().getWorldContainer().getAbsolutePath());
-		String strData = dataFolder.toString();
-		strData = strData.substring(0, strData.length() - 1);
-
-		File srcDir = new File(strData + "backup\\" + name);
-		if (!srcDir.exists())
-		{
-			Bukkit.getLogger().warning("Map does not exist in backup folder!");
-			return null;
-		}
-
-		File destDir = new File(strData);
-		try
-		{
-			FileUtils.copyDirectory(srcDir, destDir);
-		} catch (IOException ex)
-		{
-			ex.printStackTrace();
-		}
-		return Bukkit.getServer().createWorld(new WorldCreator(name));
-	}
-
-	public void delete(String name)
-	{
-		Bukkit.getServer().unloadWorld(name, false);
-
-		File dataFolder = new File(this.getServer().getWorldContainer().getAbsolutePath());
-		String strData = dataFolder.toString();
-		strData = strData.substring(0, strData.length() - 1);
-
-		File dir = new File(strData + mm.getMap().getWorld());
-		try
-		{
-			FileUtils.deleteDirectory(dir);
-		} catch (IOException ex)
-		{
-			ex.printStackTrace();
-		}
+		player.teleport(gm.lobby);
 	}
 
 }

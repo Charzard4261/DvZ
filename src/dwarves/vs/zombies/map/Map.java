@@ -1,37 +1,23 @@
 package dwarves.vs.zombies.map;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-public class Map {
+public abstract class Map {
 
-	String world;
-	double spawnX;
-	double spawnY;
-	double spawnZ;
-	float spawnPitch;
-	float spawnYaw;
-	public Shrine[] shrines;
-
-	public Map(String world, double spawnX, double spawnY, double spawnZ, float spawnPitch, float spawnYaw, Shrine[] shrines)
+	public String world;
+	public int shrine = 0;
+	
+	public Map(String world)
 	{
 		this.world = world;
-		this.spawnX = spawnX;
-		this.spawnY = spawnY;
-		this.spawnZ = spawnZ;
-		this.spawnPitch = spawnPitch;
-		this.spawnYaw = spawnYaw;
-		this.shrines = shrines;
 	}
+	
+	public abstract Location getPlayerSpawn();
+	public abstract Shrine[] getShrines();
 
-	public String getWorld()
+	public Location getMonsterSpawn()
 	{
-		return world;
+		return getShrines()[shrine].getMonsterspawn();
 	}
-
-	public Location getSpawn()
-	{
-		return new Location(Bukkit.getWorld(world), spawnX, spawnY, spawnZ, spawnPitch, spawnYaw);
-	}
-
+	
 }
