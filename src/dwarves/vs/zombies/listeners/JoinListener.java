@@ -1,6 +1,5 @@
 package dwarves.vs.zombies.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,9 +15,7 @@ public class JoinListener implements Listener {
 		switch (Core.getInstance().getGm().stage)
 		{
 		case LOBBY:
-			event.getPlayer().setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 			Core.getInstance().spawnSpectator(event.getPlayer());
-			event.getPlayer().setCustomName(event.getPlayer().getDisplayName());
 			break;
 		case PRE:
 			if (!(Core.getInstance().getGm().dwarves.containsKey(event.getPlayer().getUniqueId())))

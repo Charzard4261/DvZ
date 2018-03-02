@@ -26,6 +26,7 @@ import dwarves.vs.zombies.listeners.RespawnListener;
 import dwarves.vs.zombies.listeners.dwarves.BreakBlockListener;
 import dwarves.vs.zombies.listeners.dwarves.ClickBlockListener;
 import dwarves.vs.zombies.listeners.dwarves.WeaponInteractListener;
+import dwarves.vs.zombies.misc.ChangePlayerTag;
 
 public class Core extends JavaPlugin {
 
@@ -100,7 +101,7 @@ public class Core extends JavaPlugin {
 		}
 
 		gm.remainingS.setScore(gm.dwarves.size());
-		
+
 		gm.map.getPlayerSpawn().getWorld().setTime(13800);
 
 		timer = Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), new Runnable() {
@@ -187,9 +188,9 @@ public class Core extends JavaPlugin {
 		while (it.hasNext())
 		{
 			UUID uuid = it.next();
-
+			
 			gm.dwarves.get(uuid).getPlayer().getInventory().clear();
-			gm.dwarves.get(uuid).getPlayer().setCustomName(gm.dwarves.get(uuid).getPlayer().getDisplayName());
+			gm.dwarves.get(uuid).getPlayer().setDisplayName(gm.dwarves.get(uuid).getPlayer().getCustomName());
 			gm.dwarves.get(uuid).getPlayer().setPlayerListName(gm.dwarves.get(uuid).getPlayer().getCustomName());
 			gm.dwarves.get(uuid).getPlayer().setLevel(0);
 			gm.dwarves.get(uuid).getPlayer().setExp(0f);
@@ -218,6 +219,10 @@ public class Core extends JavaPlugin {
 	public void spawnSpectator(Player player)
 	{
 		player.getInventory().clear();
+		if (player.getCustomName() == null)
+			player.getPlayer().setCustomName(player.getDisplayName());
+		ChangePlayerTag.changeTag(player, player.getCustomName());
+		player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		player.teleport(gm.lobby);
 	}
 

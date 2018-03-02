@@ -77,7 +77,7 @@ public class GameManager {
 		player.setPlayerListName(player.getDisplayName());
 		dwarves.put(player.getUniqueId(), new Jimmy(player.getUniqueId()));
 		player.teleport(map.getPlayerSpawn());
-		ChangePlayerTag.changeTag(player, "");
+		ChangePlayerTag.changeTag(player, player.getDisplayName());
 	}
 
 	public void spawnHero(String type, Player player)
