@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -16,6 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 import dwarves.vs.zombies.dwarf.Dwarf;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSword;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagDouble;
 import net.minecraft.server.v1_12_R1.NBTTagInt;
 import net.minecraft.server.v1_12_R1.NBTTagList;
 import net.minecraft.server.v1_12_R1.NBTTagString;
@@ -24,7 +26,7 @@ public class ElvenDagger extends DwarfSword {
 
 	public ElvenDagger(Dwarf dwarf)
 	{
-		super(dwarf, 15, true, false);
+		super(dwarf, 60, false);
 	}
 
 	@Override
@@ -68,8 +70,8 @@ public class ElvenDagger extends DwarfSword {
 		attackSpeed.set("UUIDMost", new NBTTagInt(2872));
 		attackSpeed.set("Slot", new NBTTagString("mainhand"));
 		modifiers.add(attackSpeed);
-    
-    NBTTagCompound speed = new NBTTagCompound();
+
+		NBTTagCompound speed = new NBTTagCompound();
 		speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
 		speed.set("Name", new NBTTagString("generic.movementSpeed"));
 		speed.set("Amount", new NBTTagDouble(0.8));
@@ -96,19 +98,20 @@ public class ElvenDagger extends DwarfSword {
 	@Override
 	protected void onHit(EntityDamageByEntityEvent event)
 	{
-    Player hit = (Player) event.getDamager();
+		LivingEntity hit = (LivingEntity) event.getDamager();
 		hit.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 6, 3, false, false), false);
 	}
 
 	@Override
-	protected void special(PlayerInteractEvent event)
+	protected boolean special(PlayerInteractEvent event)
 	{
-
+		return false;
 	}
 
 	@Override
 	protected boolean special(PlayerInteractAtEntityEvent event)
 	{
+		return false; // TODO Add Evicerate
 
 	}
 

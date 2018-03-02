@@ -2,15 +2,16 @@ package dwarves.vs.zombies.dwarf.weapons.bows;
 
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.dwarf.Dwarf;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfBow;
 
@@ -20,8 +21,8 @@ public class Longbow extends DwarfBow {
 	{
 		super(dwarf, 30);
 	}
-  
-  private int boost = 0;
+
+	private int boost = 0;
 	private BoostTimer task;
 	public int timer;
 
@@ -55,18 +56,20 @@ public class Longbow extends DwarfBow {
 	}
 
 	@Override
-	public void onHit(EntityDamageByEntityEvent event)
+	public boolean onHit(EntityDamageByEntityEvent event)
 	{
 		if (boost < 6)
-			boost += 1;
+			boost ++;
 
 		timer = 15;
-		
+
 		if (task == null)
 		{
 			task = new BoostTimer();
 			task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
 		}
+
+		return false;
 
 	}
 
@@ -79,11 +82,11 @@ public class Longbow extends DwarfBow {
 		{
 			if (timer == 0)
 			{
-				boost = 0;
+				boost = 1;
 				Bukkit.getScheduler().cancelTask(id);
 			}
 
-			timer -= 1;
+			timer --;
 		}
 
 		public void setId(int id)

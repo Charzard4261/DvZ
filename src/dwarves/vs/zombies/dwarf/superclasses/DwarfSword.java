@@ -12,16 +12,14 @@ public abstract class DwarfSword {
 
 	private Dwarf dwarf;
 	private int timer;
-	private boolean atEnt;
 	
 	public boolean rollsProcs;
 
-	public DwarfSword(Dwarf dwarf, int timer, boolean rollsProcs, boolean atEnt)
+	public DwarfSword(Dwarf dwarf, int timer, boolean rollsProcs)
 	{
 		this.dwarf = dwarf;
 		this.timer = timer;
 		this.rollsProcs = rollsProcs;
-		this.atEnt = atEnt;
 	}
 
 	public Dwarf getDwarf()
@@ -31,6 +29,7 @@ public abstract class DwarfSword {
 
 	public void rightClick(PlayerInteractEvent event)
 	{
+
 		if (dwarf.sword)
 		{
 			getDwarf().getPlayer()
@@ -38,11 +37,8 @@ public abstract class DwarfSword {
 			return;
 		}
 
-		if (atEnt)
-			return;
-
-		special(event);
-		dwarf.useSword(timer);
+		if (special(event))
+			dwarf.useSword(timer);
 	}
 
 	public void rightClick(PlayerInteractAtEntityEvent event)
@@ -66,7 +62,7 @@ public abstract class DwarfSword {
 
 	protected abstract void onHit(EntityDamageByEntityEvent event);
 
-	protected abstract void special(PlayerInteractEvent event);
+	protected abstract boolean special(PlayerInteractEvent event);
 
 	protected abstract boolean special(PlayerInteractAtEntityEvent event);
 }

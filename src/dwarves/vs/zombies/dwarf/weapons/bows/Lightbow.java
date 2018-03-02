@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
@@ -52,6 +51,7 @@ public class Lightbow extends DwarfBow {
 	@Override
 	protected boolean onHit(EntityDamageByEntityEvent event)
 	{
+		return false;
 
 	}
 }

@@ -10,8 +10,6 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.dwarf.Dwarf;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSword;
@@ -24,7 +22,7 @@ public class TombMaker extends DwarfSword {
 
 	public TombMaker(Dwarf dwarf)
 	{
-		super(dwarf, 15, true, false);
+		super(dwarf, 0, true);
 	}
 
 	@Override
@@ -92,15 +90,15 @@ public class TombMaker extends DwarfSword {
 	}
 
 	@Override
-	protected void special(PlayerInteractEvent event)
+	protected boolean special(PlayerInteractEvent event)
 	{
-
+		return false;
 	}
 
 	@Override
 	protected boolean special(PlayerInteractAtEntityEvent event)
 	{
-
+		return false;
 	}
 
 }

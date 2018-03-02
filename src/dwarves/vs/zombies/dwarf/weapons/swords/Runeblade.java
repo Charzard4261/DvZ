@@ -24,7 +24,7 @@ public class Runeblade extends DwarfSword {
 
 	public Runeblade(Dwarf dwarf)
 	{
-		super(dwarf, 15, true, false);
+		super(dwarf, 15, true);
 	}
 
 	@Override
@@ -91,13 +91,15 @@ public class Runeblade extends DwarfSword {
 	}
 
 	@Override
-	protected void special(PlayerInteractEvent event)
+	protected boolean special(PlayerInteractEvent event)
 	{
 		getDwarf().getPlayer().getWorld().playSound(getDwarf().getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
 		getDwarf().getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
-		getDwarf().getPlayer()
-				.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, Integer.MAX_VALUE, false, false), false);
+		getDwarf().getPlayer().addPotionEffect(
+				new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, Integer.MAX_VALUE, false, false), false);
 		getDwarf().getPlayer().setVelocity(getDwarf().getPlayer().getLocation().getDirection().multiply(2).setY(0.2));
+		
+		return true;
 	}
 
 	@Override
@@ -105,8 +107,8 @@ public class Runeblade extends DwarfSword {
 	{
 		getDwarf().getPlayer().playSound(getDwarf().getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
 		getDwarf().getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
-		getDwarf().getPlayer()
-		.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, Integer.MAX_VALUE, false, false), false);
+		getDwarf().getPlayer().addPotionEffect(
+				new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, Integer.MAX_VALUE, false, false), false);
 		getDwarf().getPlayer().setVelocity(getDwarf().getPlayer().getLocation().getDirection().multiply(2).setY(0.2));
 
 		return true;

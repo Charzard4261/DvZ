@@ -2,7 +2,6 @@ package dwarves.vs.zombies.misc;
 
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_12_R1.util.CraftChatMessage;
 import org.bukkit.entity.Player;
 
 import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
@@ -15,11 +14,18 @@ public class ChangePlayerTag {
 	{
 		for (Player player : Bukkit.getOnlinePlayers())
 		{
-			PacketPlayOutPlayerInfo info = new PacketPlayOutPlayerInfo();
-			info.(info, EnumPlayerInfoAction.ADD_PLAYER, info.new PlayerInfoData(((CraftPlayer) player).getProfile(), entity.ping,
-					entity.playerInteractManager.getGameMode(), CraftChatMessage.fromString(name)[0]));
-			setInfo(info, EnumPlayerInfoAction.ADD_PLAYER, info.new PlayerInfoData(((CraftPlayer) player).getProfile(), entity.ping,
-					entity.playerInteractManager.getGameMode(), CraftChatMessage.fromString(name)[0]));
+			if (player != playerToChange)
+			{
+				PacketPlayOutPlayerInfo info = new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.UPDATE_DISPLAY_NAME,
+						((CraftPlayer) playerToChange).getHandle());
+				((CraftPlayer) player).getHandle().playerConnection.sendPacket(info);
+			}
+			// PacketPlayOutPlayerInfo info = new
+			// PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer)
+			// playerToChange).getHandle());
+			// PacketPlayOutPlayerInfo info = new
+			// PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, ((CraftPlayer)
+			// playerToChange).getHandle());
 		}
 	}
 

@@ -24,7 +24,7 @@ public class Excaliju extends DwarfSword {
 
 	public Excaliju(Dwarf dwarf)
 	{
-		super(dwarf, 15, true, false);
+		super(dwarf, 10, true);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class Excaliju extends DwarfSword {
 		ItemMeta meta = item.getItemMeta();
 
 		meta.setDisplayName(ChatColor.GOLD + "Excaliju");
-    
+
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Broken and reforged over a thousand times, a");
 		lore.add("sword made of gold is said to be weaker than");
@@ -68,10 +68,10 @@ public class Excaliju extends DwarfSword {
 		attackSpeed.set("UUIDMost", new NBTTagInt(2872));
 		attackSpeed.set("Slot", new NBTTagString("mainhand"));
 		modifiers.add(attackSpeed);
-    
-    NBTTagCompound kb = new NBTTagCompound();
+
+		NBTTagCompound kb = new NBTTagCompound();
 		kb.set("AttributeName", new NBTTagString("generic.knockbackResistance"));
-   	kb.set("Name", new NBTTagString("generic.knockbackResistance"));
+		kb.set("Name", new NBTTagString("generic.knockbackResistance"));
 		kb.set("Amount", new NBTTagInt(1));
 		kb.set("Operation", new NBTTagInt(0));
 		kb.set("UUIDLeast", new NBTTagInt(894654));
@@ -80,8 +80,8 @@ public class Excaliju extends DwarfSword {
 		modifiers.add(kb);
 
 		compound.set("AttributeModifiers", modifiers);
-    
-    NBTTagList ench = new NBTTagList();
+
+		NBTTagList ench = new NBTTagList();
 		NBTTagCompound enchant = new NBTTagCompound();
 		enchant.set("id", new NBTTagInt(34));
 		enchant.set("lvl", new NBTTagInt(10));
@@ -108,13 +108,15 @@ public class Excaliju extends DwarfSword {
 	}
 
 	@Override
-	protected void special(PlayerInteractEvent event)
+	protected boolean special(PlayerInteractEvent event)
 	{
 		getDwarf().getPlayer().getWorld().playSound(getDwarf().getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
 		getDwarf().getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
-		getDwarf().getPlayer()
-				.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, Integer.MAX_VALUE, false, false), false);
+		getDwarf().getPlayer().addPotionEffect(
+				new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, Integer.MAX_VALUE, false, false), false);
 		getDwarf().getPlayer().setVelocity(getDwarf().getPlayer().getLocation().getDirection().multiply(2).setY(0.2));
+		
+		return true;
 	}
 
 	@Override
@@ -122,8 +124,8 @@ public class Excaliju extends DwarfSword {
 	{
 		getDwarf().getPlayer().playSound(getDwarf().getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
 		getDwarf().getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
-		getDwarf().getPlayer()
-		.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, Integer.MAX_VALUE, false, false), false);
+		getDwarf().getPlayer().addPotionEffect(
+				new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, Integer.MAX_VALUE, false, false), false);
 		getDwarf().getPlayer().setVelocity(getDwarf().getPlayer().getLocation().getDirection().multiply(2).setY(0.2));
 
 		return true;
