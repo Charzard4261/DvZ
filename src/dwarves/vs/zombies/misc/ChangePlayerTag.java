@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
 
-// BROKEN CODE
 public class ChangePlayerTag {
 
 	public static void changeTag(Player playerToChange, String newName)

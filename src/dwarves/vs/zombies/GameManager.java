@@ -19,6 +19,7 @@ import dwarves.vs.zombies.dwarf.Jimmy;
 import dwarves.vs.zombies.enums.Stage;
 import dwarves.vs.zombies.map.Map;
 import dwarves.vs.zombies.map.maps.DefaultMap;
+import dwarves.vs.zombies.misc.ChangePlayerTag;
 import dwarves.vs.zombies.misc.ProjectileData;
 import dwarves.vs.zombies.monster.MData;
 
@@ -76,6 +77,7 @@ public class GameManager {
 		player.setPlayerListName(player.getDisplayName());
 		dwarves.put(player.getUniqueId(), new Jimmy(player.getUniqueId()));
 		player.teleport(map.getPlayerSpawn());
+		ChangePlayerTag.changeTag(player, "");
 	}
 
 	public void spawnHero(String type, Player player)
