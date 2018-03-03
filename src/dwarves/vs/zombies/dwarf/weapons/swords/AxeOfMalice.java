@@ -22,7 +22,7 @@ public class AxeOfMalice extends DwarfSword {
 
 	public AxeOfMalice(Dwarf dwarf)
 	{
-		super(dwarf, 15, true);
+		super(dwarf, 60, true);
 	}
 
 	@Override

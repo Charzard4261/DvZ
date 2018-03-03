@@ -22,7 +22,7 @@ public class TombMaker extends DwarfSword {
 
 	public TombMaker(Dwarf dwarf)
 	{
-		super(dwarf, 0, true);
+		super(dwarf, 15, true);
 	}
 
 	@Override
