@@ -10,6 +10,8 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.dwarf.Dwarf;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSword;
@@ -92,13 +94,15 @@ public class TombMaker extends DwarfSword {
 	@Override
 	protected boolean special(PlayerInteractEvent event)
 	{
-		return false;
+	    getPlayer().playSound(getPlayer().getLocation(), "SOMETHING", 4F, 1F);
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
 	}
 
 	@Override
 	protected boolean special(PlayerInteractAtEntityEvent event)
 	{
-		return false;
+	    getPlayer().playSound(getPlayer().getLocation(), "SOMETHING", 4F, 1F);
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
 	}
 
 }
