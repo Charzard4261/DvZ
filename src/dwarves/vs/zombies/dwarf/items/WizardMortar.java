@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 
-public class WizzardMortar extends DwarfItem{
+public class WizardMortar extends DwarfItem{
 
 	@Override
 	public ItemStack getItem()

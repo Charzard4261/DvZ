@@ -39,8 +39,11 @@ public abstract class Dwarf extends PlayerType {
 		return Bukkit.getPlayer(uuid);
 	}
 
-	public void modifyMana(int amount)
+	public boolean modifyMana(int amount)
 	{
+		if (mana + amount > 0)
+			return false;
+		
 		if (mana + amount <= 1000)
 		{
 			mana += amount;
@@ -48,6 +51,8 @@ public abstract class Dwarf extends PlayerType {
 			getPlayer().setExp(mana / 1000);
 		} else
 			mana = 1000;
+		
+		return true;
 
 	}
 

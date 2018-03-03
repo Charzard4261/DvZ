@@ -96,7 +96,7 @@ public class TombMaker extends DwarfSword {
 	{
 	    getDwarf().getPlayer().playSound(getDwarf().getPlayer().getLocation(), "SOMETHING", 4F, 1F);
 	    getDwarf().getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
-		return true;
+	    return true;
 	}
 
 	@Override
