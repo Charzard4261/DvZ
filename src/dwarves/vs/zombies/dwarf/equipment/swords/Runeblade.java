@@ -1,11 +1,10 @@
-package dwarves.vs.zombies.dwarf.weapons.swords;
+package dwarves.vs.zombies.dwarf.equipment.swords;
 
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -17,33 +16,32 @@ import org.bukkit.potion.PotionEffectType;
 import dwarves.vs.zombies.dwarf.Dwarf;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSword;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import net.minecraft.server.v1_12_R1.NBTTagDouble;
 import net.minecraft.server.v1_12_R1.NBTTagInt;
 import net.minecraft.server.v1_12_R1.NBTTagList;
 import net.minecraft.server.v1_12_R1.NBTTagString;
 
-public class ElvenDagger extends DwarfSword {
+public class Runeblade extends DwarfSword {
 
-	public ElvenDagger(Dwarf dwarf)
+	public Runeblade(Dwarf dwarf)
 	{
-		super(dwarf, 60, false);
+		super(dwarf, 15, true);
 	}
 
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 4);
+		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 3);
 		ItemMeta meta = item.getItemMeta();
 
-		meta.setDisplayName(ChatColor.AQUA + "Elven Dagger");
+		meta.setDisplayName(ChatColor.AQUA + "Greater Runeblade");
 
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "15");
-		lore.add(ChatColor.YELLOW + "With this Dagger, you move more quickly and your");
-		lore.add(ChatColor.YELLOW + "hits poison demons for 5 seconds. Right Click to");
-		lore.add(ChatColor.YELLOW + "Eviserate which deals massive damage killing most");
-		lore.add(ChatColor.YELLOW + "demons. This ability has a 60 second cooldown that");
-		lore.add(ChatColor.YELLOW + "is reduced by 10 seconds for every bow kill.");
+		lore.add(ChatColor.GOLD + "With this Blade, killing demons grants you a Powerful");
+		lore.add(ChatColor.GOLD + "Rampage for 3 seconds with allows you to instantly");
+		lore.add(ChatColor.GOLD + "kill most demons.");
+		lore.add(ChatColor.GOLD + "Right Click to Runedash which dashes you forward");
+		lore.add(ChatColor.GOLD + "making you breifly immune to damage and granting");
+		lore.add(ChatColor.GOLD + "you a Powerful Rampage for 0.5 seconds.");
 		meta.setLore(lore);
 
 		item.setItemMeta(meta);
@@ -71,15 +69,6 @@ public class ElvenDagger extends DwarfSword {
 		attackSpeed.set("Slot", new NBTTagString("mainhand"));
 		modifiers.add(attackSpeed);
 
-		NBTTagCompound speed = new NBTTagCompound();
-		speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
-		speed.set("Name", new NBTTagString("generic.movementSpeed"));
-		speed.set("Amount", new NBTTagDouble(0.8));
-		speed.set("Operation", new NBTTagInt(0));
-		speed.set("UUIDLeast", new NBTTagInt(894654));
-		speed.set("UUIDMost", new NBTTagInt(2872));
-		modifiers.add(speed);
-
 		compound.set("AttributeModifiers", modifiers);
 
 		nmsStack.setTag(compound);
@@ -98,21 +87,31 @@ public class ElvenDagger extends DwarfSword {
 	@Override
 	protected void onHit(EntityDamageByEntityEvent event)
 	{
-		LivingEntity hit = (LivingEntity) event.getDamager();
-		hit.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 6, 3, false, false), false);
+
 	}
 
 	@Override
 	protected boolean special(PlayerInteractEvent event)
 	{
-		return false;
+		getDwarf().getPlayer().getWorld().playSound(getDwarf().getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
+		getDwarf().getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
+		getDwarf().getPlayer().addPotionEffect(
+				new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, Integer.MAX_VALUE, false, false), false);
+		getDwarf().getPlayer().setVelocity(getDwarf().getPlayer().getLocation().getDirection().multiply(2).setY(0.2));
+		
+		return true;
 	}
 
 	@Override
 	protected boolean special(PlayerInteractAtEntityEvent event)
 	{
-		return false; // TODO Add Evicerate
+		getDwarf().getPlayer().playSound(getDwarf().getPlayer().getLocation(), "runebladeRunedash", 4F, 1F);
+		getDwarf().getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5, 3, false, false), false);
+		getDwarf().getPlayer().addPotionEffect(
+				new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5, Integer.MAX_VALUE, false, false), false);
+		getDwarf().getPlayer().setVelocity(getDwarf().getPlayer().getLocation().getDirection().multiply(2).setY(0.2));
 
+		return true;
 	}
 
 }

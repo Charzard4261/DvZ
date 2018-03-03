@@ -1,46 +1,49 @@
-package dwarves.vs.zombies.dwarf.weapons.swords;
+package dwarves.vs.zombies.dwarf.equipment.swords;
 
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.dwarf.Dwarf;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSword;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagDouble;
 import net.minecraft.server.v1_12_R1.NBTTagInt;
 import net.minecraft.server.v1_12_R1.NBTTagList;
 import net.minecraft.server.v1_12_R1.NBTTagString;
 
-public class Warhammer extends DwarfSword {
+public class ElvenDagger extends DwarfSword {
 
-	public Warhammer(Dwarf dwarf)
+	public ElvenDagger(Dwarf dwarf)
 	{
-		super(dwarf, 0, false);
+		super(dwarf, 60, false);
 	}
 
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 3);
+		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 4);
 		ItemMeta meta = item.getItemMeta();
 
-		meta.setDisplayName(ChatColor.AQUA + "Warhammer");
-    
+		meta.setDisplayName(ChatColor.AQUA + "Elven Dagger");
+
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "10 to 21");
-		lore.add(ChatColor.YELLOW + "With this Warhammer, your attacks cleave dealing");
-		lore.add(ChatColor.YELLOW + "damage to nearby monsters and bonus damage to");
-		lore.add(ChatColor.YELLOW + "lesser demons. Every 100 demons slain, increases");
-		lore.add(ChatColor.YELLOW + "the power of this weapon. Right click to channel");
-		lore.add(ChatColor.YELLOW + "your Warhammer which solwly restores mana and");
-		lore.add(ChatColor.YELLOW + "repairs your armor without a gold cost.");
+		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "15");
+		lore.add(ChatColor.YELLOW + "With this Dagger, you move more quickly and your");
+		lore.add(ChatColor.YELLOW + "hits poison demons for 5 seconds. Right Click to");
+		lore.add(ChatColor.YELLOW + "Eviserate which deals massive damage killing most");
+		lore.add(ChatColor.YELLOW + "demons. This ability has a 60 second cooldown that");
+		lore.add(ChatColor.YELLOW + "is reduced by 10 seconds for every bow kill.");
 		meta.setLore(lore);
 
 		item.setItemMeta(meta);
@@ -51,7 +54,7 @@ public class Warhammer extends DwarfSword {
 		NBTTagCompound damage = new NBTTagCompound();
 		damage.set("AttributeName", new NBTTagString("generic.attackDamage"));
 		damage.set("Name", new NBTTagString("generic.attackDamage"));
-		damage.set("Amount", new NBTTagInt(10));
+		damage.set("Amount", new NBTTagInt(15));
 		damage.set("Operation", new NBTTagInt(0));
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
@@ -67,6 +70,15 @@ public class Warhammer extends DwarfSword {
 		attackSpeed.set("UUIDMost", new NBTTagInt(2872));
 		attackSpeed.set("Slot", new NBTTagString("mainhand"));
 		modifiers.add(attackSpeed);
+
+		NBTTagCompound speed = new NBTTagCompound();
+		speed.set("AttributeName", new NBTTagString("generic.movementSpeed"));
+		speed.set("Name", new NBTTagString("generic.movementSpeed"));
+		speed.set("Amount", new NBTTagDouble(0.8));
+		speed.set("Operation", new NBTTagInt(0));
+		speed.set("UUIDLeast", new NBTTagInt(894654));
+		speed.set("UUIDMost", new NBTTagInt(2872));
+		modifiers.add(speed);
 
 		compound.set("AttributeModifiers", modifiers);
 
@@ -86,7 +98,8 @@ public class Warhammer extends DwarfSword {
 	@Override
 	protected void onHit(EntityDamageByEntityEvent event)
 	{
-
+		LivingEntity hit = (LivingEntity) event.getDamager();
+		hit.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 6, 3, false, false), false);
 	}
 
 	@Override
@@ -98,7 +111,7 @@ public class Warhammer extends DwarfSword {
 	@Override
 	protected boolean special(PlayerInteractAtEntityEvent event)
 	{
-		return false;
+		return false; // TODO Add Evicerate
 
 	}
 

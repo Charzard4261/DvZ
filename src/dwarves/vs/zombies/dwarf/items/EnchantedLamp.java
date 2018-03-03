@@ -21,7 +21,7 @@ public class EnchantedLamp extends DwarfItem{
 		
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.YELLOW + 								"R-Click: Use to place a unbreakable lamp that");
-		lore.add(ChatColor.YELLOW + 								"lasts for 60 seconds");
+		lore.add(ChatColor.YELLOW + 								"         lasts for 60 seconds");
 		lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_PURPLE + 	"Fight along side this Lamp young warrior.");
 		lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_PURPLE + 	"It shall be your light in the darkness");
 		lore.add(ChatColor.GOLD + 									"- Lance Willakers");

@@ -1,4 +1,4 @@
-package dwarves.vs.zombies.dwarf.weapons.swords;
+package dwarves.vs.zombies.dwarf.equipment.swords;
 
 import java.util.ArrayList;
 
@@ -94,15 +94,17 @@ public class TombMaker extends DwarfSword {
 	@Override
 	protected boolean special(PlayerInteractEvent event)
 	{
-	    getPlayer().playSound(getPlayer().getLocation(), "SOMETHING", 4F, 1F);
-		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
+	    getDwarf().getPlayer().playSound(getDwarf().getPlayer().getLocation(), "SOMETHING", 4F, 1F);
+	    getDwarf().getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
+		return true;
 	}
 
 	@Override
 	protected boolean special(PlayerInteractAtEntityEvent event)
 	{
-	    getPlayer().playSound(getPlayer().getLocation(), "SOMETHING", 4F, 1F);
-		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
+		getDwarf().getPlayer().playSound(getDwarf().getPlayer().getLocation(), "SOMETHING", 4F, 1F);
+		getDwarf().getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 2, false, false), false);
+		return true;
 	}
 
 }

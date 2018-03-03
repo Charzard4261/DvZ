@@ -2,12 +2,13 @@ package dwarves.vs.zombies.dwarf;
 
 import java.util.UUID;
 
+import dwarves.vs.zombies.dwarf.equipment.ales.JimmyJuice;
+import dwarves.vs.zombies.dwarf.equipment.bows.DragonskinBow;
+import dwarves.vs.zombies.dwarf.equipment.swords.Runeblade;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfAle;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfBow;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSpecial;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSword;
-import dwarves.vs.zombies.dwarf.weapons.bows.DragonskinBow;
-import dwarves.vs.zombies.dwarf.weapons.swords.Runeblade;
 import dwarves.vs.zombies.misc.ArmourSet;
 import net.md_5.bungee.api.ChatColor;
 
@@ -15,6 +16,7 @@ public class Jimmy extends Dwarf {
 
 	private DwarfSword sword = new Runeblade(this);
 	private DwarfBow bow = new DragonskinBow(this);
+	private DwarfAle ale = new JimmyJuice(this);
 	
 	public Jimmy(UUID uuid)
 	{
@@ -43,7 +45,7 @@ public class Jimmy extends Dwarf {
 	@Override
 	public DwarfAle getAle()
 	{
-		return null;
+		return ale;
 	}
 
 	@Override

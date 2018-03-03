@@ -20,8 +20,8 @@ public class Log extends DwarfItem{
 		meta.setDisplayName(ChatColor.AQUA + "Wood log");
 		
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.YELLOW + 								"R-Click: Use on a Sawmill to ");
-		lore.add(ChatColor.YELLOW + 								"turn into planks");
+		lore.add(ChatColor.YELLOW + 								"R-Click: Use on a Sawmill to turn");
+		lore.add(ChatColor.YELLOW + 								"         into planks");
 		lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_PURPLE + 	"Why is it flat?");
 		lore.add(ChatColor.DARK_AQUA + 								"- Jimmy");
 		meta.setLore(lore);

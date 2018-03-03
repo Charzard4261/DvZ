@@ -1,11 +1,10 @@
-package dwarves.vs.zombies.dwarf.weapons.bows;
+package dwarves.vs.zombies.dwarf.equipment.bows;
 
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
@@ -14,9 +13,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import dwarves.vs.zombies.dwarf.Dwarf;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfBow;
 
-public class DragonskinBow extends DwarfBow {
+public class Lightbow extends DwarfBow {
 
-	public DragonskinBow(Dwarf dwarf)
+	public Lightbow(Dwarf dwarf)
 	{
 		super(dwarf, 30);
 	}
@@ -26,12 +25,12 @@ public class DragonskinBow extends DwarfBow {
 	{
 		ItemStack item = new ItemStack(Material.BOW);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.AQUA + "Dragonskin Bow");
+		meta.setDisplayName(ChatColor.AQUA + "Lightbow");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "50");
-		lore.add(ChatColor.YELLOW + "With this Bow, kills grant you a Powerful Rampage");
-		lore.add(ChatColor.YELLOW + "for 2 seconds, which allows you to instantly kill");
-		lore.add(ChatColor.YELLOW + "most demons.");
+		lore.add(ChatColor.YELLOW + "With this Bow, arrows that do not hit a monster will");
+		lore.add(ChatColor.YELLOW + "spawn an Enchanted Lamp that lasts for 5 seconds.");
+		lore.add(ChatColor.YELLOW + "You are also now immune to Darkness.");
 		meta.setLore(lore);
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
@@ -52,12 +51,7 @@ public class DragonskinBow extends DwarfBow {
 	@Override
 	protected boolean onHit(EntityDamageByEntityEvent event)
 	{
-		if (!(event.getEntity() instanceof LivingEntity))
-			return false;
-		if ((((LivingEntity) event.getEntity()).getHealth() - event.getDamage()) > 0)
-			return false;
-		getDwarf().proc();
-		System.out.println("Dragonskin Proc");
-		return true;
+		return false;
+
 	}
 }

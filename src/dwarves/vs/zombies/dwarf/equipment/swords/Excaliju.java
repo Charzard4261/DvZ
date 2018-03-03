@@ -1,4 +1,4 @@
-package dwarves.vs.zombies.dwarf.weapons.swords;
+package dwarves.vs.zombies.dwarf.equipment.swords;
 
 import java.util.ArrayList;
 
@@ -20,11 +20,11 @@ import net.minecraft.server.v1_12_R1.NBTTagInt;
 import net.minecraft.server.v1_12_R1.NBTTagList;
 import net.minecraft.server.v1_12_R1.NBTTagString;
 
-public class Runeblade extends DwarfSword {
+public class Excaliju extends DwarfSword {
 
-	public Runeblade(Dwarf dwarf)
+	public Excaliju(Dwarf dwarf)
 	{
-		super(dwarf, 15, true);
+		super(dwarf, 10, true);
 	}
 
 	@Override
@@ -33,15 +33,15 @@ public class Runeblade extends DwarfSword {
 		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 3);
 		ItemMeta meta = item.getItemMeta();
 
-		meta.setDisplayName(ChatColor.AQUA + "Greater Runeblade");
+		meta.setDisplayName(ChatColor.GOLD + "Excaliju");
 
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.GOLD + "With this Blade, killing demons grants you a Powerful");
-		lore.add(ChatColor.GOLD + "Rampage for 3 seconds with allows you to instantly");
-		lore.add(ChatColor.GOLD + "kill most demons.");
-		lore.add(ChatColor.GOLD + "Right Click to Runedash which dashes you forward");
-		lore.add(ChatColor.GOLD + "making you breifly immune to damage and granting");
-		lore.add(ChatColor.GOLD + "you a Powerful Rampage for 0.5 seconds.");
+		lore.add("Broken and reforged over a thousand times, a");
+		lore.add("sword made of gold is said to be weaker than");
+		lore.add("typical runebaldes, but the Old Man claims he");
+		lore.add("just wants to give the monsters a better chance.");
+		lore.add("Personally, I think he's straight bonkers.");
+		lore.add(ChatColor.GOLD + "- Deadbones");
 		meta.setLore(lore);
 
 		item.setItemMeta(meta);
@@ -52,7 +52,7 @@ public class Runeblade extends DwarfSword {
 		NBTTagCompound damage = new NBTTagCompound();
 		damage.set("AttributeName", new NBTTagString("generic.attackDamage"));
 		damage.set("Name", new NBTTagString("generic.attackDamage"));
-		damage.set("Amount", new NBTTagInt(15));
+		damage.set("Amount", new NBTTagInt(30));
 		damage.set("Operation", new NBTTagInt(0));
 		damage.set("UUIDLeast", new NBTTagInt(894654));
 		damage.set("UUIDMost", new NBTTagInt(2872));
@@ -69,7 +69,24 @@ public class Runeblade extends DwarfSword {
 		attackSpeed.set("Slot", new NBTTagString("mainhand"));
 		modifiers.add(attackSpeed);
 
+		NBTTagCompound kb = new NBTTagCompound();
+		kb.set("AttributeName", new NBTTagString("generic.knockbackResistance"));
+		kb.set("Name", new NBTTagString("generic.knockbackResistance"));
+		kb.set("Amount", new NBTTagInt(1));
+		kb.set("Operation", new NBTTagInt(0));
+		kb.set("UUIDLeast", new NBTTagInt(894654));
+		kb.set("UUIDMost", new NBTTagInt(2872));
+		kb.set("Slot", new NBTTagString("mainhand"));
+		modifiers.add(kb);
+
 		compound.set("AttributeModifiers", modifiers);
+
+		NBTTagList ench = new NBTTagList();
+		NBTTagCompound enchant = new NBTTagCompound();
+		enchant.set("id", new NBTTagInt(34));
+		enchant.set("lvl", new NBTTagInt(10));
+		ench.add(enchant);
+		compound.set("ench", ench);
 
 		nmsStack.setTag(compound);
 

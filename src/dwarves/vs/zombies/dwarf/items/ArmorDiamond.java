@@ -20,10 +20,11 @@ public class ArmorDiamond extends DwarfItem{
 		meta.setDisplayName(ChatColor.AQUA + "Dwarven Armor");
 		
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.GOLD + 								"L-Click: Use on a Dwarf to give them armor. You");
-    lore.add(ChatColor.GOLD + 								"will need someone else to put on your own");
+		lore.add(ChatColor.GOLD + 									"L-Click: Use on a Dwarf to give them armor");
+		lore.add(ChatColor.GOLD + 									"         You will need someone else to put");
+		lore.add(ChatColor.GOLD + 									"         on your own");
 		lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_PURPLE + 	"How do you put it on? Thats a good question.");
-		lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_PURPLE + 	"I just always get some other jimmy to help me");
+		lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_PURPLE + 	"I just always get some other jimmy to help me.");
 		lore.add(ChatColor.GOLD + 									"- Lance Willakers");
 		meta.setLore(lore);
 		

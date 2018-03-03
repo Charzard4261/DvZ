@@ -1,4 +1,4 @@
-package dwarves.vs.zombies.dwarf.weapons.bows;
+package dwarves.vs.zombies.dwarf.equipment.bows;
 
 import java.util.ArrayList;
 

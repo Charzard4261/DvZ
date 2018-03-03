@@ -1,4 +1,4 @@
-package dwarves.vs.zombies.dwarf.weapons.bows;
+package dwarves.vs.zombies.dwarf.equipment.bows;
 
 import java.util.ArrayList;
 
@@ -14,9 +14,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import dwarves.vs.zombies.dwarf.Dwarf;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfBow;
 
-public class Virendra extends DwarfBow {
+public class DragonskinBow extends DwarfBow {
 
-	public Virendra(Dwarf dwarf)
+	public DragonskinBow(Dwarf dwarf)
 	{
 		super(dwarf, 30);
 	}
@@ -26,14 +26,12 @@ public class Virendra extends DwarfBow {
 	{
 		ItemStack item = new ItemStack(Material.BOW);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD + "Virendra");
+		meta.setDisplayName(ChatColor.AQUA + "Dragonskin Bow");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("The men tell me that ever since I started using it");
-		lore.add("my shots have become more accurate, more powerful.");
-		lore.add("But the truth is that when I draw this bow.");
-		lore.add("When I hold her in my hands.");
-		lore.add("All I can feel is her love for me and my hate for myself.");
-		lore.add(ChatColor.GOLD + "- Bruce Willakers");
+		lore.add(ChatColor.YELLOW + "Power: " + ChatColor.AQUA + "50");
+		lore.add(ChatColor.YELLOW + "With this Bow, kills grant you a Powerful Rampage");
+		lore.add(ChatColor.YELLOW + "for 2 seconds, which allows you to instantly kill");
+		lore.add(ChatColor.YELLOW + "most demons.");
 		meta.setLore(lore);
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
@@ -46,9 +44,9 @@ public class Virendra extends DwarfBow {
 		Arrow arrow = (Arrow) event.getProjectile();
 		arrow.setFireTicks(0);
 		arrow.setVelocity(arrow.getVelocity().multiply(1));
-		arrow.setKnockbackStrength(100);
+		arrow.setKnockbackStrength(1);
 		arrow.setCritical(false);
-		arrow.spigot().setDamage(350); // Damage, also 350 is the actual damage the bow does
+		arrow.spigot().setDamage(50); // Damage
 	}
 
 	@Override
