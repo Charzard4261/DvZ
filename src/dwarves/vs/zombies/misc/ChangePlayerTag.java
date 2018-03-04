@@ -1,31 +1,93 @@
 package dwarves.vs.zombies.misc;
 
+import java.lang.reflect.Field;
+
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
+import org.bukkit.scoreboard.Team.Option;
+import org.bukkit.scoreboard.Team.OptionStatus;
 
-import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
+import com.mojang.authlib.GameProfile;
+
+import net.minecraft.server.v1_12_R1.EntityPlayer;
 
 public class ChangePlayerTag {
 
+	@SuppressWarnings("deprecation")
 	public static void changeTag(Player playerToChange, String newName)
 	{
-		for (Player player : Bukkit.getOnlinePlayers())
+		EntityPlayer ep = ((CraftPlayer) playerToChange).getHandle();
+		GameProfile gp = ep.getProfile();
+		
+		try
 		{
-			if (player != playerToChange)
+			Field profileField = gp.getClass().getDeclaredField("name");
+			profileField.setAccessible(true);
+			profileField.set(gp, newName);
+		} catch (Exception e)
+		{
+			Bukkit.broadcastMessage("Not Work!");
+		}
+
+		for (Player p : Bukkit.getOnlinePlayers())
+		{
+			if (p != playerToChange)
 			{
-				PacketPlayOutPlayerInfo info = new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.UPDATE_DISPLAY_NAME,
-						((CraftPlayer) playerToChange).getHandle());
-				((CraftPlayer) player).getHandle().playerConnection.sendPacket(info);
+				p.hidePlayer(playerToChange);
+				p.showPlayer(playerToChange);
 			}
-			// PacketPlayOutPlayerInfo info = new
-			// PacketPlayOutPlayerInfo(EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer)
-			// playerToChange).getHandle());
-			// PacketPlayOutPlayerInfo info = new
-			// PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, ((CraftPlayer)
-			// playerToChange).getHandle());
 		}
 	}
+	
+	// CODE AFTER HERE WAS MADE BY SPIGOT USER lim_bo56 FOUND AT https://www.spigotmc.org/threads/change-players-name-tag.191025/
+    private static Team team;
+    private static Scoreboard scoreboard;
+ 
+    public static void changePlayerName(Player player, String prefix, String suffix, TeamAction action) {
+        if (player.getScoreboard() == null || prefix == null || suffix == null || action == null) {
+            return;
+        }
+ 
+        scoreboard = player.getScoreboard();
+ 
+        if (scoreboard.getTeam(player.getName()) == null) {
+            scoreboard.registerNewTeam(player.getName());
+        }
+ 
+        team = scoreboard.getTeam(player.getName());
+        team.setPrefix(Color(prefix));
+        team.setSuffix(Color(suffix));
+        team.setOption(Option.NAME_TAG_VISIBILITY, OptionStatus.ALWAYS);
+ 
+        switch (action) {
+            case CREATE:
+                team.addEntry(player.getName());
+                break;
+            case UPDATE:
+                team.unregister();
+                scoreboard.registerNewTeam(player.getName());
+                team = scoreboard.getTeam(player.getName());
+                team.setPrefix(Color(prefix));
+                team.setSuffix(Color(suffix));
+                team.setOption(Option.NAME_TAG_VISIBILITY, OptionStatus.ALWAYS);
+                team.addEntry(player.getName());
+                break;
+            case DESTROY:
+                team.unregister();
+                break;
+        }
+    }
+ 
+    private static String Color(String input) {
+        return ChatColor.translateAlternateColorCodes('&', input);
+    }
+    
+    public enum TeamAction {
+        CREATE, DESTROY, UPDATE
+    }
 
 }

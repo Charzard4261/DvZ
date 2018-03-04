@@ -96,8 +96,6 @@ public class Core extends JavaPlugin {
 		for (Player player : Bukkit.getOnlinePlayers())
 		{
 			gm.spawnDwarf(player);
-
-			player.setScoreboard(gm.board);
 		}
 
 		gm.remainingS.setScore(gm.dwarves.size());
@@ -188,7 +186,7 @@ public class Core extends JavaPlugin {
 		while (it.hasNext())
 		{
 			UUID uuid = it.next();
-			
+
 			gm.dwarves.get(uuid).getPlayer().getInventory().clear();
 			gm.dwarves.get(uuid).getPlayer().setDisplayName(gm.dwarves.get(uuid).getPlayer().getCustomName());
 			gm.dwarves.get(uuid).getPlayer().setPlayerListName(gm.dwarves.get(uuid).getPlayer().getCustomName());
@@ -220,7 +218,7 @@ public class Core extends JavaPlugin {
 	{
 		player.getInventory().clear();
 		if (player.getCustomName() == null)
-			player.getPlayer().setCustomName(player.getDisplayName());
+			player.getPlayer().setCustomName(player.getName());
 		ChangePlayerTag.changeTag(player, player.getCustomName());
 		player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		player.teleport(gm.lobby);

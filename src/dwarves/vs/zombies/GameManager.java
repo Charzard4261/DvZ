@@ -20,6 +20,7 @@ import dwarves.vs.zombies.enums.Stage;
 import dwarves.vs.zombies.map.Map;
 import dwarves.vs.zombies.map.maps.DefaultMap;
 import dwarves.vs.zombies.misc.ChangePlayerTag;
+import dwarves.vs.zombies.misc.ChangePlayerTag.TeamAction;
 import dwarves.vs.zombies.misc.ProjectileData;
 import dwarves.vs.zombies.monster.MData;
 
@@ -75,9 +76,12 @@ public class GameManager {
 		player.getInventory().clear();
 		player.setDisplayName(ChatColor.DARK_AQUA + player.getCustomName());
 		player.setPlayerListName(player.getDisplayName());
+		player.sendMessage(player.getName() + player.getDisplayName());
 		dwarves.put(player.getUniqueId(), new Jimmy(player.getUniqueId()));
 		player.teleport(map.getPlayerSpawn());
-		ChangePlayerTag.changeTag(player, player.getDisplayName());
+		player.setScoreboard(board);
+		ChangePlayerTag.changePlayerName(player, ChatColor.DARK_AQUA + "", "", TeamAction.CREATE);
+		// PlayerSkinEditor.applyOldMan(player.getUniqueId());
 	}
 
 	public void spawnHero(String type, Player player)
