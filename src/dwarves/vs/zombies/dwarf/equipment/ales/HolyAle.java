@@ -24,7 +24,7 @@ public class HolyAle extends DwarfAle {
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.POTION, 1, (byte) 8267);
+		ItemStack item = new ItemStack(Material.POTION, 1, (byte) 8267); 
 		ItemMeta meta = item.getItemMeta();
 
 		meta.setDisplayName(ChatColor.AQUA + "Holy Ale");
