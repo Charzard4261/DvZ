@@ -42,6 +42,25 @@ public class DwarfArmourFull extends ArmourSet {
 		meta.setUnbreakable(true);
 
 		item.setItemMeta(meta);
+		
+		net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
+		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+		NBTTagList modifiers = new NBTTagList();
+		NBTTagCompound health = new NBTTagCompound();
+		health.set("AttributeName", new NBTTagString("generic.maxHealth"));
+		health.set("Name", new NBTTagString("generic.maxHealth"));
+		health.set("Amount", new NBTTagInt(20));
+		health.set("Operation", new NBTTagInt(0));
+		health.set("UUIDLeast", new NBTTagInt(894654));
+		health.set("UUIDMost", new NBTTagInt(2872));
+		health.set("Slot", new NBTTagString("chest"));
+		modifiers.add(health);
+
+		compound.set("AttributeModifiers", modifiers);
+
+		nmsStack.setTag(compound);
+
+		item = CraftItemStack.asBukkitCopy(nmsStack);
 		return item;
 	}
 
@@ -56,25 +75,6 @@ public class DwarfArmourFull extends ArmourSet {
 		meta.setUnbreakable(true);
 
 		item.setItemMeta(meta);
-		
-		net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
-		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-		NBTTagList modifiers = new NBTTagList();
-		NBTTagCompound health = new NBTTagCompound();
-		health.set("AttributeName", new NBTTagString("generic.maxHealth"));
-		health.set("Name", new NBTTagString("generic.maxHealth"));
-		health.set("Amount", new NBTTagInt(20));
-		health.set("Operation", new NBTTagInt(0));
-		health.set("UUIDLeast", new NBTTagInt(894654));
-		health.set("UUIDMost", new NBTTagInt(2872));
-		health.set("Slot", new NBTTagString("mainhand"));
-		modifiers.add(health);
-
-		compound.set("AttributeModifiers", modifiers);
-
-		nmsStack.setTag(compound);
-
-		item = CraftItemStack.asBukkitCopy(nmsStack);
 		return item;
 	}
 

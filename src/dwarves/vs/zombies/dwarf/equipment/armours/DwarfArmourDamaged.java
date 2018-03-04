@@ -51,7 +51,7 @@ public class DwarfArmourDamaged extends ArmourSet {
 		health.set("Operation", new NBTTagInt(0));
 		health.set("UUIDLeast", new NBTTagInt(894654));
 		health.set("UUIDMost", new NBTTagInt(2872));
-		health.set("Slot", new NBTTagString("mainhand"));
+		health.set("Slot", new NBTTagString("chest"));
 		modifiers.add(health);
 
 		compound.set("AttributeModifiers", modifiers);
