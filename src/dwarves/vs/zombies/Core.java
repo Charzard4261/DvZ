@@ -13,6 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.DisplaySlot;
 
 import dwarves.vs.zombies.command.CommandFactory;
+import dwarves.vs.zombies.command.commands.AdminCommand;
 import dwarves.vs.zombies.command.commands.GameCommand;
 import dwarves.vs.zombies.dwarf.Dwarf;
 import dwarves.vs.zombies.enums.Stage;
@@ -55,6 +56,7 @@ public class Core extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new RespawnListener(), this);
 
 		cf.registerCommand(new GameCommand());
+		cf.registerCommand(new AdminCommand());
 	}
 
 	@Override

@@ -27,6 +27,8 @@ public class JoinListener implements Listener {
 		case PRE:
 			if (!(Core.getInstance().getGm().dwarves.containsKey(event.getPlayer().getUniqueId())))
 				Core.getInstance().getGm().spawnDwarf(event.getPlayer());
+			else
+				Core.getInstance().getGm().respawnDwarf(event.getPlayer());
 			break;
 		case IN:
 			if (Core.getInstance().getGm().dwarves.containsKey(event.getPlayer().getUniqueId()))

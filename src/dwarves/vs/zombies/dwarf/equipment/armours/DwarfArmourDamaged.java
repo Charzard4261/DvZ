@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -34,7 +33,7 @@ public class DwarfArmourDamaged extends ArmourSet {
 		meta.setUnbreakable(true);
 		
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("Your armor is damaged get someone");
+		lore.add("Your armor is damaged, get someone");
 		lore.add("to R-Click you with a pickaxe");
 		lore.add("to repair it.");
 		meta.setLore(lore);
@@ -72,7 +71,7 @@ public class DwarfArmourDamaged extends ArmourSet {
 		meta.setUnbreakable(true);
 		
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("Your armor is damaged get someone");
+		lore.add("Your armor is damaged, get someone");
 		lore.add("to R-Click you with a pickaxe");
 		lore.add("to repair it.");
 		meta.setLore(lore);
@@ -91,7 +90,7 @@ public class DwarfArmourDamaged extends ArmourSet {
 		meta.setUnbreakable(true);
 		
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("Your armor is damaged get someone");
+		lore.add("Your armor is damaged, get someone");
 		lore.add("to R-Click you with a pickaxe");
 		lore.add("to repair it.");
 		meta.setLore(lore);

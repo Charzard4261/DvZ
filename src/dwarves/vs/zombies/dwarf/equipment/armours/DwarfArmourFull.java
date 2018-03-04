@@ -1,7 +1,5 @@
 package dwarves.vs.zombies.dwarf.equipment.armours;
 
-import java.util.ArrayList;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;

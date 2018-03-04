@@ -34,9 +34,9 @@ public class DwarfArmourBroken extends ArmourSet {
 		
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Your armor is broken and you are");
-		lore.add("taking additional damage.");
-		lore.add("to R-Click you with a pickaxe");
-		lore.add("to repair it.");
+		lore.add("taking additional damage");
+		lore.add("Get someone to R-Click you with");
+		lore.add("a pickaxe to repair it.");
 		meta.setLore(lore);
 
 		item.setItemMeta(meta);
@@ -73,8 +73,9 @@ public class DwarfArmourBroken extends ArmourSet {
 		
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Your armor is broken and you are");
-		lore.add("taking additional damage.");
-		lore.add("to R-Click you with a pickaxe");
+		lore.add("taking additional damage");
+		lore.add("Get someone to R-Click you with");
+		lore.add("a pickaxe to repair it.");
 		lore.add("to repair it.");
 		meta.setLore(lore);
 
@@ -94,8 +95,9 @@ public class DwarfArmourBroken extends ArmourSet {
 		
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Your armor is broken and you are");
-		lore.add("taking additional damage.");
-		lore.add("to R-Click you with a pickaxe");
+		lore.add("taking additional damage");
+		lore.add("Get someone to R-Click you with");
+		lore.add("a pickaxe to repair it.");
 		lore.add("to repair it.");
 		meta.setLore(lore);
 
