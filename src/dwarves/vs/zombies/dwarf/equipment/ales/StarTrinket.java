@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -39,7 +40,13 @@ public class StarTrinket extends DwarfAle {
 	@Override
 	public void onLeftClick(PlayerInteractEvent event)
 	{
-		// TODO Auto-generated method stub
+		if (getDwarf().modifyMana(-100))
+		{
+			getDwarf().getPlayer().playSound(getDwarf().getPlayer().getLocation(), "", 0.4f, 1f);
+			getDwarf().getPlayer().setHealth(getDwarf().getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+			
+			getDwarf().getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, Integer.MAX_VALUE, 9, false, false), false); //20 abssorb hearts
+		}
 
 	}
 

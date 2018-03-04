@@ -17,7 +17,7 @@ public class WizardMortar extends DwarfItem{
 		ItemStack item = new ItemStack(Material.INK_SACK, 1, (byte) 9);
 		ItemMeta meta = item.getItemMeta();
 		
-		meta.setDisplayName(ChatColor.AQUA + "Wizzard Mortar");
+		meta.setDisplayName(ChatColor.AQUA + "Wizard Mortar");
 		
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.YELLOW + 								"L-Click: Use on any walls to repair them into magic stone!");
