@@ -24,6 +24,7 @@ import dwarves.vs.zombies.dwarf.items.Mortar;
 import dwarves.vs.zombies.dwarf.items.ScrollOfMagicStone;
 import dwarves.vs.zombies.dwarf.items.Stick;
 import dwarves.vs.zombies.dwarf.items.Torch;
+import dwarves.vs.zombies.dwarf.items.WizardMortar;
 import dwarves.vs.zombies.dwarf.items.WoodenPlank;
 import dwarves.vs.zombies.enums.Stage;
 import dwarves.vs.zombies.misc.Utils;
@@ -84,6 +85,34 @@ public class ClickBlockListener implements Listener {
 					event.getPlayer().getWorld().spawnParticle(Particle.EXPLOSION_HUGE, event.getPlayer().getLocation(), 1);
 					new ScrollOfMagicStone().slab(event.getPlayer(), event.getPlayer().getLocation().getBlock());
 				}
+		}
+		
+		if (event.getAction() == Action.LEFT_CLICK_BLOCK)
+		{
+			if (event.getPlayer().getInventory().getItemInMainHand() != null)
+				if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new WizardMortar().getItem()))
+				{
+					if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
+						event.getPlayer().getInventory().getItemInMainHand()
+								.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+					event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.BLOCK_SLIME_PLACE, 0.4f,
+							1f);
+					List<Block> radius = Utils.getBlocks(event.getClickedBlock(), 3, 3, 3);
+					for (Block block : radius)
+					{
+						switch (block.getType())
+						{
+						case COBBLESTONE:
+						case MOSSY_COBBLESTONE:
+						case SMOOTH_BRICK:
+							block.setType(Material.LAPIS_ORE);
+							break;
+						default:
+							break;
+						}
+					}
+				}
+
 		}
 
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK)

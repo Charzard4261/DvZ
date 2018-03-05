@@ -14,10 +14,10 @@ public class EnchantedLamp extends DwarfItem{
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (byte) 9);
+		ItemStack item = new ItemStack(Material.INK_SACK, 1, (byte) 12);
 		ItemMeta meta = item.getItemMeta();
 		
-		meta.setDisplayName(ChatColor.AQUA + "Mortar");
+		meta.setDisplayName(ChatColor.AQUA + "Enchanted Lamp");
 		
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.YELLOW + 								"R-Click: Use to place a unbreakable lamp that");

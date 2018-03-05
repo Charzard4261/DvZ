@@ -20,7 +20,7 @@ public class ScrollOfMagicStone extends DwarfItem {
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.BRICK);
+		ItemStack item = new ItemStack(Material.CLAY_BRICK);
 		ItemMeta meta = item.getItemMeta();
 
 		meta.setDisplayName(ChatColor.AQUA + "Scroll of Magic Stone.");
