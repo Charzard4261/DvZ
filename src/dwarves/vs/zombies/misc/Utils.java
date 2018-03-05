@@ -32,7 +32,7 @@ public class Utils {
 		if (useSubCardinalDirections)
 			return radial[Math.round(yaw / 45f) & 0x7].getOppositeFace();
 
-		return axis[Math.round(yaw / 90f) & 0x3]/*.getOppositeFace()*/;
+		return axis[Math.round(yaw / 90f) & 0x3].getOppositeFace();
 	}
 
 	private static final BlockFace[] axis =

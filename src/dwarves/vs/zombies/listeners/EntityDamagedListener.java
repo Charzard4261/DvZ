@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.enums.Stage;
@@ -84,8 +85,6 @@ public class EntityDamagedListener implements Listener {
 		if (!(event.getEntity() instanceof Player) || event.isCancelled())
 			return;
 
-		Bukkit.broadcastMessage("PLAYER GOT HIT");
-
 		if (Core.getInstance().getGm().stage == Stage.LOBBY)
 		{
 			event.setCancelled(true);
@@ -119,13 +118,12 @@ public class EntityDamagedListener implements Listener {
 		}
 	}
 
+	@EventHandler
 	public void onPlayerDamaged(EntityDamageEvent event)
 	{
 
 		if (!(event.getEntity() instanceof Player) || event.isCancelled())
 			return;
-
-		Bukkit.broadcastMessage("PLAYER GOT HURT");
 
 		if (Core.getInstance().getGm().stage == Stage.LOBBY)
 		{
@@ -137,7 +135,7 @@ public class EntityDamagedListener implements Listener {
 		{
 			if ((((LivingEntity) event.getEntity()).getHealth() - event.getDamage()) <= 0)
 			{
-				if (Core.getInstance().getGm().stage != Stage.PRE)
+				if (Core.getInstance().getGm().stage != Stage.PRE && event.getCause() != DamageCause.ENTITY_ATTACK)
 					for (Player player : Bukkit.getOnlinePlayers())
 					{
 						player.sendTitle(event.getEntity().getCustomName() + ChatColor.RED + " was killed!", "", 1, 3,

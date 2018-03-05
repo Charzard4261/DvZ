@@ -25,7 +25,7 @@ public abstract class Dwarf extends PlayerType {
 	public int proc = 0;
 
 	public boolean sword = false, bow = false, ale = false, special = false;
-	public int swordt = 0, bowt = 0, alet = 0, specialt = 0;
+	public int swordt = 0, bowt = 0, alet = 0, specialt = 0, slabt = 0;
 
 	public int mana = 1000;
 

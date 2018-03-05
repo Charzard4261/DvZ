@@ -73,24 +73,16 @@ public class ClickBlockListener implements Listener {
 			if (event.getPlayer().getInventory().getItemInMainHand() != null)
 				if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new ScrollOfMagicStone().getItem()))
 				{
+					if (Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).slabt > 0)
+						return;
+					
 					if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
 						event.getPlayer().getInventory().getItemInMainHand()
 								.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
 					event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ANVIL_PLACE, 1f,
 							1f);
 					event.getPlayer().getWorld().spawnParticle(Particle.EXPLOSION_HUGE, event.getPlayer().getLocation(), 1);
-					List<Block> radius = Utils.getBlocks(event.getPlayer().getLocation().add(5, 1, 0).getBlock(), 4, 2, 2); // TODO CHECK DIRECTION AND MODIFY AXIS AS APPROPRATE, RE-DO AXIS ENTIRELY
-					for (Block block : radius)
-					{
-						switch (block.getType())
-						{
-						case AIR:
-							block.setType(Material.LAPIS_ORE);
-							break;
-						default:
-							break;
-						}
-					}
+					new ScrollOfMagicStone().slab(event.getPlayer(), event.getPlayer().getLocation().getBlock());
 				}
 		}
 

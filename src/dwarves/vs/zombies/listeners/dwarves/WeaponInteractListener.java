@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import dwarves.vs.zombies.Core;
+import dwarves.vs.zombies.dwarf.items.DebugTool;
 import dwarves.vs.zombies.enums.Stage;
 
 public class WeaponInteractListener implements Listener {
@@ -15,6 +16,10 @@ public class WeaponInteractListener implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event)
 	{
+		if (event.getPlayer().getInventory().getItemInMainHand() != null)
+			if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new DebugTool().getItem()))
+				new DebugTool().interact(event);
+
 		if (event.getHand() == EquipmentSlot.OFF_HAND || Core.getInstance().getGm().stage == Stage.LOBBY
 				|| event.getPlayer().getInventory().getItemInMainHand() == null)
 			return;

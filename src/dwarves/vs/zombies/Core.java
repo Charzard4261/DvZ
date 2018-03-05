@@ -123,6 +123,7 @@ public class Core extends JavaPlugin {
 				{
 					if (dwarf.getPlayer() == null)
 						continue;
+					
 					if (manatimer)
 					{
 
@@ -133,6 +134,9 @@ public class Core extends JavaPlugin {
 								dwarf.modifyMana(25);
 						}
 					}
+					
+					if (dwarf.slabt > 0)
+						dwarf.slabt--;
 
 					if (dwarf.isProccing())
 						dwarf.proc--;

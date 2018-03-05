@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 import dwarves.vs.zombies.command.ACommand;
 import dwarves.vs.zombies.dwarf.items.ArmorDiamond;
-import dwarves.vs.zombies.dwarf.items.Bowl;
+import dwarves.vs.zombies.dwarf.items.DebugTool;
 import dwarves.vs.zombies.dwarf.items.EnchantedLamp;
 import dwarves.vs.zombies.dwarf.items.Mortar;
 import dwarves.vs.zombies.dwarf.items.ScrollOfMagicStone;
@@ -26,15 +26,15 @@ public class AdminCommand extends ACommand {
 		{
 			return;
 		}
-		
+
+		p.getInventory().addItem(new DebugTool().getItem());
 		p.getInventory().addItem(new ArmorDiamond().getItem());
-		p.getInventory().addItem(new Bowl().getItem());
-		p.getInventory().addItem(new EnchantedLamp().getItem());
 		p.getInventory().addItem(new Mortar().getItem());
+		p.getInventory().addItem(new WizardMortar().getItem());
 		p.getInventory().addItem(new ScrollOfMagicStone().getItem());
 		p.getInventory().addItem(new SwordOfSanctification().getItem());
 		p.getInventory().addItem(new WigglyWrench().getItem());
-		p.getInventory().addItem(new WizardMortar().getItem());
+		p.getInventory().addItem(new EnchantedLamp().getItem());
 
 	}
 
