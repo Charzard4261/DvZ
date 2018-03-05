@@ -14,7 +14,7 @@ public class SwordOfSanctification extends DwarfItem{
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (byte) 9);
+		ItemStack item = new ItemStack(Material.INK_SACK, 1, (byte) 13);
 		ItemMeta meta = item.getItemMeta();
 		
 		meta.setDisplayName(ChatColor.AQUA + "Sword Of Sanctification");
