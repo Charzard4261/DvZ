@@ -68,7 +68,7 @@ public class ClickBlockListener implements Listener {
 
 		}
 
-		if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
+		if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)
 		{
 			if (event.getPlayer().getInventory().getItemInMainHand() != null)
 				if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new ScrollOfMagicStone().getItem()))
@@ -106,7 +106,7 @@ public class ClickBlockListener implements Listener {
 						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activateshield", 0.4f,
 								1f);
 						break;
-					case ACTIVATOR_RAIL: // PICAXE
+					case ACTIVATOR_RAIL: // PICKAXE
 						event.getPlayer().getInventory().addItem(new MightyPickaxe().getItem());
 						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activateshield", 0.4f,
 								1f);
