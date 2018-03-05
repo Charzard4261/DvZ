@@ -41,7 +41,7 @@ public class ClickBlockListener implements Listener {
 		if (event.getHand() == EquipmentSlot.OFF_HAND || Core.getInstance().getGm().stage == Stage.LOBBY)
 			return;
 
-		if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)
+		if (event.getAction() == Action.LEFT_CLICK_BLOCK)
 		{
 			if (event.getPlayer().getInventory().getItemInMainHand() != null)
 				if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new Mortar().getItem()))
@@ -95,7 +95,7 @@ public class ClickBlockListener implements Listener {
 				}
 		}
 		
-		if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)
+		if (event.getAction() == Action.LEFT_CLICK_BLOCK)
 		{
 			if (event.getPlayer().getInventory().getItemInMainHand() != null)
 				if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new WizardMortar().getItem()))
