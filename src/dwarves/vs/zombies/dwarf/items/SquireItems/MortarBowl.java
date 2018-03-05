@@ -20,7 +20,7 @@ public class MortarBowl extends DwarfItem{
 		meta.setDisplayName(ChatColor.AQUA + "Mortar Bowl");
 		
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(ChatColor.YELLOW + "R-Click: Use on oil to make Mortar");							"- Bruce Willakers");
+		lore.add(ChatColor.YELLOW + "R-Click: Use on oil to make Mortar");
 		meta.setLore(lore);
 		
 		item.setItemMeta(meta);
