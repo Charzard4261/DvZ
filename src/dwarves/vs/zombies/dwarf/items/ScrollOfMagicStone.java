@@ -42,16 +42,16 @@ public class ScrollOfMagicStone extends DwarfItem {
 
 	public void slab(Player player, Block center)
 	{
-		
+
 		List<Block> radius = new ArrayList<Block>();
 		if (Utils.yawToFace(player.getEyeLocation().getYaw(), false) == BlockFace.NORTH)
-			radius = Utils.getBlocks(player.getLocation().add(0, 1, -5).getBlock(), 4, 2, 2);
+			radius = Utils.getBlocks(player.getLocation().add(0, 1, -6).getBlock(), 5, 2, 3);
 		else if (Utils.yawToFace(player.getEyeLocation().getYaw(), false) == BlockFace.SOUTH)
-			radius = Utils.getBlocks(player.getLocation().add(0, 1, 5).getBlock(), 4, 2, 2);
-		if (Utils.yawToFace(player.getEyeLocation().getYaw(), false) == BlockFace.EAST)
-			radius = Utils.getBlocks(player.getLocation().add(5, 1, 0).getBlock(), 2, 2, 4);
+			radius = Utils.getBlocks(player.getLocation().add(0, 1, 6).getBlock(), 5, 2, 3);
+		else if (Utils.yawToFace(player.getEyeLocation().getYaw(), false) == BlockFace.EAST)
+			radius = Utils.getBlocks(player.getLocation().add(6, 1, 0).getBlock(), 3, 2, 5);
 		else if (Utils.yawToFace(player.getEyeLocation().getYaw(), false) == BlockFace.WEST)
-			radius = Utils.getBlocks(player.getLocation().add(-5, 1, 0).getBlock(), 2, 2, 4);
+			radius = Utils.getBlocks(player.getLocation().add(-6, 1, 0).getBlock(), 3, 2, 5);
 		for (Block block : radius)
 		{
 			switch (block.getType())
@@ -63,8 +63,8 @@ public class ScrollOfMagicStone extends DwarfItem {
 				break;
 			}
 		}
-		
-		Core.getInstance().getGm().dwarves.get(player.getUniqueId()).slabt = 1;
+
+		Core.getInstance().getGm().dwarves.get(player.getUniqueId()).slabt = 2;
 	}
 
 }

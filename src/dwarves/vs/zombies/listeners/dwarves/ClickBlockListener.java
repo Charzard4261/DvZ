@@ -44,7 +44,8 @@ public class ClickBlockListener implements Listener {
 		if (event.getAction() == Action.LEFT_CLICK_BLOCK)
 		{
 			if (event.getPlayer().getInventory().getItemInMainHand() != null)
-				if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new Mortar().getItem()))
+				if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new Mortar().getItem())
+						|| event.getPlayer().getInventory().getItemInMainHand().isSimilar(new WizardMortar().getItem()))
 				{
 					if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
 						event.getPlayer().getInventory().getItemInMainHand()
@@ -59,7 +60,11 @@ public class ClickBlockListener implements Listener {
 						case COBBLESTONE:
 						case MOSSY_COBBLESTONE:
 						case SMOOTH_BRICK:
-							block.setType(Material.LAPIS_ORE);
+							if (Core.getInstance().getGm().stage == Stage.PRE || event.getPlayer().getInventory()
+									.getItemInMainHand().isSimilar(new WizardMortar().getItem()))
+								block.setType(Material.LAPIS_ORE);
+							else
+								block.setType(Material.SMOOTH_BRICK);
 							break;
 						default:
 							break;
@@ -76,43 +81,16 @@ public class ClickBlockListener implements Listener {
 				{
 					if (Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).slabt > 0)
 						return;
-					
+
 					if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
 						event.getPlayer().getInventory().getItemInMainHand()
 								.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
 					event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ANVIL_PLACE, 1f,
 							1f);
-					event.getPlayer().getWorld().spawnParticle(Particle.EXPLOSION_HUGE, event.getPlayer().getLocation(), 1);
+					event.getPlayer().getWorld().spawnParticle(Particle.EXPLOSION_HUGE, event.getPlayer().getLocation(),
+							1);
 					new ScrollOfMagicStone().slab(event.getPlayer(), event.getPlayer().getLocation().getBlock());
 				}
-		}
-		
-		if (event.getAction() == Action.LEFT_CLICK_BLOCK)
-		{
-			if (event.getPlayer().getInventory().getItemInMainHand() != null)
-				if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new WizardMortar().getItem()))
-				{
-					if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
-						event.getPlayer().getInventory().getItemInMainHand()
-								.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
-					event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.BLOCK_SLIME_PLACE, 0.4f,
-							1f);
-					List<Block> radius = Utils.getBlocks(event.getClickedBlock(), 3, 3, 3);
-					for (Block block : radius)
-					{
-						switch (block.getType())
-						{
-						case COBBLESTONE:
-						case MOSSY_COBBLESTONE:
-						case SMOOTH_BRICK:
-							block.setType(Material.LAPIS_ORE);
-							break;
-						default:
-							break;
-						}
-					}
-				}
-
 		}
 
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
