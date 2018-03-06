@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -135,18 +136,21 @@ public abstract class Dwarf extends PlayerType {
 	public void proc()
 	{
 		getPlayer().getWorld().playSound(getPlayer().getLocation(), "wpnproc", 4f, 1f);
+		getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, getPlayer().getEyeLocation(), 50, 0.3, 0.6, 0.3, 1);
 		proc = 3;
-		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 255, false, false), true);
-		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 2, false, false), true);
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40, 0, false, false), true);
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 2, false, false), true);
+		
 	}
 
 	public void proc(int time)
 	{
 		getPlayer().getWorld().playSound(getPlayer().getLocation(), "wpnproc", 4f, 1f);
+		getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, getPlayer().getEyeLocation(), 50, 0.3, 0.6, 0.3, 1);
 		proc = time;
-		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, time * 20, 0, false, false),
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, (time - 1) * 20, 0, false, false),
 				true);
-		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, time * 20, 2, false, false), true);
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (time - 1) * 20, 2, false, false), true);
 	}
 
 	public boolean isProccing()

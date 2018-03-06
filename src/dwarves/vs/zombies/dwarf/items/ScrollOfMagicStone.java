@@ -45,13 +45,13 @@ public class ScrollOfMagicStone extends DwarfItem {
 
 		List<Block> radius = new ArrayList<Block>();
 		if (Utils.yawToFace(player.getEyeLocation().getYaw(), false) == BlockFace.NORTH)
-			radius = Utils.getBlocks(player.getLocation().add(0, 1, -6).getBlock(), 5, 2, 3);
+			radius = Utils.getBlocks(player.getLocation().add(0, 2, -6).getBlock(), 5, 2, 3);
 		else if (Utils.yawToFace(player.getEyeLocation().getYaw(), false) == BlockFace.SOUTH)
-			radius = Utils.getBlocks(player.getLocation().add(0, 1, 6).getBlock(), 5, 2, 3);
+			radius = Utils.getBlocks(player.getLocation().add(0, 2, 6).getBlock(), 5, 2, 3);
 		else if (Utils.yawToFace(player.getEyeLocation().getYaw(), false) == BlockFace.EAST)
-			radius = Utils.getBlocks(player.getLocation().add(6, 1, 0).getBlock(), 3, 2, 5);
+			radius = Utils.getBlocks(player.getLocation().add(6, 2, 0).getBlock(), 3, 2, 5);
 		else if (Utils.yawToFace(player.getEyeLocation().getYaw(), false) == BlockFace.WEST)
-			radius = Utils.getBlocks(player.getLocation().add(-6, 1, 0).getBlock(), 3, 2, 5);
+			radius = Utils.getBlocks(player.getLocation().add(-6, 2, 0).getBlock(), 3, 2, 5);
 		for (Block block : radius)
 		{
 			switch (block.getType())

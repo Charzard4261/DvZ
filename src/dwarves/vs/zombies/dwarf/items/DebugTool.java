@@ -20,7 +20,7 @@ public class DebugTool extends DwarfItem {
 		ItemStack item = new ItemStack(Material.STICK);
 		ItemMeta meta = item.getItemMeta();
 
-		meta.setDisplayName(ChatColor.AQUA + "DebugStick");
+		meta.setDisplayName(ChatColor.AQUA + "Debug Stick");
 
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.YELLOW + "R-Click: Use the RIGHT CLICK debug function");

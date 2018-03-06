@@ -102,7 +102,7 @@ public class Core extends JavaPlugin {
 
 		gm.remainingS.setScore(gm.dwarves.size());
 
-		gm.map.getPlayerSpawn().getWorld().setTime(13800);
+		gm.map.getPlayerSpawn().getWorld().setTime(23000);
 
 		timer = Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), new Runnable() {
 
