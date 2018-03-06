@@ -9,6 +9,7 @@ public abstract class ACommand extends BukkitCommand {
 
 	String name;
 	String command_host;
+	boolean console = false;
 
 	public ACommand(String name, String command_host, String... alias)
 	{
@@ -21,14 +22,29 @@ public abstract class ACommand extends BukkitCommand {
 		}
 	}
 
+	public ACommand(String name, String command_host, String[] alias, boolean console)
+	{
+		super(name);
+		this.name = name;
+		this.command_host = command_host;
+		for (String ali : alias)
+		{
+			this.getAliases().add(ali);
+		}
+		this.console = console;
+	}
+
 	@Override
-	public final boolean execute(CommandSender sender, String command,
-			String[] args)
+	public final boolean execute(CommandSender sender, String command, String[] args)
 	{
 		if (!(sender instanceof Player))
 		{
-			sender.sendMessage(ChatColor.RED
-					+ "The Console Command Sender cannot send this command!");
+			if (console)
+			{
+				callCommand(sender, args);
+				return true;
+			}
+			sender.sendMessage(ChatColor.RED + "The Console Command Sender cannot send this command!");
 			return true;
 		}
 		Player pl = (Player) sender;
@@ -48,6 +64,11 @@ public abstract class ACommand extends BukkitCommand {
 	public String getHost()
 	{
 		return command_host;
+	}
+
+	protected void callCommand(CommandSender sender, String[] args)
+	{
+		
 	}
 
 }

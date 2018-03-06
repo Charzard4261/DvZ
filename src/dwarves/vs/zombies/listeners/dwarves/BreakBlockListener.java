@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.dwarf.items.ArmorDiamond;
-import dwarves.vs.zombies.dwarf.items.DwarvernShovel;
 import dwarves.vs.zombies.dwarf.items.MightyPickaxe;
 import dwarves.vs.zombies.enums.Stage;
 

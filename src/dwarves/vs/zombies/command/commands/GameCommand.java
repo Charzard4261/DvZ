@@ -1,5 +1,6 @@
 package dwarves.vs.zombies.command.commands;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import dwarves.vs.zombies.Core;
@@ -11,7 +12,7 @@ public class GameCommand extends ACommand {
 
 	public GameCommand()
 	{
-		super("game", "Game Master", new String[] {});
+		super("game", "Game Master", new String[] {}, true);
 	}
 
 	@Override
@@ -50,6 +51,34 @@ public class GameCommand extends ACommand {
 			}
 		}
 
+	}
+	
+	@Override
+	protected void callCommand(CommandSender sender, String[] args)
+	{
+		switch (args[0])
+		{
+		case "start":
+			if (Core.getInstance().getGm().stage == Stage.LOBBY)
+			{
+				Core.getInstance().start();
+			}
+			else
+				sender.sendMessage(ChatColor.RED + "Game is in progress");
+			break;
+		case "stop":
+			if (Core.getInstance().getGm().stage != Stage.LOBBY)
+			{
+				Core.getInstance().end();
+			}
+			else
+				sender.sendMessage(ChatColor.RED + "Game is not in progress");
+			break;
+		default:
+			sender.sendMessage(ChatColor.RED + "Correct usage is /game <start/stop>");
+			break;
+
+		}
 	}
 
 }
