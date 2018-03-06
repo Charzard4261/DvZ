@@ -18,7 +18,7 @@ public class DragonskinBow extends DwarfBow {
 
 	public DragonskinBow(Dwarf dwarf)
 	{
-		super(dwarf, 30);
+		super(dwarf, 0);
 	}
 
 	@Override

@@ -58,7 +58,7 @@ public class Virendra extends DwarfBow {
 			return false;
 		if ((((LivingEntity) event.getEntity()).getHealth() - event.getDamage()) > 0)
 			return false;
-		getDwarf().proc();
+		getDwarf().proc(5);
 		System.out.println("Dragonskin Proc");
 		return true;
 	}
