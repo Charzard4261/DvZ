@@ -93,7 +93,9 @@ public class AxeOfMalice extends DwarfSword {
 	@Override
 	protected boolean special(PlayerInteractEvent event)
 	{
-		return rollsProcs;
+		getDwarf().getPlayer().getWorld().playSound(getDwarf().getPlayer().getLocation(), "maliceUse", 4F, 1F);
+		getDwarf().proc(8);
+        return true;
 	}
 
 	@Override

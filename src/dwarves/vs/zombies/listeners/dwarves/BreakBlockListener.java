@@ -56,6 +56,7 @@ public class BreakBlockListener implements Listener {
 			case SPONGE:
 			case QUARTZ_BLOCK:
 			case QUARTZ_STAIRS:
+			case JACK_O_LANTERN:
 				event.setCancelled(true);
 				break;
 			case GOLD_ORE:

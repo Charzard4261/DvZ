@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
@@ -99,7 +100,7 @@ public class ElvenDagger extends DwarfSword {
 	protected void onHit(EntityDamageByEntityEvent event)
 	{
 		LivingEntity hit = (LivingEntity) event.getDamager();
-		hit.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 6, 3, false, false), false);
+		hit.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 3, false, false), false);
 	}
 
 	@Override
@@ -111,6 +112,11 @@ public class ElvenDagger extends DwarfSword {
 	@Override
 	protected boolean special(PlayerInteractAtEntityEvent event)
 	{
+		Entity target = (Entity) event.getRightClicked();
+		
+		((LivingEntity) target).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 3, false, false), false);
+		((LivingEntity) target).damage(140, getDwarf().getPlayer()); //not sure if this will work, if it does do you know if resistance will reduce it as a method is needed where resistance or mobtype will effect damage
+		
 		return false; // TODO Add Evicerate
 
 	}
