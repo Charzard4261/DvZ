@@ -63,7 +63,7 @@ public class EntityDamagedListener implements Listener {
 					&& Core.getInstance().getGm().dwarves.get(event.getDamager().getUniqueId()).getSword().rollsProcs
 					&& (((LivingEntity) event.getEntity()).getHealth() - event.getDamage()) <= 0)
 			{
-				Core.getInstance().getGm().dwarves.get(event.getDamager().getUniqueId()).proc();
+				Core.getInstance().getGm().dwarves.get(event.getDamager().getUniqueId()).proc(3);
 			}
 
 			if ((((LivingEntity) event.getEntity()).getHealth() - event.getDamage()) <= 0)
