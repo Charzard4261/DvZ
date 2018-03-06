@@ -56,7 +56,7 @@ public class DragonskinBow extends DwarfBow {
 			return false;
 		if ((((LivingEntity) event.getEntity()).getHealth() - event.getDamage()) > 0)
 			return false;
-		getDwarf().proc();
+		getDwarf().proc(2);
 		System.out.println("Dragonskin Proc");
 		return true;
 	}
