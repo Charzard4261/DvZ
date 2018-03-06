@@ -9,6 +9,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import dwarves.vs.zombies.Core;
+import dwarves.vs.zombies.dwarf.items.ArmorDiamond;
+import dwarves.vs.zombies.dwarf.items.DwarvernShovel;
 import dwarves.vs.zombies.dwarf.items.MightyPickaxe;
 import dwarves.vs.zombies.enums.Stage;
 
@@ -65,6 +67,8 @@ public class BreakBlockListener implements Listener {
 				event.getPlayer().playSound(event.getBlock().getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.4f, 1f);
 				event.getPlayer().getInventory().addItem(new ItemStack(Material.COBBLESTONE, 2));
 				break;
+			case GOLD_BLOCK:
+				event.getPlayer().getInventory().addItem(new ArmorDiamond().getItem());
 			default:
 				break;
 			}
