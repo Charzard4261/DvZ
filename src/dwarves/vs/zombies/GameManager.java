@@ -151,7 +151,7 @@ public class GameManager {
 		objective = null;
 		board = null;
 
-		doomtimer = 500;
+		doomtimer = 1300;
 		vault = 0;
 		gold = 0;
 		kills = 0;
