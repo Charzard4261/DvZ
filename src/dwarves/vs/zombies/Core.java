@@ -115,7 +115,7 @@ public class Core extends JavaPlugin {
 				if (dwarfmanatimer == 0)
 				{
 					manatimer = true;
-					dwarfmanatimer = 5;
+					dwarfmanatimer = 4;
 
 				}
 
@@ -175,7 +175,7 @@ public class Core extends JavaPlugin {
 	public void releaseMonsters()
 	{
 		gm.doomS = gm.objective.getScore(ChatColor.DARK_RED + "Doom Clock");
-		gm.doomS.setScore(500);
+		gm.doomS.setScore(1300);
 	}
 
 	public void end()
