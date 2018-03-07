@@ -66,6 +66,8 @@ public class BreakBlockListener implements Listener {
 			case GRAVEL:
 				event.getPlayer().playSound(event.getBlock().getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.4f, 1f);
 				event.getPlayer().getInventory().addItem(new ItemStack(Material.COBBLESTONE, 2));
+				if (event.getPlayer().getInventory().getItemInMainHand().equals(new MightyPickaxe().getItem()))
+					getdwarf().proc(3);
 				break;
 			case GOLD_BLOCK:
 				event.getPlayer().getInventory().addItem(new ArmorDiamond().getItem());
