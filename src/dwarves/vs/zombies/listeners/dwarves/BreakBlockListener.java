@@ -11,10 +11,10 @@ import org.bukkit.inventory.ItemStack;
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.dwarf.items.ArmorDiamond;
 import dwarves.vs.zombies.dwarf.items.MightyPickaxe;
-import dwarves.vs.zombies.dwarf.equipment.swords.TombMaker;
 import dwarves.vs.zombies.enums.Stage;
 
 import dwarves.vs.zombies.dwarf.Dwarf;
+import dwarves.vs.zombies.dwarf.equipment.swords.TombMaker;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSword;
 
 public class BreakBlockListener implements Listener {
@@ -70,8 +70,8 @@ public class BreakBlockListener implements Listener {
 			case GRAVEL:
 				event.getPlayer().playSound(event.getBlock().getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.4f, 1f);
 				event.getPlayer().getInventory().addItem(new ItemStack(Material.COBBLESTONE, 2));
-				if (event.getPlayer().getInventory().getItemInMainHand().equals(new TombMaker().getItem()))
-					getdwarf().proc(5);
+				//if (event.getPlayer().getInventory().getItemInMainHand().equals(new TombMaker().getItem)))
+					//((Dwarf) event.getPlayer()).proc(5);
 				break;
 			case GOLD_BLOCK:
 				event.getPlayer().getInventory().addItem(new ArmorDiamond().getItem());
