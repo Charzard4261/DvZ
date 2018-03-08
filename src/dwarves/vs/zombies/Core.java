@@ -115,7 +115,7 @@ public class Core extends JavaPlugin {
 				if (dwarfmanatimer == 0)
 				{
 					manatimer = true;
-					dwarfmanatimer = 4;
+					dwarfmanatimer = 5; // DON'T TOUCH THIS - It starts at 5 and immediately decreases to 4
 
 				}
 
