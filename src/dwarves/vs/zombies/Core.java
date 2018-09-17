@@ -6,6 +6,10 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
@@ -35,7 +39,8 @@ public class Core extends JavaPlugin {
 	private GameManager gm;
 	private CommandFactory cf;
 
-	int timer;
+	int timer, minplayers;
+	private BossBar startBar;
 
 	@Override
 	public void onEnable()
@@ -57,12 +62,17 @@ public class Core extends JavaPlugin {
 
 		cf.registerCommand(new GameCommand());
 		cf.registerCommand(new AdminCommand());
+		
+		startBar = Bukkit.createBossBar("Waiting for players... (" + minplayers + ")", BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.DARKEN_SKY);
+		startBar.removeFlag(BarFlag.DARKEN_SKY);
 	}
 
 	@Override
 	public void onDisable()
 	{
-
+		startBar.removeAll();
+		startBar = null;
+		
 		gm = null;
 		cf = null;
 		core = null;
@@ -73,9 +83,15 @@ public class Core extends JavaPlugin {
 		return core;
 	}
 
+	public void countdown()
+	{
+		
+	}
+	
 	public void start()
 	{
 		gm.stage = Stage.PRE;
+		startBar.removeAll();
 
 		gm.chooseMap();
 		Bukkit.broadcastMessage(gm.map.world);
@@ -89,7 +105,7 @@ public class Core extends JavaPlugin {
 		// File destDir = new File("");
 
 		gm.board = Bukkit.getScoreboardManager().getNewScoreboard();
-		gm.objective = gm.board.registerNewObjective(ChatColor.AQUA + "Dwarves", "dummy");
+		gm.objective = gm.board.registerNewObjective(ChatColor.AQUA + "Dwarves", "dummy", ChatColor.AQUA + "Dwarves");
 		gm.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		gm.vaultS = gm.objective.getScore(ChatColor.GOLD + "Vault");
 		gm.vaultS.setScore(0);
@@ -138,9 +154,6 @@ public class Core extends JavaPlugin {
 					if (dwarf.slabt > 0)
 						dwarf.slabt--;
 
-					if (dwarf.isProccing())
-						dwarf.proc--;
-
 					if ((!dwarf.getPlayer().hasPotionEffect(PotionEffectType.NIGHT_VISION))
 							&& (dwarf.getPlayer().getInventory().getItemInMainHand().getType() != Material.TORCH
 									&& dwarf.getPlayer().getInventory().getItemInOffHand().getType() != Material.TORCH)
@@ -177,9 +190,12 @@ public class Core extends JavaPlugin {
 		gm.doomS = gm.objective.getScore(ChatColor.DARK_RED + "Doom Clock");
 		gm.doomS.setScore(1300);
 	}
-
+	
 	public void end()
 	{
+		if (gm.stage == Stage.LOBBY)
+			return;
+		
 		gm.stage = Stage.LOBBY;
 
 		Bukkit.getScheduler().cancelTask(timer);
@@ -228,6 +244,11 @@ public class Core extends JavaPlugin {
 		ChangePlayerTag.changeTag(player, player.getCustomName());
 		player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		player.teleport(gm.lobby);
+		
+		if (Bukkit.getOnlinePlayers().size() >= minplayers)
+			countdown();
+		
+		startBar.addPlayer(player);
 	}
 
 }

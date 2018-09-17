@@ -50,8 +50,7 @@ public class ClickBlockListener implements Listener {
 					if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
 						event.getPlayer().getInventory().getItemInMainHand()
 								.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
-					event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.BLOCK_SLIME_PLACE, 0.4f,
-							1f);
+					event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.BLOCK_SLIME_BLOCK_PLACE, 0.4f, 1f);
 					List<Block> radius = Utils.getBlocks(event.getClickedBlock(), 3, 3, 3);
 					for (Block block : radius)
 					{
@@ -59,12 +58,12 @@ public class ClickBlockListener implements Listener {
 						{
 						case COBBLESTONE:
 						case MOSSY_COBBLESTONE:
-						case SMOOTH_BRICK:
-							if (Core.getInstance().getGm().stage == Stage.PRE || event.getPlayer().getInventory()
-									.getItemInMainHand().isSimilar(new WizardMortar().getItem()))
+						case STONE_BRICKS:
+							if (Core.getInstance().getGm().stage == Stage.PRE
+									|| event.getPlayer().getInventory().getItemInMainHand().isSimilar(new WizardMortar().getItem()))
 								block.setType(Material.LAPIS_ORE);
 							else
-								block.setType(Material.SMOOTH_BRICK);
+								block.setType(Material.STONE_BRICKS);
 							break;
 						default:
 							break;
@@ -85,10 +84,8 @@ public class ClickBlockListener implements Listener {
 					if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
 						event.getPlayer().getInventory().getItemInMainHand()
 								.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
-					event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ANVIL_PLACE, 1f,
-							1f);
-					event.getPlayer().getWorld().spawnParticle(Particle.EXPLOSION_HUGE, event.getPlayer().getLocation(),
-							1);
+					event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.BLOCK_ANVIL_PLACE, 1f, 1f);
+					event.getPlayer().getWorld().spawnParticle(Particle.EXPLOSION_HUGE, event.getPlayer().getLocation(), 1);
 					new ScrollOfMagicStone().slab(event.getPlayer(), event.getPlayer().getLocation().getBlock());
 				}
 		}
@@ -100,42 +97,38 @@ public class ClickBlockListener implements Listener {
 					switch (event.getClickedBlock().getType())
 					{
 					// ----------------------------------------------------------------------
-					case RAILS: // AXE
+					case RAIL: // AXE
 						event.getPlayer().getInventory().addItem(new LumberjackAxe().getItem());
-						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activateshield", 0.4f,
-								1f);
+						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activateshield", 0.4f, 1f);
 						break;
 					case ACTIVATOR_RAIL: // PICKAXE
 						event.getPlayer().getInventory().addItem(new MightyPickaxe().getItem());
-						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activateshield", 0.4f,
-								1f);
+						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activateshield", 0.4f, 1f);
 						break;
 					case POWERED_RAIL: // SHOVEL
 						event.getPlayer().getInventory().addItem(new DwarvernShovel().getItem());
-						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activateshield", 0.4f,
-								1f);
+						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activateshield", 0.4f, 1f);
 						break;
 					case DETECTOR_RAIL: // BOW
-						if (!event.getPlayer().getInventory().contains(Core.getInstance().getGm().dwarves
-								.get(event.getPlayer().getUniqueId()).getBow().getItem()))
+						if (!event.getPlayer().getInventory()
+								.contains(Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getBow().getItem()))
 						{
-							event.getPlayer().getInventory().addItem(Core.getInstance().getGm().dwarves
-									.get(event.getPlayer().getUniqueId()).getBow().getItem());
-							event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activatebow", 0.4f,
-									1f);
+							event.getPlayer().getInventory()
+									.addItem(Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getBow().getItem());
+							event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activatebow", 0.4f, 1f);
 						}
 						break;
 					case LADDER: // SWORD
-						if (!event.getPlayer().getInventory().contains(Core.getInstance().getGm().dwarves
-								.get(event.getPlayer().getUniqueId()).getSword().getItem()))
+						if (!event.getPlayer().getInventory()
+								.contains(Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSword().getItem()))
 						{
-							event.getPlayer().getInventory().addItem(Core.getInstance().getGm().dwarves
-									.get(event.getPlayer().getUniqueId()).getSword().getItem());
-							event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activatesword",
-									0.4f, 1f);
+							event.getPlayer().getInventory()
+									.addItem(Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSword().getItem());
+							event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activatesword", 0.4f, 1f);
 						}
 						break;
-					case REDSTONE_TORCH_ON: // ALE
+					case REDSTONE_TORCH: // ALE
+					case REDSTONE_WALL_TORCH:
 
 						break;
 					default:
@@ -145,42 +138,40 @@ public class ClickBlockListener implements Listener {
 					switch (event.getClickedBlock().getType())
 					{
 					// ----------------------------------------------------------------------
-					case LOG:
-					case LOG_2:
+					case ACACIA_LOG:
+					case BIRCH_LOG:
+					case DARK_OAK_LOG:
+					case JUNGLE_LOG:
+					case OAK_LOG:
+					case SPRUCE_LOG:
 						if (event.getPlayer().getInventory().getItemInMainHand().equals(new LumberjackAxe().getItem()))
 						{
-							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(), "toolaxehit",
-									0.4f, 1f);
+							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(), "toolaxehit", 0.4f, 1f);
 							event.getPlayer().getInventory().addItem(new Log().getItem());
 						}
 						break;
-					case IRON_FENCE:
+					case IRON_BARS:
 						if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new Log().getItem()))
 						{
 							event.getPlayer().getInventory().getItemInMainHand()
 									.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
-							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(),
-									"toolwoodchop", 0.4f, 1f);
+							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(), "toolwoodchop", 0.4f, 1f);
 							ItemStack s = new WoodenPlank().getItem();
 							s.setAmount(2);
 							event.getPlayer().getInventory().addItem(s);
-						} else if (event.getPlayer().getInventory().getItemInMainHand()
-								.isSimilar(new WoodenPlank().getItem()))
+						} else if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new WoodenPlank().getItem()))
 						{
 							event.getPlayer().getInventory().getItemInMainHand()
 									.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
-							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(),
-									"toolwoodchop", 0.4f, 1f);
+							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(), "toolwoodchop", 0.4f, 1f);
 							ItemStack s = new Stick().getItem();
 							s.setAmount(2);
 							event.getPlayer().getInventory().addItem(s);
-						} else if (event.getPlayer().getInventory().getItemInMainHand()
-								.isSimilar(new Stick().getItem()))
+						} else if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new Stick().getItem()))
 						{
 							event.getPlayer().getInventory().getItemInMainHand()
 									.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
-							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(),
-									"toolwoodchop", 0.4f, 1f);
+							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(), "toolwoodchop", 0.4f, 1f);
 							ItemStack s = new Bowl().getItem();
 							s.setAmount(4);
 							event.getPlayer().getInventory().addItem(s);
@@ -191,15 +182,13 @@ public class ClickBlockListener implements Listener {
 						{
 							event.getPlayer().getInventory().getItemInMainHand()
 									.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
-							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(),
-									Sound.ENTITY_SLIME_JUMP, 0.4f, 0.5f);
+							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(), Sound.ENTITY_SLIME_JUMP, 0.4f, 0.5f);
 							event.getPlayer().getInventory().addItem(new Torch().getItem());
 						} else if (event.getPlayer().getInventory().getItemInMainHand().isSimilar(new Bowl().getItem()))
 						{
 							event.getPlayer().getInventory().getItemInMainHand()
 									.setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
-							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(),
-									Sound.ENTITY_SLIME_JUMP, 0.4f, 0.5f);
+							event.getPlayer().getWorld().playSound(event.getClickedBlock().getLocation(), Sound.ENTITY_SLIME_JUMP, 0.4f, 0.5f);
 							event.getPlayer().getInventory().addItem(new Mortar().getItem());
 						}
 						break;

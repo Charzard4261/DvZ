@@ -3,7 +3,7 @@ package dwarves.vs.zombies.listeners;
 import java.lang.reflect.Field;
 
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_13_R1.entity.CraftPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import com.mojang.authlib.GameProfile;
 
 import dwarves.vs.zombies.Core;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_13_R1.EntityPlayer;
 
 public class JoinListener implements Listener {
 

@@ -16,7 +16,7 @@ public class ItemDropListener implements Listener {
 		case TORCH:
 		case IRON_PICKAXE:
 		case IRON_AXE:
-		case IRON_SPADE:
+		case IRON_SHOVEL:
 		case DIAMOND:
 		break;
 		default:

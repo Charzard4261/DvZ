@@ -23,7 +23,8 @@ public abstract class Dwarf extends PlayerType {
 	private UUID uuid;
 
 	public boolean dcd = false;
-	public int proc = 0;
+	private int proc = 0;
+	private ProcTimer proctimer;
 
 	public boolean sword = false, bow = false, ale = false, special = false;
 	public int swordt = 0, bowt = 0, alet = 0, specialt = 0, slabt = 0;
@@ -44,7 +45,7 @@ public abstract class Dwarf extends PlayerType {
 	{
 		if (mana + amount > 0)
 			return false;
-		
+
 		if (mana + amount <= 1000)
 		{
 			mana += amount;
@@ -52,7 +53,7 @@ public abstract class Dwarf extends PlayerType {
 			getPlayer().setExp(mana / 1000);
 		} else
 			mana = 1000;
-		
+
 		return true;
 
 	}
@@ -136,21 +137,56 @@ public abstract class Dwarf extends PlayerType {
 	public void proc()
 	{
 		getPlayer().getWorld().playSound(getPlayer().getLocation(), "wpnproc", 4f, 1f);
-		getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, getPlayer().getEyeLocation(), 50, 0.3, 0.6, 0.3, 1);
+		getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, getPlayer().getEyeLocation(), 50, 0.3, 0.6, 0.3,
+				1);
 		proc = 3;
 		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40, 0, false, false), true);
 		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 2, false, false), true);
-		
+
+		if (proctimer == null)
+		{
+			proctimer = new ProcTimer();
+			proctimer.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), proctimer, 0, 20));
+		}
+
 	}
 
 	public void proc(int time)
 	{
 		getPlayer().getWorld().playSound(getPlayer().getLocation(), "wpnproc", 4f, 1f);
-		getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, getPlayer().getEyeLocation(), 50, 0.3, 0.6, 0.3, 1);
+		getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, getPlayer().getEyeLocation(), 50, 0.3, 0.6, 0.3,
+				1);
 		proc = time;
-		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, (time - 1) * 20, 0, false, false),
-				true);
+		getPlayer().addPotionEffect(
+				new PotionEffect(PotionEffectType.INCREASE_DAMAGE, (time - 1) * 20, 0, false, false), true);
 		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (time - 1) * 20, 2, false, false), true);
+		
+		if (proctimer == null)
+		{
+			proctimer = new ProcTimer();
+			proctimer.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), proctimer, 0, 20));
+		}
+	}
+
+	public class ProcTimer implements Runnable {
+
+		private int id;
+
+		@Override
+		public void run()
+		{
+			if (proc <= 0)
+			{
+				Bukkit.getScheduler().cancelTask(id);
+			}
+
+			proc--;
+		}
+
+		public void setId(int id)
+		{
+			this.id = id;
+		}
 	}
 
 	public boolean isProccing()
@@ -163,6 +199,18 @@ public abstract class Dwarf extends PlayerType {
 		Core.getInstance().getGm().addKill();
 	}
 
+	public void replaceDwarf(Dwarf dwarf)
+	{
+		proc = 0;
+		bowt = 0;
+		alet = 0;
+		specialt = 0;
+
+		getPlayer().getInventory().clear();
+
+		Core.getInstance().getGm().dwarves.replace(uuid, dwarf);
+	}
+
 	public void killDwarf()
 	{
 		swordt = 0;
@@ -171,8 +219,8 @@ public abstract class Dwarf extends PlayerType {
 		specialt = 0;
 
 		getPlayer().getInventory().clear();
-		getPlayer().setDisplayName(ChatColor.DARK_RED + getPlayer().getCustomName());
-		getPlayer().setPlayerListName(ChatColor.DARK_RED + getPlayer().getDisplayName());
+		getPlayer().setDisplayName(ChatColor.GRAY + getPlayer().getCustomName());
+		getPlayer().setPlayerListName(ChatColor.GRAY + getPlayer().getDisplayName());
 
 		Core.getInstance().getGm().dwarves.remove(getPlayer().getUniqueId());
 		Core.getInstance().getGm().monsters.put(uuid, new MData(uuid));

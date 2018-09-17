@@ -13,10 +13,6 @@ import dwarves.vs.zombies.dwarf.items.ArmorDiamond;
 import dwarves.vs.zombies.dwarf.items.MightyPickaxe;
 import dwarves.vs.zombies.enums.Stage;
 
-import dwarves.vs.zombies.dwarf.Dwarf;
-import dwarves.vs.zombies.dwarf.equipment.swords.TombMaker;
-import dwarves.vs.zombies.dwarf.superclasses.DwarfSword;
-
 public class BreakBlockListener implements Listener {
 
 	@EventHandler
@@ -40,22 +36,25 @@ public class BreakBlockListener implements Listener {
 			case ACTIVATOR_RAIL:
 			case BEACON:
 			case DETECTOR_RAIL:
-			case ENCHANTMENT_TABLE:
-			case IRON_FENCE:
-			case LOG:
-			case LOG_2:
+			case ENCHANTING_TABLE:
+			case IRON_BARS:
+			case ACACIA_LOG:
+			case BIRCH_LOG:
+			case DARK_OAK_LOG:
+			case JUNGLE_LOG:
+			case OAK_LOG:
+			case SPRUCE_LOG:
 			case LADDER:
 			case OBSIDIAN:
-			case PISTON_BASE:
-			case PISTON_EXTENSION:
-			case PISTON_MOVING_PIECE:
-			case PISTON_STICKY_BASE:
+			case PISTON:
+			case PISTON_HEAD:
+			case STICKY_PISTON:
 			case POWERED_RAIL:
-			case RAILS:
+			case RAIL:
 			case REDSTONE:
 			case REDSTONE_BLOCK:
-			case REDSTONE_TORCH_ON:
-			case REDSTONE_TORCH_OFF:
+			case REDSTONE_TORCH:
+			case REDSTONE_WALL_TORCH:
 			case SPONGE:
 			case QUARTZ_BLOCK:
 			case QUARTZ_STAIRS:

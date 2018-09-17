@@ -41,4 +41,14 @@ public class MData extends PlayerType {
 	{
 		return monster;
 	}
+	
+	public void spawnSpectator()
+	{
+		
+	}
+	
+	public void spawnMonster()
+	{
+		
+	}
 }
