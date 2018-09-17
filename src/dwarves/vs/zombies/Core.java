@@ -132,6 +132,10 @@ public class Core extends JavaPlugin {
 				{
 					manatimer = true;
 					dwarfmanatimer = 5; // DON'T TOUCH THIS - It starts at 5 and immediately decreases to 4
+					//^Why is this a float value? Would it not make more sense to an integer. I cannot
+					// find anywhere in this specific document where this is used past a regular timer.
+					// Are you using this value for another function? In which case, you should still keep
+					// the integer and type cast.
 
 				}
 
