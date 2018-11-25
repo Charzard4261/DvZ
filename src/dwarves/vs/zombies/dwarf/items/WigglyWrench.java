@@ -9,12 +9,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 
-public class WigglyWrench extends DwarfItem{
+public class WigglyWrench implements DwarfItem{
 
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (byte) 7);
+		ItemStack item = new ItemStack(Material.LIGHT_GRAY_DYE);
 		ItemMeta meta = item.getItemMeta();
 		
 		meta.setDisplayName(ChatColor.AQUA + "Wiggly Wrench");

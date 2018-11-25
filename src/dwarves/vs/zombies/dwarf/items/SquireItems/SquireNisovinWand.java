@@ -9,12 +9,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 
-public class SquireNisovinWand extends DwarfItem{
+public class SquireNisovinWand implements DwarfItem{
 
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.NETHER_BRICK_ITEM);
+		ItemStack item = new ItemStack(Material.NETHER_BRICK);
 		ItemMeta meta = item.getItemMeta();
 		
 		meta.setDisplayName(ChatColor.GOLD + "Wand of Limited Probabilities");

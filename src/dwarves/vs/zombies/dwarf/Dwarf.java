@@ -1,11 +1,13 @@
 package dwarves.vs.zombies.dwarf;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -58,7 +60,7 @@ public abstract class Dwarf extends PlayerType {
 
 	}
 
-	public abstract DwarfSword getSword();
+	public abstract HashMap<ItemStack, DwarfSword> getSwords();
 
 	public abstract DwarfBow getBow();
 

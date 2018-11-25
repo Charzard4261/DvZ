@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 import dwarves.vs.zombies.misc.Utils;
 
-public class DebugTool extends DwarfItem {
+public class DebugTool implements DwarfItem {
 
 	@Override
 	public ItemStack getItem()

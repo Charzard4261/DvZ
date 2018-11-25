@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -15,10 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import dwarves.vs.zombies.dwarf.Dwarf;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSword;
-import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import net.minecraft.server.v1_12_R1.NBTTagInt;
-import net.minecraft.server.v1_12_R1.NBTTagList;
-import net.minecraft.server.v1_12_R1.NBTTagString;
+import dwarves.vs.zombies.misc.NMSItem;
 
 public class Excaliju extends DwarfSword {
 
@@ -30,7 +27,7 @@ public class Excaliju extends DwarfSword {
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 3);
+		ItemStack item = new ItemStack(Material.INK_SAC);
 		ItemMeta meta = item.getItemMeta();
 
 		meta.setDisplayName(ChatColor.GOLD + "Excaliju");
@@ -43,54 +40,20 @@ public class Excaliju extends DwarfSword {
 		lore.add("Personally, I think he's straight bonkers.");
 		lore.add(ChatColor.GOLD + "- Deadbones");
 		meta.setLore(lore);
+		
+		meta.addEnchant(Enchantment.DAMAGE_UNDEAD, 10, true);
 
 		item.setItemMeta(meta);
 
-		net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
-		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
-		NBTTagList modifiers = new NBTTagList();
-		NBTTagCompound damage = new NBTTagCompound();
-		damage.set("AttributeName", new NBTTagString("generic.attackDamage"));
-		damage.set("Name", new NBTTagString("generic.attackDamage"));
-		damage.set("Amount", new NBTTagInt(30));
-		damage.set("Operation", new NBTTagInt(0));
-		damage.set("UUIDLeast", new NBTTagInt(894654));
-		damage.set("UUIDMost", new NBTTagInt(2872));
-		damage.set("Slot", new NBTTagString("mainhand"));
-		modifiers.add(damage);
+		item = new NMSItem(item).addAttribute("generic.attackDamage", 30).addAttribute("generic.attackSpeed", 4).addAttribute("generic.knockbackResistance", 1).getItem();
 
-		NBTTagCompound attackSpeed = new NBTTagCompound();
-		attackSpeed.set("AttributeName", new NBTTagString("generic.attackSpeed"));
-		attackSpeed.set("Name", new NBTTagString("generic.attackSpeed"));
-		attackSpeed.set("Amount", new NBTTagInt(4));
-		attackSpeed.set("Operation", new NBTTagInt(0));
-		attackSpeed.set("UUIDLeast", new NBTTagInt(894654));
-		attackSpeed.set("UUIDMost", new NBTTagInt(2872));
-		attackSpeed.set("Slot", new NBTTagString("mainhand"));
-		modifiers.add(attackSpeed);
 
-		NBTTagCompound kb = new NBTTagCompound();
-		kb.set("AttributeName", new NBTTagString("generic.knockbackResistance"));
-		kb.set("Name", new NBTTagString("generic.knockbackResistance"));
-		kb.set("Amount", new NBTTagInt(1));
-		kb.set("Operation", new NBTTagInt(0));
-		kb.set("UUIDLeast", new NBTTagInt(894654));
-		kb.set("UUIDMost", new NBTTagInt(2872));
-		kb.set("Slot", new NBTTagString("mainhand"));
-		modifiers.add(kb);
-
-		compound.set("AttributeModifiers", modifiers);
-
-		NBTTagList ench = new NBTTagList();
-		NBTTagCompound enchant = new NBTTagCompound();
-		enchant.set("id", new NBTTagInt(34));
-		enchant.set("lvl", new NBTTagInt(10));
-		ench.add(enchant);
-		compound.set("ench", ench);
-
-		nmsStack.setTag(compound);
-
-		item = CraftItemStack.asBukkitCopy(nmsStack);
+//		NBTTagList ench = new NBTTagList();
+//		NBTTagCompound enchant = new NBTTagCompound();
+//		enchant.set("id", new NBTTagInt(34));
+//		enchant.set("lvl", new NBTTagInt(10));
+//		ench.add(enchant);
+//		compound.set("ench", ench);
 
 		return item;
 	}

@@ -49,8 +49,7 @@ public class EntityDamagedListener implements Listener {
 				{
 					UUID uuid = it.next();
 
-					if (Core.getInstance().getGm().monsters.get(uuid).getMonster().getEntity().getUniqueId()
-							.equals(event.getEntity().getUniqueId()))
+					if (Core.getInstance().getGm().monsters.get(uuid).getMonster().getEntity().getUniqueId().equals(event.getEntity().getUniqueId()))
 					{
 						if (!Core.getInstance().getGm().monsters.get(uuid).getMonster().canBeProcced())
 						{
@@ -64,12 +63,13 @@ public class EntityDamagedListener implements Listener {
 					event.setDamage(999);
 			}
 
-			if (((Player) event.getDamager()).getInventory().getItemInMainHand().equals(
-					Core.getInstance().getGm().dwarves.get(event.getDamager().getUniqueId()).getSword().getItem())
-					&& Core.getInstance().getGm().dwarves.get(event.getDamager().getUniqueId()).getSword().rollsProcs
+			if (Core.getInstance().getGm().dwarves.get(event.getDamager().getUniqueId()).getSwords()
+					.containsKey(((Player) event.getDamager()).getInventory().getItemInMainHand())
 					&& (((LivingEntity) event.getEntity()).getHealth() - event.getDamage()) <= 0)
 			{
-				Core.getInstance().getGm().dwarves.get(event.getDamager().getUniqueId()).proc(3);
+				if (Core.getInstance().getGm().dwarves.get(event.getDamager().getUniqueId()).getSwords()
+						.get(((Player) event.getDamager()).getInventory().getItemInMainHand()).rollsProcs)
+					Core.getInstance().getGm().dwarves.get(event.getDamager().getUniqueId()).proc(3);
 			}
 
 			if ((((LivingEntity) event.getEntity()).getHealth() - event.getDamage()) <= 0)
@@ -106,8 +106,7 @@ public class EntityDamagedListener implements Listener {
 					return;
 				}
 
-			if ((((LivingEntity) event.getEntity()).getHealth() - event.getDamage()) <= 0
-					&& Core.getInstance().getGm().stage != Stage.PRE)
+			if ((((LivingEntity) event.getEntity()).getHealth() - event.getDamage()) <= 0 && Core.getInstance().getGm().stage != Stage.PRE)
 			{
 				for (Player player : Bukkit.getOnlinePlayers())
 				{
@@ -117,8 +116,7 @@ public class EntityDamagedListener implements Listener {
 										+ ((Player) event.getDamager()).getInventory().getItemInMainHand(),
 								1, 3, 1);
 					else
-						player.sendTitle(event.getEntity().getCustomName() + ChatColor.RED + " was killed!", "", 1, 3,
-								1);
+						player.sendTitle(event.getEntity().getCustomName() + ChatColor.RED + " was killed!", "", 1, 3, 1);
 				}
 			}
 		}
@@ -144,8 +142,7 @@ public class EntityDamagedListener implements Listener {
 				if (Core.getInstance().getGm().stage != Stage.PRE && event.getCause() != DamageCause.ENTITY_ATTACK)
 					for (Player player : Bukkit.getOnlinePlayers())
 					{
-						player.sendTitle(event.getEntity().getCustomName() + ChatColor.RED + " was killed!", "", 1, 3,
-								1);
+						player.sendTitle(event.getEntity().getCustomName() + ChatColor.RED + " was killed!", "", 1, 3, 1);
 					}
 				else
 				{

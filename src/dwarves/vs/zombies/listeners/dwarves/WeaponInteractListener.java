@@ -26,11 +26,12 @@ public class WeaponInteractListener implements Listener {
 		if (!Core.getInstance().getGm().dwarves.containsKey(event.getPlayer().getUniqueId()))
 			return;
 
-		if (event.getPlayer().getInventory().getItemInMainHand()
-				.equals(Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSword().getItem())
+		if (Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSwords()
+				.containsKey(event.getPlayer().getInventory().getItemInMainHand())
 				&& (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK))
 		{
-			Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSword().rightClick(event);
+			Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSwords()
+					.get(event.getPlayer().getInventory().getItemInMainHand()).rightClick(event);
 		}
 	}
 
@@ -44,10 +45,9 @@ public class WeaponInteractListener implements Listener {
 		if (!Core.getInstance().getGm().dwarves.containsKey(event.getPlayer().getUniqueId()))
 			return;
 
-		if (event.getPlayer().getInventory().getItemInMainHand()
-				.equals(Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSword().getItem()))
+		if (Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSwords().containsKey(event.getPlayer().getInventory().getItemInMainHand()))
 		{
-			Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSword().rightClick(event);
+			Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSwords().get(event.getPlayer().getInventory().getItemInMainHand()).rightClick(event);
 		}
 	}
 

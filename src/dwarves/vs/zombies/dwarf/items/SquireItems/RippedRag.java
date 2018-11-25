@@ -9,12 +9,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 
-public class RippedRag extends DwarfItem{
+public class RippedRag implements DwarfItem{
 
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (byte) 15);
+		ItemStack item = new ItemStack(Material.BONE_MEAL);
 		ItemMeta meta = item.getItemMeta();
 		
 		meta.setDisplayName(ChatColor.GOLD + "Ripped Rag");

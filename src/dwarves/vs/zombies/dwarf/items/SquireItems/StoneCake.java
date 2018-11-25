@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 
-public class StoneCake extends DwarfItem{
+public class StoneCake implements DwarfItem{
 
 	@Override
 	public ItemStack getItem()

@@ -9,12 +9,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 
-public class WizardMortar extends DwarfItem{
+public class WizardMortar implements DwarfItem{
 
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (byte) 11);
+		ItemStack item = new ItemStack(Material.DANDELION_YELLOW);
 		ItemMeta meta = item.getItemMeta();
 		
 		meta.setDisplayName(ChatColor.AQUA + "Wizard Mortar");

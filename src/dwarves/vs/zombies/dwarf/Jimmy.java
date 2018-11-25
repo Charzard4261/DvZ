@@ -1,6 +1,10 @@
 package dwarves.vs.zombies.dwarf;
 
+import java.util.HashMap;
 import java.util.UUID;
+
+import org.bukkit.ChatColor;
+import org.bukkit.inventory.ItemStack;
 
 import dwarves.vs.zombies.dwarf.equipment.ales.JimmyJuice;
 import dwarves.vs.zombies.dwarf.equipment.bows.DragonskinBow;
@@ -10,30 +14,31 @@ import dwarves.vs.zombies.dwarf.superclasses.DwarfBow;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSpecial;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfSword;
 import dwarves.vs.zombies.misc.ArmourSet;
-import net.md_5.bungee.api.ChatColor;
 
 public class Jimmy extends Dwarf {
 
-	private DwarfSword sword = new Runeblade(this);
+	private HashMap<ItemStack, DwarfSword> meleeWeapons = new HashMap<ItemStack, DwarfSword>();
 	private DwarfBow bow = new DragonskinBow(this);
 	private DwarfAle ale = new JimmyJuice(this);
-	
+
 	public Jimmy(UUID uuid)
 	{
 		super(uuid);
+
+		DwarfSword sword = new Runeblade(this);
+		meleeWeapons.put(sword.getItem(), sword);
 	}
 
-	public Jimmy(UUID uuid, String title)
+	public void setTitle(String title)
 	{
-		super(uuid);
 		getPlayer().setCustomName(ChatColor.AQUA + title + " " + getPlayer().getDisplayName());
 		getPlayer().setPlayerListName(ChatColor.AQUA + title + " " + getPlayer().getDisplayName());
 	}
-	
+
 	@Override
-	public DwarfSword getSword()
+	public HashMap<ItemStack, DwarfSword> getSwords()
 	{
-		return sword;
+		return meleeWeapons;
 	}
 
 	@Override

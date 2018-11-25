@@ -15,12 +15,12 @@ import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 import dwarves.vs.zombies.misc.Utils;
 
-public class ScrollOfMagicStone extends DwarfItem {
+public class ScrollOfMagicStone implements DwarfItem {
 
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.CLAY_BRICK);
+		ItemStack item = new ItemStack(Material.BRICK);
 		ItemMeta meta = item.getItemMeta();
 
 		meta.setDisplayName(ChatColor.AQUA + "Scroll of Magic Stone.");

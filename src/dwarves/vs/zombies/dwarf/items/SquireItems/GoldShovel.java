@@ -9,12 +9,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 
-public class GoldShovel extends DwarfItem{
+public class GoldShovel implements DwarfItem{
 
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.IRON_SPADE);
+		ItemStack item = new ItemStack(Material.IRON_SHOVEL);
 		ItemMeta meta = item.getItemMeta();
 		
 		meta.setDisplayName(ChatColor.GOLD + "Gold Shovel");

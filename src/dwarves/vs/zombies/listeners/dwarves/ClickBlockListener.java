@@ -119,13 +119,13 @@ public class ClickBlockListener implements Listener {
 						}
 						break;
 					case LADDER: // SWORD
-						if (!event.getPlayer().getInventory()
-								.contains(Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSword().getItem()))
-						{
-							event.getPlayer().getInventory()
-									.addItem(Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSword().getItem());
-							event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activatesword", 0.4f, 1f);
-						}
+						for (ItemStack item : Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSwords().keySet())
+							if (!event.getPlayer().getInventory().contains(item))
+							{
+								event.getPlayer().getInventory().addItem(item);
+								event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activatesword", 0.4f, 1f);
+								break;
+							}
 						break;
 					case REDSTONE_TORCH: // ALE
 					case REDSTONE_WALL_TORCH:

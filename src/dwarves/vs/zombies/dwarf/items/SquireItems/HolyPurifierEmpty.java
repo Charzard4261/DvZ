@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 
-public class HolyPurifierEmpty extends DwarfItem{
+public class HolyPurifierEmpty implements DwarfItem{
 
 	@Override
 	public ItemStack getItem()

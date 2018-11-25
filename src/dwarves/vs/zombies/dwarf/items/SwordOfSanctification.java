@@ -9,12 +9,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 
-public class SwordOfSanctification extends DwarfItem{
+public class SwordOfSanctification implements DwarfItem{
 
 	@Override
 	public ItemStack getItem()
 	{
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (byte) 13);
+		ItemStack item = new ItemStack(Material.MAGENTA_DYE);
 		ItemMeta meta = item.getItemMeta();
 		
 		meta.setDisplayName(ChatColor.AQUA + "Sword Of Sanctification");

@@ -2,8 +2,8 @@ package dwarves.vs.zombies.dwarf.superclasses;
 
 import org.bukkit.inventory.ItemStack;
 
-public abstract class DwarfItem {
+public interface DwarfItem {
 
-	public abstract ItemStack getItem();
+	public ItemStack getItem();
 	
 }
