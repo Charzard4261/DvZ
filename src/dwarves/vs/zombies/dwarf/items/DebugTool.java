@@ -9,10 +9,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import dwarves.vs.zombies.dwarf.superclasses.DwarfItem;
 import dwarves.vs.zombies.misc.Utils;
+import dwarves.vs.zombies.misc.generics.GenericItem;
 
-public class DebugTool implements DwarfItem {
+public class DebugTool implements GenericItem {
 
 	@Override
 	public ItemStack getItem()

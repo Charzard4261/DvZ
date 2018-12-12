@@ -90,6 +90,8 @@ public class ClickBlockListener implements Listener {
 				}
 		}
 
+		// ----------------------------------------------------------------------
+
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{
 			if (event.getPlayer().getInventory().getItemInMainHand() != null)
@@ -110,13 +112,13 @@ public class ClickBlockListener implements Listener {
 						event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activateshield", 0.4f, 1f);
 						break;
 					case DETECTOR_RAIL: // BOW
-						if (!event.getPlayer().getInventory()
-								.contains(Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getBow().getItem()))
-						{
-							event.getPlayer().getInventory()
-									.addItem(Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getBow().getItem());
-							event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activatebow", 0.4f, 1f);
-						}
+						for (ItemStack item : Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getBows().keySet())
+							if (!event.getPlayer().getInventory().contains(item))
+							{
+								event.getPlayer().getInventory().addItem(item);
+								event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), "activatebow", 0.4f, 1f);
+								break;
+							}
 						break;
 					case LADDER: // SWORD
 						for (ItemStack item : Core.getInstance().getGm().dwarves.get(event.getPlayer().getUniqueId()).getSwords().keySet())

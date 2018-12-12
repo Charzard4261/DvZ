@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.inventory.ItemStack;
 
 import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.dwarf.Dwarf;
@@ -23,15 +24,14 @@ public class BowListener implements Listener {
 
 		if (Core.getInstance().getGm().dwarves.containsKey(((Player) event.getEntity()).getUniqueId()))
 		{
-			if (event.getBow().equals(Core.getInstance().getGm().dwarves.get(((Player) event.getEntity()).getUniqueId())
-					.getBow().getItem()))
+			Dwarf dwarf = Core.getInstance().getGm().dwarves.get(((Player) event.getEntity()).getUniqueId());
+			for (ItemStack item : dwarf.getBows().keySet())
 			{
-				Core.getInstance().getGm().projectiles.put(event.getProjectile().getUniqueId(),
-						new ProjectileData(
-								Core.getInstance().getGm().dwarves.get(((Player) event.getEntity()).getUniqueId()),
-								ProjectileType.BOW));
-				Core.getInstance().getGm().dwarves.get(((Player) event.getEntity()).getUniqueId()).getBow()
-						.shootBowEvent(event);
+				if (event.getBow().equals(item))
+				{
+					Core.getInstance().getGm().projectiles.put(event.getProjectile().getUniqueId(), new ProjectileData(dwarf, ProjectileType.BOW, dwarf.getBows().get(item)));
+					dwarf.getBows().get(item).shootBowEvent(event);
+				}
 			}
 		} else if (Core.getInstance().getGm().monsters.containsKey(((Player) event.getEntity()).getUniqueId()))
 		{
@@ -49,11 +49,14 @@ public class BowListener implements Listener {
 		{
 			if (Core.getInstance().getGm().projectiles.get(event.getDamager().getUniqueId()).type instanceof Dwarf)
 			{
-				if (Core.getInstance().getGm().projectiles
-						.get(event.getDamager().getUniqueId()).projectileType == ProjectileType.BOW)
+				if (Core.getInstance().getGm().projectiles.get(event.getDamager().getUniqueId()).projectileType == ProjectileType.BOW)
 				{
-					((Dwarf) Core.getInstance().getGm().projectiles.get(event.getDamager().getUniqueId()).type).getBow()
-							.entityHitEvent(event);
+//					Dwarf dwarf = Core.getInstance().getGm().dwarves.get(((Player) event.getEntity()).getUniqueId());
+//					for (ItemStack item : dwarf.getBows().keySet())
+//					{
+//						dwarf.getBows().get(item).entityHitEvent(event);
+//					}
+					Core.getInstance().getGm().projectiles.get(event.getDamager().getUniqueId()).launcher.entityHitEvent(event);
 					Core.getInstance().getGm().projectiles.remove(event.getDamager().getUniqueId());
 				}
 			}

@@ -13,11 +13,11 @@ import org.bukkit.scoreboard.Team.OptionStatus;
 
 import com.mojang.authlib.GameProfile;
 
+import dwarves.vs.zombies.Core;
 import net.minecraft.server.v1_13_R2.EntityPlayer;
 
 public class ChangePlayerTag {
 
-	@SuppressWarnings("deprecation")
 	public static void changeTag(Player playerToChange, String newName)
 	{
 		EntityPlayer ep = ((CraftPlayer) playerToChange).getHandle();
@@ -30,15 +30,15 @@ public class ChangePlayerTag {
 			profileField.set(gp, newName);
 		} catch (Exception e)
 		{
-			Bukkit.broadcastMessage("Not Work!");
+			Bukkit.broadcastMessage("Change player tag did not work! " + playerToChange + " " + newName);
 		}
 
 		for (Player p : Bukkit.getOnlinePlayers())
 		{
 			if (p != playerToChange)
 			{
-				p.hidePlayer(playerToChange);
-				p.showPlayer(playerToChange);
+				p.hidePlayer(Core.getInstance(), playerToChange);
+				p.showPlayer(Core.getInstance(), playerToChange);
 			}
 		}
 	}

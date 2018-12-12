@@ -1,24 +1,29 @@
 package dwarves.vs.zombies.dwarf.superclasses;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.dwarf.Dwarf;
+import dwarves.vs.zombies.misc.Utils;
+import dwarves.vs.zombies.misc.generics.GenericTimer;
 
 public abstract class DwarfSword {
 
 	private Dwarf dwarf;
-	private int timer;
-	
+	private int timerMax, currentTime = 0;
+	public boolean canUse = true;
+
 	public boolean rollsProcs;
 
 	public DwarfSword(Dwarf dwarf, int timer, boolean rollsProcs)
 	{
 		this.dwarf = dwarf;
-		this.timer = timer;
+		this.timerMax = timer;
 		this.rollsProcs = rollsProcs;
 	}
 
@@ -29,31 +34,62 @@ public abstract class DwarfSword {
 
 	public void rightClick(PlayerInteractEvent event)
 	{
-
-		if (dwarf.sword)
+		if (!canUse)
 		{
-			getDwarf().getPlayer()
-					.sendMessage(ChatColor.DARK_AQUA + "You must wait " + dwarf.swordt + " more seconds to do that.");
+			getDwarf().getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + currentTime + " more seconds to do that.");
 			return;
 		}
 
 		if (special(event))
-			dwarf.useSword(timer);
+		{
+			currentTime = timerMax;
+			GenericTimer task = new GenericTimer(timerMax) {
+
+				@Override
+				public void onTimerComplete()
+				{
+					canUse = true;
+					dwarf.getPlayer().sendMessage(Utils.getMessageFormatCanUse(""));
+				}
+
+				@Override
+				public void onTimerDecrease()
+				{
+					currentTime--;
+				}
+			};
+			task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
+		}
 	}
 
 	public void rightClick(PlayerInteractAtEntityEvent event)
 	{
-
-		if (dwarf.sword)
+		if (!canUse)
 		{
-			getDwarf().getPlayer()
-					.sendMessage(ChatColor.DARK_AQUA + "You must wait " + dwarf.swordt + " more seconds to do that.");
+			getDwarf().getPlayer().sendMessage(ChatColor.DARK_AQUA + "You must wait " + currentTime + " more seconds to do that.");
 			return;
 		}
 
 		if (special(event))
-			dwarf.useSword(timer);
+		{
+			currentTime = timerMax;
+			GenericTimer task = new GenericTimer(timerMax) {
 
+				@Override
+				public void onTimerComplete()
+				{
+					canUse = true;
+					dwarf.getPlayer().sendMessage(Utils.getMessageFormatCanUse(""));
+				}
+
+				@Override
+				public void onTimerDecrease()
+				{
+					currentTime--;
+				}
+			};
+			task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
+		}
 	}
 
 	public abstract ItemStack getItem();

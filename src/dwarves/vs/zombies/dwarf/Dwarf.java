@@ -22,14 +22,18 @@ import dwarves.vs.zombies.monster.MData;
 
 public abstract class Dwarf extends PlayerType {
 
+	protected HashMap<ItemStack, DwarfSword> meleeWeapons = new HashMap<ItemStack, DwarfSword>();
+	protected HashMap<ItemStack, DwarfBow> bowWeapons = new HashMap<ItemStack, DwarfBow>();
+	protected HashMap<ItemStack, DwarfSpecial> specialWeapons = new HashMap<ItemStack, DwarfSpecial>();
+
 	private UUID uuid;
 
 	public boolean dcd = false;
 	private int proc = 0;
 	private ProcTimer proctimer;
 
-	public boolean sword = false, bow = false, ale = false, special = false;
-	public int swordt = 0, bowt = 0, alet = 0, specialt = 0, slabt = 0;
+	protected boolean sword = false, bow = false, ale = false, special = false;
+	public int /* swordt = 0, bowt = 0, alet = 0, specialt = 0, */ slabt = 0; // TODO Slabs to special weapons
 
 	public int mana = 1000;
 
@@ -60,9 +64,15 @@ public abstract class Dwarf extends PlayerType {
 
 	}
 
-	public abstract HashMap<ItemStack, DwarfSword> getSwords();
+	public HashMap<ItemStack, DwarfSword> getSwords()
+	{
+		return meleeWeapons;
+	}
 
-	public abstract DwarfBow getBow();
+	public HashMap<ItemStack, DwarfBow> getBows()
+	{
+		return bowWeapons;
+	}
 
 	public abstract DwarfAle getAle();
 
@@ -70,77 +80,78 @@ public abstract class Dwarf extends PlayerType {
 
 	public abstract ArmourSet getArmour();
 
-	public void useSword(int timer)
-	{
-		sword = true;
-		swordt = timer;
+	// public void useSword(int timer)
+	// {
+	// sword = true;
+	// swordt = timer;
+	//
+	// SwordTimer task = new SwordTimer();
+	// task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(),
+	// task, 0, 20));
+	// }
+	//
+	// public class SwordTimer implements Runnable {
+	//
+	// private int id;
+	//
+	// @Override
+	// public void run()
+	// {
+	// if (swordt <= 0)
+	// {
+	// sword = false;
+	// Bukkit.getScheduler().cancelTask(id);
+	// }
+	//
+	// swordt--;
+	// }
+	//
+	// public void setId(int id)
+	// {
+	// this.id = id;
+	// }
+	// }
 
-		SwordTimer task = new SwordTimer();
-		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
-	}
+	// public void useBow(int timer, boolean activate)
+	// {
+	// if (!activate)
+	// return;
+	//
+	// bow = true;
+	// bowt = timer;
+	//
+	// BowTimer task = new BowTimer();
+	// task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(),
+	// task, 0, 20));
+	// }
 
-	public class SwordTimer implements Runnable {
-
-		private int id;
-
-		@Override
-		public void run()
-		{
-			if (swordt <= 0)
-			{
-				sword = false;
-				Bukkit.getScheduler().cancelTask(id);
-			}
-
-			swordt--;
-		}
-
-		public void setId(int id)
-		{
-			this.id = id;
-		}
-	}
-
-	public void useBow(int timer, boolean activate)
-	{
-		if (!activate)
-			return;
-
-		bow = true;
-		bowt = timer;
-
-		BowTimer task = new BowTimer();
-		task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
-	}
-
-	public class BowTimer implements Runnable {
-
-		private int id;
-
-		@Override
-		public void run()
-		{
-			System.out.println("" + bowt);
-			if (bowt <= 0)
-			{
-				bow = false;
-				Bukkit.getScheduler().cancelTask(id);
-			}
-
-			bowt--;
-		}
-
-		public void setId(int id)
-		{
-			this.id = id;
-		}
-	}
+	// public class BowTimer implements Runnable {
+	//
+	// private int id;
+	//
+	// @Override
+	// public void run()
+	// {
+	// System.out.println("" + bowt);
+	// if (bowt <= 0)
+	// {
+	// bow = false;
+	// Bukkit.getScheduler().cancelTask(id);
+	// }
+	//
+	// bowt--;
+	// }
+	//
+	// public void setId(int id)
+	// {
+	// this.id = id;
+	// }
+	// }
 
 	public void proc()
 	{
 		getPlayer().getWorld().playSound(getPlayer().getLocation(), "wpnproc", 4f, 1f);
-		getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, getPlayer().getEyeLocation(), 50, 0.3, 0.6, 0.3,
-				1);
+		getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, getPlayer().getEyeLocation(), 50, 0.3, 0.6, 0.3, 1);
 		proc = 3;
 		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40, 0, false, false), true);
 		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 2, false, false), true);
@@ -156,13 +167,11 @@ public abstract class Dwarf extends PlayerType {
 	public void proc(int time)
 	{
 		getPlayer().getWorld().playSound(getPlayer().getLocation(), "wpnproc", 4f, 1f);
-		getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, getPlayer().getEyeLocation(), 50, 0.3, 0.6, 0.3,
-				1);
+		getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, getPlayer().getEyeLocation(), 50, 0.3, 0.6, 0.3, 1);
 		proc = time;
-		getPlayer().addPotionEffect(
-				new PotionEffect(PotionEffectType.INCREASE_DAMAGE, (time - 1) * 20, 0, false, false), true);
+		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, (time - 1) * 20, 0, false, false), true);
 		getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (time - 1) * 20, 2, false, false), true);
-		
+
 		if (proctimer == null)
 		{
 			proctimer = new ProcTimer();
@@ -204,10 +213,7 @@ public abstract class Dwarf extends PlayerType {
 	public void replaceDwarf(Dwarf dwarf)
 	{
 		proc = 0;
-		bowt = 0;
-		alet = 0;
-		specialt = 0;
-
+		// TODO timers from previous weapons will still run
 		getPlayer().getInventory().clear();
 
 		Core.getInstance().getGm().dwarves.replace(uuid, dwarf);
@@ -215,11 +221,7 @@ public abstract class Dwarf extends PlayerType {
 
 	public void killDwarf()
 	{
-		swordt = 0;
-		bowt = 0;
-		alet = 0;
-		specialt = 0;
-
+		// TODO timers from previous weapons will still run
 		getPlayer().getInventory().clear();
 		getPlayer().setDisplayName(ChatColor.GRAY + getPlayer().getCustomName());
 		getPlayer().setPlayerListName(ChatColor.GRAY + getPlayer().getDisplayName());

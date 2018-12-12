@@ -1,20 +1,26 @@
 package dwarves.vs.zombies.dwarf.superclasses;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 
+import dwarves.vs.zombies.Core;
 import dwarves.vs.zombies.dwarf.Dwarf;
+import dwarves.vs.zombies.misc.Utils;
+import dwarves.vs.zombies.misc.generics.GenericProjectileLauncher;
+import dwarves.vs.zombies.misc.generics.GenericTimer;
 
-public abstract class DwarfBow {
+public abstract class DwarfBow implements GenericProjectileLauncher {
 
 	private Dwarf dwarf;
-	private int timer;
+	private int timerMax;
+	public boolean canUse = true;
 
 	public DwarfBow(Dwarf dwarf, int timer)
 	{
 		this.dwarf = dwarf;
-		this.timer = timer;
+		this.timerMax = timer;
 	}
 
 	public Dwarf getDwarf()
@@ -27,11 +33,26 @@ public abstract class DwarfBow {
 		onFire(event);
 	}
 
+	@Override
 	public void entityHitEvent(EntityDamageByEntityEvent event)
 	{
-		if (!dwarf.bow)
+		if (canUse)
 		{
-			dwarf.useBow(timer, onHit(event));
+			GenericTimer task = new GenericTimer(timerMax) {
+
+				@Override
+				public void onTimerComplete()
+				{
+					canUse = true;
+					dwarf.getPlayer().sendMessage(Utils.getMessageFormatCanUse(""));
+				}
+
+				@Override
+				public void onTimerDecrease()
+				{
+				}
+			};
+			task.setId(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), task, 0, 20));
 		}
 	}
 

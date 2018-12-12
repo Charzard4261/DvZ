@@ -3,11 +3,17 @@ package dwarves.vs.zombies.misc;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
 public class Utils {
 
+	public static String getMessageFormatCanUse(String text)
+	{
+		return ChatColor.AQUA + "You can use your " + text + " again.";
+	}
+	
 	public static List<Block> getBlocks(Block start, int xradius, int yradius, int zradius)
 	{
 		int xiterations = (xradius * 2) + 1;
